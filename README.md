@@ -16,7 +16,3 @@ Uma empresa de logística está procurando automatizar todos os seus processos e
 
 * João Caram Santos de Oliveira
 
-## Kanban
-
-https://trello.com/invite/b/oSyvsFcD/ATTI02bcd67832637334a1e0eb2c4aab5330D64ED32E/kanban
-
