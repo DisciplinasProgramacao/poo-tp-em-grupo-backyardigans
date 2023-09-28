@@ -1,5 +1,6 @@
 public class Veiculo {
 
+    private static final int MAX_ROTAS;
     private String placa;
     private Rota rotas[];
     private int quantRotas;
@@ -7,7 +8,21 @@ public class Veiculo {
     private double tanqueMaximo;
     private double totalReabastecido;
 
+    static{
+        MAX_ROTAS = 30;
+    }
+
     public String getPlaca() {
-        return this.placa;
+        return placa;
+    }
+
+    public int getQuantRotas(){
+        return quantRotas;
+    }
+
+    public double kmTotal(){
+        double kmTotal =0;
+
+        return kmTotal;
     }
 }

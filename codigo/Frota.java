@@ -3,9 +3,9 @@ public class Frota {
     private int tamanhoFrota;
     private Veiculo veiculos[];
 
-    public Frota(int tamanhoFrota, Veiculo[] veiculos) {
+    public Frota(int tamanhoFrota) {
         this.tamanhoFrota = tamanhoFrota;
-        this.veiculos = new Veiculo [50]; //verificar se tem algum número limite base ou se pode usar estrutura de dados
+        this.veiculos = new Veiculo [tamanhoFrota];
     }
 
     /**
@@ -35,9 +35,9 @@ public class Frota {
     }
 
     /**
-     * Metódo que vai localizar, a partir da placa fornecida, se o veículo existe na frota
-     * @param placa Placa do veículo que será pesquisado
-     * @return Veículo procurado
+     * Metódo que vai localizar, a partir da placa fornecida, se o veículo existe na frota.
+     * @param placa Placa do veículo que será pesquisado.
+     * @return Veículo procurado.
      */
     public Veiculo localizarVeiculo(String placa){
         Veiculo veiculoLocalizado = null;
@@ -52,7 +52,8 @@ public class Frota {
     }
 
     /**
-     * Metódo que vai retornar a quilometragem total de todos os veículos da frota
+     * Metódo que vai retornar a quilometragem total de todos os veículos da frota.
+     * @return Quilometragem total da frota de veículos.
      */
     public double quilometragemTotal(){
         double totalQuilometragem = 0;
@@ -65,8 +66,8 @@ public class Frota {
     }
 
     /**
-     * Metódo que vai retornar o veículo com a maior quilometragem da frota
-     * @return Veículo com a maior quilometragem da frota
+     * Metódo que vai retornar o veículo com a maior quilometragem da frota.
+     * @return Veículo com a maior quilometragem da frota.
      */
     public Veiculo maiorKmTotal(){
         double maiorKm = 0;
@@ -83,10 +84,21 @@ public class Frota {
     }
 
     /**
-     * Metódo que vai retornar o veículo com a maior quilometragem média da frota
+     * Metódo que vai retornar o veículo com a maior quilometragem média da frota.
      * @return Veículo com a maior quilometragem média da frota.
      */
     public Veiculo maiorKmMedia(){
-        return null;
+        Veiculo veiculoMaiorMedia = null;
+        double maiorKmMedia = 0;
+
+        for(Veiculo x : veiculos){
+            double mediaVeiculo = x.kmTotal()/x.getQuantRotas();
+            if(mediaVeiculo > maiorKmMedia){
+                maiorKmMedia = mediaVeiculo;
+                veiculoMaiorMedia = x;
+            }
+        }
+
+        return veiculoMaiorMedia;
     }
 }
