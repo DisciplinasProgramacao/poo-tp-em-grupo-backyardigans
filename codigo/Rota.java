@@ -12,7 +12,7 @@ public class Rota{
     }
 
     public String relatorio(){
-        
+        return "";
     }
 
 }
