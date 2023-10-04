@@ -21,10 +21,22 @@ public class Veiculo {
         return quantRotas;
     }
 
-    public double kmTotal(){
-        double kmTotal =0;
+    public Veiculo(String placa, double tanqueMaximo) {
+        this.placa = placa;
+        this.tanqueMaximo = tanqueMaximo;
+        this.rotas = new Rota[MAX_ROTAS];
+    }
 
+    public double kmTotal() {
+       // Logica para calcular quilometragem total
+        // Retorna a quilometragem total
         return kmTotal;
+    }
+
+     public double kmNoMes() {
+        // Logica para calcular quilometragem no mes
+        // Retorna a quilometragem percorrida no mes atual
+        return 0;
     }
 
     private double autonomiaAtual() {
@@ -35,5 +47,8 @@ public class Veiculo {
     private double autonomiaMaxima() {
         double quantidadeTanque = tanque.autonomiaMaxima();
         return quantidadeTanque;
+    }    private void percorrerRota(Rota rota) {
+        // Logica para percorrer a rota
     }
+
 }
