@@ -1,9 +1,8 @@
-public class Tanque implements ITanque{
-    private  double consumo;
+public class Tanque implements ITanque {
+    private double consumo;
     private double capacidadeMaxima;
     private double capacidadeAtual;
     private Combustivel tipo;
-
 
     public Tanque(double cMaxima, int tipoCombustivel) {
         this.capacidadeMaxima = cMaxima;
@@ -53,9 +52,11 @@ public class Tanque implements ITanque{
      *         veiculo
      */
     public double autonomiaAtual() {
+        double quantosKmPodeRodar;
 
-        double kmPossiveis = capacidadeAtual / consumo;
-        return kmPossiveis;
+        quantosKmPodeRodar = capacidadeAtual / consumo;
+
+        return quantosKmPodeRodar;
     }
 
     public double getConsumo() {

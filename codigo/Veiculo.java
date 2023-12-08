@@ -58,7 +58,6 @@ public abstract class Veiculo implements IManutencao {
         return tanque.autonomiaAtual();
     }
 
-
     /**
      * Método para abastecer o veículo
      * 
@@ -111,12 +110,12 @@ public abstract class Veiculo implements IManutencao {
      * @param rota rota que será percorrida
      */
 
-    
     private void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
-            if (kmRota <= tanque.autonomiaAtual()) {
-                tanqueAtual -= kmRota;
+            if (kmRota <= autonomiaAtual()) {
+                 
+                //tanqueAtual -= kmRota;
             } else {
                 System.out.println("Não há combustível suficiente para percorrer esta rota.");
             }
