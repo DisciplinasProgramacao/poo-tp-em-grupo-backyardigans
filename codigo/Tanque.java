@@ -54,7 +54,7 @@ public class Tanque implements ITanque{
      */
     public double autonomiaAtual() {
 
-        double kmPossiveis = capacidadeAtual * consumo;
+        double kmPossiveis = capacidadeAtual / consumo;
         return kmPossiveis;
     }
 

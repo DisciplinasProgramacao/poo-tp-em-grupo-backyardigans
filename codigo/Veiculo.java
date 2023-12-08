@@ -9,6 +9,7 @@ public abstract class Veiculo implements IManutencao {
     private int quantRotas;
     private double totalReabastecido;
     protected Tanque tanque;
+    protected double kmTotal;
     static {
         MAX_ROTAS = 30;
     }
@@ -18,6 +19,7 @@ public abstract class Veiculo implements IManutencao {
         this.rotas = new Rota[30];
         this.quantRotas = 0;
         this.totalReabastecido = 0;
+        this.kmTotal = 0;
     }
 
     /**
@@ -56,6 +58,7 @@ public abstract class Veiculo implements IManutencao {
         return tanque.autonomiaAtual();
     }
 
+
     /**
      * Método para abastecer o veículo
      * 
@@ -71,7 +74,7 @@ public abstract class Veiculo implements IManutencao {
             tanque.abastecer(litros);
         }
 
-        totalReabastecido += litros;
+        totalReabastecido = totalReabastecido + litros;
 
         return tanque.capacidadeAtual();
     }
@@ -97,11 +100,8 @@ public abstract class Veiculo implements IManutencao {
      * @return retorna a quilometragem total percorrida
      */
     public double kmTotal() {
-        double quilometragemTotal = 0;
-        for (int i = 0; i < quantRotas; i++) {
-            quilometragemTotal += rotas[i].getQuilometragem();
-        }
-        return quilometragemTotal;
+
+        return kmTotal;
     }
 
     /**
@@ -114,9 +114,9 @@ public abstract class Veiculo implements IManutencao {
     
     private void percorrerRota(Rota rota) {
         if (rota != null) {
-            double consumoRota = rota.getQuilometragem();
-            if (consumoRota <= tanqueAtual) {
-                tanqueAtual -= consumoRota;
+            double kmRota = rota.getQuilometragem();
+            if (kmRota <= tanque.autonomiaAtual()) {
+                tanqueAtual -= kmRota;
             } else {
                 System.out.println("Não há combustível suficiente para percorrer esta rota.");
             }
