@@ -7,9 +7,10 @@ public class Van extends Veiculo {
         MANUTENCAO_PERIODICA = 12000;
     }
 
-    public Van(String placa) {
+    public Van(String placa, int tipoCombustivel) {
         super(placa);
-        // TODO Auto-generated constructor stub
+        this.tanque = new Tanque(60, tipoCombustivel);
+        this.consumo = tanque.getConsumo();
     }
 
 }
