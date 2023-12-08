@@ -1,29 +1,25 @@
 import java.util.Arrays;
 
-public class Veiculo {
+public abstract class Veiculo {
 
     private static final int MAX_ROTAS;
-    private static final double CONSUMO;
+    protected double consumo;
     private String placa;
     private Rota rotas[];
     private int quantRotas;
     private double tanqueAtual;
     private double tanqueMaximo;
     private double totalReabastecido;
-
+    protected Tanque tanque;
     static {
         MAX_ROTAS = 30;
-        CONSUMO = 8.2;
     }
 
-    public Veiculo(String placa, Rota[] rotas, int quantRotas, double tanqueAtual, double tanqueMaximo,
-            double totalReabastecido) {
+    public Veiculo(String placa) {
         this.placa = placa;
-        this.rotas = rotas;
-        this.quantRotas = quantRotas;
-        this.tanqueAtual = tanqueAtual;
-        this.tanqueMaximo = tanqueMaximo;
-        this.totalReabastecido = totalReabastecido;
+        this.rotas = new Rota[30];
+        this.quantRotas = 0;
+        this.totalReabastecido = 0;
     }
 
     /**
@@ -50,7 +46,7 @@ public class Veiculo {
      * @return retorna a autonomia máxima do vepiculo
      */
     private double autonomiaMaxima() {
-        return tanqueMaximo * CONSUMO;
+        return tanqueMaximo;
     }
 
     /**
@@ -59,7 +55,7 @@ public class Veiculo {
      * @return retorna a autonomia atual do veículo
      */
     private double autonomiaAtual() {
-        return tanqueAtual * CONSUMO;
+        return tanqueAtual;
     }
 
     /**
@@ -118,7 +114,7 @@ public class Veiculo {
      */
     private void percorrerRota(Rota rota) {
         if (rota != null) {
-            double consumoRota = rota.getQuilometragem() / CONSUMO;
+            double consumoRota = rota.getQuilometragem();
             if (consumoRota <= tanqueAtual) {
                 tanqueAtual -= consumoRota;
             } else {

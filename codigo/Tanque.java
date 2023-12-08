@@ -1,15 +1,15 @@
 public class Tanque {
-    private static final double CONSUMO;
+    private  double consumo;
     private double capacidadeMaxima;
     private double capacidadeAtual;
+    private Combustivel tipo;
 
-    static {
-        CONSUMO = 8.2;
-    }
 
-    public Tanque(double cMaxima) {
+    public Tanque(double cMaxima, int tipoCombustivel) {
         this.capacidadeMaxima = cMaxima;
         this.capacidadeAtual = capacidadeMaxima;
+        this.tipo = tipo.getTipo(tipoCombustivel);
+        this.consumo = getConsumo();
     }
 
     /**
@@ -42,7 +42,7 @@ public class Tanque {
 
     public double autonomiaMaxima() {
 
-        double kmPossiveis = capacidadeMaxima * CONSUMO;
+        double kmPossiveis = capacidadeMaxima * consumo;
         return kmPossiveis;
     }
 
@@ -54,7 +54,11 @@ public class Tanque {
      */
     public double autonomiaAtual() {
 
-        double kmPossiveis = capacidadeAtual * CONSUMO;
+        double kmPossiveis = capacidadeAtual * consumo;
         return kmPossiveis;
+    }
+
+    public double getConsumo() {
+        return tipo.getConsumo();
     }
 }
