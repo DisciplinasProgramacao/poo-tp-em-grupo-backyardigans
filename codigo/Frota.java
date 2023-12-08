@@ -111,4 +111,14 @@ public class Frota {
 
         return veiculoMaiorMedia;
     }
+
+    public double calcularGastoTotalVeiculo(String placa){
+        double gastoTotal = 0;
+        for(Veiculo v : veiculos){
+            if(v.getPlaca() == placa){
+                gastoTotal += v.kmTotal;
+            }
+        }
+        return gastoTotal;
+    }
 }

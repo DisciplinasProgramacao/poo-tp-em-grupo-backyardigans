@@ -14,7 +14,7 @@ public abstract class Veiculo implements IManutencao {
     static {
         MAX_ROTAS = 30;
     }
-
+    
     public Veiculo(String placa) {
         this.placa = placa;
         this.rotas = new ArrayList<>(MAX_ROTAS);
