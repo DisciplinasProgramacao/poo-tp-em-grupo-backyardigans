@@ -1,8 +1,8 @@
-import java.util.*;
+import java.time.LocalDate;
 
 public class Rota {
     private double quilometragem;
-    private Date data;
+    private LocalDate data;
 
     /**
      * Cria um objeto da classe Rota.
@@ -10,7 +10,7 @@ public class Rota {
      * @param quilometragem quilometragem da rota, do tipo double
      * @param data          data da rota, do tipo date
      */
-    public Rota(double quilometragem, Date data) {
+    public Rota(double quilometragem, LocalDate data) {
         this.quilometragem = quilometragem;
         this.data = data;
     }

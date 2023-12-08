@@ -41,7 +41,7 @@ public class Tanque implements ITanque {
 
     public double autonomiaMaxima() {
 
-        double kmPossiveis = capacidadeMaxima * consumo;
+        double kmPossiveis = capacidadeMaxima / consumo;
         return kmPossiveis;
     }
 
@@ -75,5 +75,10 @@ public class Tanque implements ITanque {
 
     public double capacidadeMaxima() {
         return capacidadeMaxima;
+    }
+
+    @Override
+    public void consumirLitros(double litros) {
+        capacidadeAtual -= litros;
     }
 }

@@ -1,22 +1,23 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public abstract class Veiculo implements IManutencao {
 
     private static final int MAX_ROTAS;
     protected double consumo;
     private String placa;
-    private Rota rotas[];
+    private ArrayList<Rota> rotas;
     private int quantRotas;
     private double totalReabastecido;
     protected Tanque tanque;
     protected double kmTotal;
+
     static {
         MAX_ROTAS = 30;
     }
 
     public Veiculo(String placa) {
         this.placa = placa;
-        this.rotas = new Rota[30];
+        this.rotas = new ArrayList<>(MAX_ROTAS);
         this.quantRotas = 0;
         this.totalReabastecido = 0;
         this.kmTotal = 0;
@@ -31,7 +32,7 @@ public abstract class Veiculo implements IManutencao {
      */
     public boolean addRota(Rota rota) {
         if (quantRotas < MAX_ROTAS) {
-            rotas[quantRotas] = rota;
+            rotas.add(rota);
             quantRotas++;
             return true;
         } else {
@@ -87,7 +88,7 @@ public abstract class Veiculo implements IManutencao {
     public double kmNoMes() {
         double quilometragemNoMes = 0;
         for (int i = 0; i < quantRotas; i++) {
-            quilometragemNoMes += rotas[i].getQuilometragem();
+            quilometragemNoMes += rotas.get(i).getQuilometragem();
         }
         return quilometragemNoMes;
     }
@@ -99,8 +100,11 @@ public abstract class Veiculo implements IManutencao {
      * @return retorna a quilometragem total percorrida
      */
     public double kmTotal() {
-
-        return kmTotal;
+        double quilometragemTotal = 0;
+        for (int i = 0; i < quantRotas; i++) {
+            quilometragemTotal += rotas.get(i).getQuilometragem();
+        }
+        return quilometragemTotal;
     }
 
     /**
@@ -113,11 +117,14 @@ public abstract class Veiculo implements IManutencao {
     private void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
+            double litros = kmRota/consumo;
             if (kmRota <= autonomiaAtual()) {
-                 
-                //tanqueAtual -= kmRota;
+                tanque.consumirLitros(litros);
+                kmTotal += kmRota;
             } else {
-                System.out.println("Não há combustível suficiente para percorrer esta rota.");
+                abastecer(litros);
+                tanque.consumirLitros(litros);
+                kmTotal += kmRota;
             }
         }
     }
@@ -142,8 +149,8 @@ public abstract class Veiculo implements IManutencao {
 
     @Override
     public String toString() {
-        return "Veiculo [placa=" + placa + ", rotas=" + Arrays.toString(rotas) + ", quantRotas=" + quantRotas
-                + ", tanqueAtual=" + tanqueAtual + ", tanqueMaximo=" + tanqueMaximo + ", totalReabastecido="
+        return "Veiculo [placa=" + placa + ", quantRotas=" + quantRotas
+                + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
                 + totalReabastecido + "]";
     }
 
