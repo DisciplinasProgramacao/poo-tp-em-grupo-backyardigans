@@ -7,8 +7,6 @@ public abstract class Veiculo implements IManutencao {
     private String placa;
     private Rota rotas[];
     private int quantRotas;
-    private double tanqueAtual;
-    private double tanqueMaximo;
     private double totalReabastecido;
     protected Tanque tanque;
     static {
@@ -46,7 +44,7 @@ public abstract class Veiculo implements IManutencao {
      * @return retorna a autonomia máxima do vepiculo
      */
     private double autonomiaMaxima() {
-        return tanqueMaximo;
+        return tanque.autonomiaMaxima();
     }
 
     /**
@@ -55,7 +53,7 @@ public abstract class Veiculo implements IManutencao {
      * @return retorna a autonomia atual do veículo
      */
     private double autonomiaAtual() {
-        return tanqueAtual;
+        return tanque.autonomiaAtual();
     }
 
     /**
@@ -66,16 +64,16 @@ public abstract class Veiculo implements IManutencao {
      */
     public double abastecer(double litros) {
 
-        if (tanqueAtual + litros <= tanqueMaximo) {
-            tanqueAtual += litros;
+        if (tanque.capacidadeAtual() + litros <= tanque.capacidadeMaxima()) {
+            tanque.abastecer(litros);
         } else {
-            litros = tanqueMaximo - tanqueAtual;
-            tanqueAtual = tanqueMaximo;
+            litros = tanque.capacidadeMaxima() - tanque.capacidadeAtual();
+            tanque.abastecer(litros);
         }
 
         totalReabastecido += litros;
 
-        return tanqueAtual;
+        return tanque.capacidadeAtual();
     }
 
     /**
@@ -112,6 +110,8 @@ public abstract class Veiculo implements IManutencao {
      * 
      * @param rota rota que será percorrida
      */
+
+    
     private void percorrerRota(Rota rota) {
         if (rota != null) {
             double consumoRota = rota.getQuilometragem();

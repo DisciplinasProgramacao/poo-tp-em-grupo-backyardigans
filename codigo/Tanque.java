@@ -67,4 +67,12 @@ public class Tanque implements ITanque{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'calcularGastoTotal'");
     }
+
+    public double capacidadeAtual() {
+        return this.capacidadeAtual;
+    }
+
+    public double capacidadeMaxima() {
+        return capacidadeMaxima;
+    }
 }
