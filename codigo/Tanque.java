@@ -1,4 +1,4 @@
-public class Tanque {
+public class Tanque implements ITanque{
     private  double consumo;
     private double capacidadeMaxima;
     private double capacidadeAtual;
@@ -60,5 +60,11 @@ public class Tanque {
 
     public double getConsumo() {
         return tipo.getConsumo();
+    }
+
+    @Override
+    public double calcularGastoTotal() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'calcularGastoTotal'");
     }
 }

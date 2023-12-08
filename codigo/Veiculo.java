@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public abstract class Veiculo {
+public abstract class Veiculo implements IManutencao {
 
     private static final int MAX_ROTAS;
     protected double consumo;
