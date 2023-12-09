@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 
+
 public class Rota {
     private double quilometragem;
     private LocalDate data;
