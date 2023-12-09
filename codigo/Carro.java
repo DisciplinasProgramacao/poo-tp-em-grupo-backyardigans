@@ -8,7 +8,7 @@ public class Carro extends Veiculo {
         MANUTENCAO_PECA = 10000;
         MANUTENCAO_PERIODICA = 10000;
     }
-    public Carro(String placa, int tipoCombustivel) {
+    public Carro(String placa, Combustivel tipoCombustivel) {
 
             super(placa);
             this.tanque = new Tanque(50, tipoCombustivel);

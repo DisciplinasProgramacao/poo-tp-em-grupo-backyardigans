@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class App {
     static Scanner sc;
+    static Frota frota;
 
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
@@ -31,23 +32,80 @@ public class App {
     public static void adicionarVeiculo() throws FileNotFoundException {
         String nomeArq = "veiculos";
         int opcao = -1;
-        Veiculo veiculo = null;
         System.out.println("Digite a placa do veículo: ");
         String placa = sc.nextLine();
-        System.out.println();
+        System.out.println("Escolha o tipo de veículo: ");
         while (opcao != 0) {
             limparTela();
             opcao = menu(nomeArq);
             switch (opcao) {
                 case 1:
-                    System.out.println("");
+                    int combustivel = pegarCombustivel();
+                
+                    Veiculo caminhao = new Caminhao(placa, combustivel);
+                    
+                    frota.adicionarVeiculo(caminhao);
+                    
                     break;
+                case 2:
+                    combustivel = pegarCombustivel();
+                
+                    Veiculo carro = new Carro(placa, combustivel);
+                    
+                    frota.adicionarVeiculo(carro);
 
+                    break;
+                case 3:
+                    combustivel = pegarCombustivel();
+                
+                    Veiculo furgao = new Furgao(placa, combustivel);
+                    
+                    frota.adicionarVeiculo(furgao);
+
+                    break;
+                case 4:
+                    combustivel = pegarCombustivel();
+                
+                    Veiculo van = new Van(placa, combustivel);
+                    
+                    frota.adicionarVeiculo(van);
+
+                    break;
                 default:
                     System.out.println("teste2");
                     break;
             }
         }
+    }
+
+    private static Combustivel pegarCombustivel() throws FileNotFoundException {
+        sc = new Scanner(System.in);
+        String nomeArq = "combustiveis";
+        int opcao;
+        int combustivel = 0;
+        Combustivel.valueOf(null);
+        do{
+            limparTela();
+            opcao = menu(nomeArq);
+            switch (opcao) {
+                case 1:
+                    combustivel = 1;
+                    Combustivel.valueOf("ALCOOL");
+                    break;
+                case 2:
+                    combustivel = 2;
+                    Combustivel.valueOf("DIESEL");
+                    break;
+                case 3:
+                    combustivel = 3;
+                    Combustivel.valueOf("GASOLINA");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+            }
+        }
+        while (combustivel == 0);
+        return ;
     }
 
     public static void verificarGastoTotalDeUmVeiculo() {
@@ -58,13 +116,10 @@ public class App {
         double valorPeca = sc.nextDouble();
         System.out.println("Digite o valor da manutenção da períodica: ");
         double valorPeriodico = sc.nextDouble();
-        Frota f = new Frota();
-        Veiculo v = f.localizarVeiculo(placa);
+        //Frota f = new Frota();
+        //Veiculo v = f.localizarVeiculo(placa);
 
-
-
-        System.out
-                .println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(valorPeca, valorPeriodico));
+        //System.out.println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(valorPeca, valorPeriodico));
     }
 
     public static void adicionarRota() {
@@ -84,7 +139,7 @@ public class App {
         sc = new Scanner(System.in);
         String nomeArq = "menu";
         int opcao = -1;
-
+        frota = new Frota();
         while (opcao != 0) {
             limparTela();
             opcao = menu(nomeArq);

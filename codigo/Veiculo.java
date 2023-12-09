@@ -118,7 +118,7 @@ public abstract class Veiculo implements ITanque{
      * @param rota rota que será percorrida
      */
 
-    public void percorrerRota(Rota rota) {
+    protected void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
             double litros = kmRota / consumo;

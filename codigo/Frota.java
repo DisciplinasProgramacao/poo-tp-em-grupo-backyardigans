@@ -5,13 +5,9 @@ public class Frota {
     private int tamanhoFrota;
     private ArrayList<Veiculo> veiculos;
 
-    public Frota(int tamanhoFrota) {
-        this.tamanhoFrota = tamanhoFrota;
-        this.veiculos = new ArrayList<Veiculo>(tamanhoFrota);
-    }
-
     public Frota() {
-
+        this.tamanhoFrota = 0;
+        this.veiculos = new ArrayList<Veiculo>();
     }
 
     /**
@@ -127,5 +123,9 @@ public class Frota {
         for (Veiculo veiculo : veiculos) {
             veiculo.zerarRotas();
         }
+    }
+
+    public void adicionarVeiculo(Veiculo veiculo) {
+        veiculos.add(veiculo);
     }
 }
