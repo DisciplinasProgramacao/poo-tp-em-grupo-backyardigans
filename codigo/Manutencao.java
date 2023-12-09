@@ -8,9 +8,8 @@ public class Manutencao {
         this.kmPeca = manutencaoPeca;
     }
 
-    public int quantManutencaoPeca(int km) {
+    public int quantidadeManutencaoPeca(int km) {
         return km/kmPeca;
-
     }
 
 }

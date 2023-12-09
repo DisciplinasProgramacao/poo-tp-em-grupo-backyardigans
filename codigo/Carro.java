@@ -16,17 +16,7 @@ public class Carro extends Veiculo {
             this.tanque = new Tanque(50, tipoCombustivel);
             this.consumo = tanque.getConsumo();
             this.manutencaoCarro = new Manutencao(MANUTENCAO_PERIODICA, MANUTENCAO_PECA);
-            
-    }
-    @Override
-    public void realizarManutencaoPeriodica() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPeriodica'");
-    }
-    @Override
-    public void realizarManutencaoPecas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
+    
     }
     
     @Override
