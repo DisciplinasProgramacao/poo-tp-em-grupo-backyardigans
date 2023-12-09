@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class App {
     static Scanner sc;
 
-
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -29,7 +28,7 @@ public class App {
         return opcao;
     }
 
-    public static void adicionarVeiculo() throws FileNotFoundException{
+    public static void adicionarVeiculo() throws FileNotFoundException {
         String nomeArq = "veiculos";
         int opcao = -1;
         Veiculo veiculo = null;
@@ -47,12 +46,38 @@ public class App {
                 default:
                     System.out.println("teste2");
                     break;
-            }        
+            }
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void verificarGastoTotalDeUmVeiculo() {
+        System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
+        String placa = sc.nextLine();
+        System.out.println("Digite o valor da manutenção da peça: ");
+        double valorPeca = sc.nextDouble();
+        System.out.println("Digite o valor da manutenção da períodica: ");
+        double valorPeriodico = sc.nextDouble();
+        Frota f = new Frota();
+        Veiculo v = f.localizarVeiculo(placa);
+        System.out
+                .println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(placa, valorPeca, valorPeriodico));
+    }
+
+    public static void adicionarRota() {
+    }
+
     
+    public static void verificarQuilometragemDeUmVeiculo() {
+    }
+
+    public static void verificarQuilometragemTotalDeUmVeiculo() {
+    }
+
+    public static void relatorioDeRotasDeUmVeiculo() {
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+
         sc = new Scanner(System.in);
         String nomeArq = "menu";
         int opcao = -1;
@@ -63,6 +88,26 @@ public class App {
             switch (opcao) {
                 case 1:
                     adicionarVeiculo();
+                    break;
+
+                case 2:
+                    adicionarRota();
+                    break;
+
+                case 3:
+                    verificarGastoTotalDeUmVeiculo();
+                    break;
+
+                case 4:
+                    verificarQuilometragemDeUmVeiculo();
+                    break;
+
+                case 5:
+                    verificarQuilometragemTotalDeUmVeiculo();
+                    break;
+
+                case 6:
+                    relatorioDeRotasDeUmVeiculo();
                     break;
 
                 default:

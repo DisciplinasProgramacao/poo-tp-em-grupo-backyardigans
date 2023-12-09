@@ -8,13 +8,12 @@ public class Manutencao {
         this.kmPeca = manutencaoPeca;
     }
 
-    public int quantidadeManutencaoPeca(int km) {
-        return km/kmPeca;
+    public int quantidadeManutencaoPeca(double km) {
+        return (int) (km/kmPeca);
     }
 
-    public int quantidadeManutencaoPeriodica(int km) {
-        return km/kmPeriodica;
-
+    public int quantidadeManutencaoPeriodica(double km) {
+        return (int) (km/kmPeriodica);
     }
 
 }

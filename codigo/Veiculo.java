@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Veiculo {
+public abstract class Veiculo implements ITanque{
 
     private static final int MAX_ROTAS;
     protected double consumo;
@@ -54,7 +54,7 @@ public abstract class Veiculo {
      * 
      * @return retorna a autonomia máxima do veiculo
      */
-    private double autonomiaMaxima() {
+    public double autonomiaMaxima() {
         return tanque.autonomiaMaxima();
     }
 
@@ -63,7 +63,7 @@ public abstract class Veiculo {
      * 
      * @return retorna a autonomia atual do veículo
      */
-    private double autonomiaAtual() {
+    public double autonomiaAtual() {
         return tanque.autonomiaAtual();
     }
 
@@ -118,7 +118,7 @@ public abstract class Veiculo {
      * @param rota rota que será percorrida
      */
 
-    private void percorrerRota(Rota rota) {
+    public void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
             double litros = kmRota / consumo;
@@ -151,6 +151,9 @@ public abstract class Veiculo {
     }
 
     public double consumo() {
+
         return 0.0;
     }
+
+    public abstract double gastoTotal(String placa, double valorManuPeca, double valorManuPeriodico);
 }

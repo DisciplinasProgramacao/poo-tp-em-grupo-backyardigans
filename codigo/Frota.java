@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+
 public class Frota {
 
     private int tamanhoFrota;
-    private Veiculo veiculos[];
+    private ArrayList<Veiculo> veiculos;
 
     public Frota(int tamanhoFrota) {
         this.tamanhoFrota = tamanhoFrota;
-        this.veiculos = new Veiculo[tamanhoFrota];
+        this.veiculos = new ArrayList<Veiculo>(tamanhoFrota);
+    }
+
+    public Frota(){
+        
     }
 
     /**
@@ -31,7 +37,7 @@ public class Frota {
             relatorio.append("Tamanho da frota: " + tamanhoFrota);
         }
 
-        for (int i = 0; i < veiculos.length; i++) {
+        for (int i = 0; i < veiculos.size(); i++) {
             relatorio.append(String.format("02d", i));
             relatorio.append(veiculos.toString() + "\\n");
         }
@@ -145,4 +151,7 @@ public class Frota {
             veiculo.zerarRotas();
         }
     }
+
+//  public Veiculo gastoTotal(String placa){
+ //   }
 }

@@ -63,12 +63,6 @@ public class Tanque implements ITanque {
         return tipo.getConsumo();
     }
 
-    @Override
-    public double calcularGastoTotal() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularGastoTotal'");
-    }
-
     public double capacidadeAtual() {
         return this.capacidadeAtual;
     }
@@ -77,8 +71,11 @@ public class Tanque implements ITanque {
         return capacidadeMaxima;
     }
 
-    @Override
     public void consumirLitros(double litros) {
         capacidadeAtual -= litros;
+    }
+
+    public double getPrecoCombustivel(){
+        return tipo.getPreco();
     }
 }
