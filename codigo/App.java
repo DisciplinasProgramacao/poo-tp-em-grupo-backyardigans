@@ -31,81 +31,104 @@ public class App {
 
     public static void adicionarVeiculo() throws FileNotFoundException {
         String nomeArq = "veiculos";
-        int opcao;
-        System.out.println("Digite a placa do veículo: ");
+        System.out.println("Digite a placa do veículo:");
         String placa = sc.nextLine();
-        System.out.println("Escolha o tipo de veículo: ");
+        System.out.println("Escolha o tipo de veículo:");
+        int opcaoVeiculo = menu(nomeArq);
+        // System.out.println("Escolha o tipo do combustivel:");
 
-        do {
-            limparTela();
-            opcao = menu(nomeArq);
-            String combustivel = pegarCombustivel();
-            if(combustivel.equals(null)) {
-                switch (opcao) {
-                case 1:
-                    Veiculo caminhao = new Caminhao(placa, combustivel);
-
-                    frota.adicionarVeiculo(caminhao);
-
-                    break;
-                case 2:
-
-
-                    Veiculo carro = new Carro(placa, combustivel);
-
-                    frota.adicionarVeiculo(carro);
-
-                    break;
-                case 3:
-
-
-                    Veiculo furgao = new Furgao(placa, combustivel);
-
-                    frota.adicionarVeiculo(furgao);
-
-                    break;
-                case 4:
-   
-
-                    Veiculo van = new Van(placa, combustivel);
-
-                    frota.adicionarVeiculo(van);
-
-                    break;
-                default:
-                    System.out.println("teste2");
-                    break;
-            }
-            
-            }
-        } while (opcao != 0);
-    }
-
-    private static String pegarCombustivel() throws FileNotFoundException {
-        sc = new Scanner(System.in);
-        String nomeArq = "combustiveis";
-        int opcao;
-        String nomeCombustivel = new String();
-        limparTela();
-        opcao = menu(nomeArq);
-        switch (opcao) {
+        switch (opcaoVeiculo) {
             case 1:
-                nomeCombustivel = "ALCOOL";
+                
                 break;
             case 2:
-                nomeCombustivel = "DIESEL";
+
                 break;
             case 3:
-                nomeCombustivel = "GASOLINA";
+
                 break;
-            case 0:
+            case 4:
+
                 break;
+
             default:
-                System.out.println("Opção inválida");
                 break;
         }
-        return nomeCombustivel;
+
     }
+
+    // public static void adicionarVeiculo() throws FileNotFoundException {
+    // String nomeArq = "veiculos";
+    // int opcao;
+    // System.out.println("Digite a placa do veículo: ");
+    // String placa = sc.nextLine();
+    // System.out.println("Escolha o tipo de veículo: ");
+
+    // do {
+    // limparTela();
+    // opcao = menu(nomeArq);
+    // String combustivel = pegarCombustivel();
+    // if (combustivel.equals(null)) {
+    // switch (opcao) {
+    // case 1:
+    // Veiculo caminhao = new Veiculo(placa, "CAMINHAO", combustivel);
+    // frota.adicionarVeiculo(caminhao);
+    // break;
+    // case 2:
+
+    // Veiculo carro = new Veiculo(placa, "CARRO", combustivel);
+
+    // frota.adicionarVeiculo(carro);
+
+    // break;
+    // case 3:
+
+    // Veiculo furgao = new Veiculo(placa, "FURGAO", combustivel);
+
+    // frota.adicionarVeiculo(furgao);
+
+    // break;
+    // case 4:
+
+    // Veiculo van = new Veiculo(placa, "VAN", combustivel);
+
+    // frota.adicionarVeiculo(van);
+
+    // break;
+    // default:
+    // System.out.println("teste2");
+    // break;
+    // }
+
+    // }
+    // } while (opcao != 0);
+    // }
+
+    // private static String pegarCombustivel() throws FileNotFoundException {
+    // sc = new Scanner(System.in);
+    // String nomeArq = "combustiveis";
+    // int opcao;
+    // String nomeCombustivel = new String();
+    // limparTela();
+    // opcao = menu(nomeArq);
+    // switch (opcao) {
+    // case 1:
+    // nomeCombustivel = "ALCOOL";
+    // break;
+    // case 2:
+    // nomeCombustivel = "DIESEL";
+    // break;
+    // case 3:
+    // nomeCombustivel = "GASOLINA";
+    // break;
+    // case 0:
+    // break;
+    // default:
+    // System.out.println("Opção inválida");
+    // break;
+    // }
+    // return nomeCombustivel;
+    // }
 
     public static void verificarGastoTotalDeUmVeiculo() {
 
