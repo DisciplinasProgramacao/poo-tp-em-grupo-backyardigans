@@ -128,4 +128,15 @@ public class Frota {
     public void adicionarVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
     }
+
+    public double gastoTotal(String placa, double valorMPeca, double valorMPeriodico) {
+        Veiculo v = (Veiculo) veiculos.stream().filter(e -> e.getPlaca().equals(placa));
+
+        double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
+        double valoManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
+        double gastoEmCombustivel = v.getTotalReabastecido() * v.valorCombustivel();
+
+        
+       return gastoEmCombustivel +  valoManutencaoPeca + valorManutencaoPeriodica;
+    }
 }

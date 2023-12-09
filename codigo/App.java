@@ -31,43 +31,44 @@ public class App {
 
     public static void adicionarVeiculo() throws FileNotFoundException {
         String nomeArq = "veiculos";
-        int opcao = -1;
+        int opcao;
         System.out.println("Digite a placa do veículo: ");
         String placa = sc.nextLine();
         System.out.println("Escolha o tipo de veículo: ");
-        while (opcao != 0) {
+
+        do {
             limparTela();
             opcao = menu(nomeArq);
-            switch (opcao) {
+            String combustivel = pegarCombustivel();
+            if(combustivel.equals(null)) {
+                switch (opcao) {
                 case 1:
-                    int combustivel = pegarCombustivel();
-                
                     Veiculo caminhao = new Caminhao(placa, combustivel);
-                    
+
                     frota.adicionarVeiculo(caminhao);
-                    
+
                     break;
                 case 2:
-                    combustivel = pegarCombustivel();
-                
+
+
                     Veiculo carro = new Carro(placa, combustivel);
-                    
+
                     frota.adicionarVeiculo(carro);
 
                     break;
                 case 3:
-                    combustivel = pegarCombustivel();
-                
+
+
                     Veiculo furgao = new Furgao(placa, combustivel);
-                    
+
                     frota.adicionarVeiculo(furgao);
 
                     break;
                 case 4:
-                    combustivel = pegarCombustivel();
-                
+   
+
                     Veiculo van = new Van(placa, combustivel);
-                    
+
                     frota.adicionarVeiculo(van);
 
                     break;
@@ -75,37 +76,35 @@ public class App {
                     System.out.println("teste2");
                     break;
             }
-        }
+            
+            }
+        } while (opcao != 0);
     }
 
-    private static Combustivel pegarCombustivel() throws FileNotFoundException {
+    private static String pegarCombustivel() throws FileNotFoundException {
         sc = new Scanner(System.in);
         String nomeArq = "combustiveis";
         int opcao;
-        int combustivel = 0;
-        Combustivel.valueOf(null);
-        do{
-            limparTela();
-            opcao = menu(nomeArq);
-            switch (opcao) {
-                case 1:
-                    combustivel = 1;
-                    Combustivel.valueOf("ALCOOL");
-                    break;
-                case 2:
-                    combustivel = 2;
-                    Combustivel.valueOf("DIESEL");
-                    break;
-                case 3:
-                    combustivel = 3;
-                    Combustivel.valueOf("GASOLINA");
-                    break;
-                default:
-                    System.out.println("Opção inválida");
-            }
+        String nomeCombustivel = new String();
+        limparTela();
+        opcao = menu(nomeArq);
+        switch (opcao) {
+            case 1:
+                nomeCombustivel = "ALCOOL";
+                break;
+            case 2:
+                nomeCombustivel = "DIESEL";
+                break;
+            case 3:
+                nomeCombustivel = "GASOLINA";
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("Opção inválida");
+                break;
         }
-        while (combustivel == 0);
-        return ;
+        return nomeCombustivel;
     }
 
     public static void verificarGastoTotalDeUmVeiculo() {
@@ -116,10 +115,11 @@ public class App {
         double valorPeca = sc.nextDouble();
         System.out.println("Digite o valor da manutenção da períodica: ");
         double valorPeriodico = sc.nextDouble();
-        //Frota f = new Frota();
-        //Veiculo v = f.localizarVeiculo(placa);
+        // Frota f = new Frota();
+        // Veiculo v = f.localizarVeiculo(placa);
 
-        //System.out.println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(valorPeca, valorPeriodico));
+        // System.out.println("O valor total do gasto do veículo foi: R$" +
+        // v.gastoTotal(valorPeca, valorPeriodico));
     }
 
     public static void adicionarRota() {

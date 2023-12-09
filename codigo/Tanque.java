@@ -4,10 +4,10 @@ public class Tanque implements ITanque {
     private double capacidadeAtual;
     private Combustivel tipo;
 
-    public Tanque(double cMaxima, Combustivel tipoCombustivel) {
-        this.capacidadeMaxima = cMaxima;
+    public Tanque(double capacidadeMaxima, String tipoCombustivel) {
+        this.capacidadeMaxima = capacidadeMaxima;
         this.capacidadeAtual = capacidadeMaxima;
-        this.tipo = tipoCombustivel;
+        this.tipo = Combustivel.valueOf(tipoCombustivel);
         this.consumo = getConsumo();
     }
 

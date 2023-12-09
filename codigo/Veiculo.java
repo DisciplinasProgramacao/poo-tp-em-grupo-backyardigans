@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Veiculo implements ITanque{
+public class Veiculo {
 
     private static final int MAX_ROTAS;
     protected double consumo;
@@ -10,17 +10,22 @@ public abstract class Veiculo implements ITanque{
     protected double totalReabastecido;
     protected Tanque tanque;
     protected double kmTotal;
+    public Manutencao manutencao;
+    private TipoVeiculo  tipo;
 
     static {
         MAX_ROTAS = 30;
     }
 
-    public Veiculo(String placa) {
+    public Veiculo(String placa, String tipoVeiculo, String tipoCombustivel) {
         this.placa = placa;
         this.rotas = new ArrayList<>(MAX_ROTAS);
         this.quantRotas = 0;
         this.totalReabastecido = 0;
         this.kmTotal = 0;
+        this.tipo = TipoVeiculo.valueOf(tipoVeiculo);
+        this.tanque = new Tanque(tipo.getTanque(), tipoCombustivel);
+        this.manutencao = new Manutencao(tipo.getManutencaoPeriodica(), tipo.getManutencaoPeca());
     }
 
     /**
@@ -150,22 +155,31 @@ public abstract class Veiculo implements ITanque{
         return quantRotas;
     }
 
-    public double consumo() {
+    public double getConsumo() {
 
         return consumo;
     }
 
-    public double totalReabastecido() {
+    public double getTotalReabastecido() {
         return totalReabastecido;
     }
-    /**
-     * Metódo que vai ser implementado nas classes filhas. Vai calcular o gasto total de um veículo
-     * levando em consideração as manutenções e combustível utilizado.
-     * @param placa placa do veículo
-     * @param valorManuPeca valor das peças de manutenção
-     * @param valorManuPeriodico valor da manutenção períodioca
-     * @return retorna o valor total gasto na manutenção
-     */
-    public abstract double gastoTotal(double valorManuPeca, double valorManuPeriodico);
+
+
+
+    public double quantidadeManutencaoPeca() {
+        
+
+        return manutencao.quantidadeManutencaoPeca(kmTotal);
+    };
+
+    public double quantidadeManutencaoPeriodica(){
+
+
+        return manutencao.quantidadeManutencaoPeriodica(kmTotal);
+    };
+
+    public double valorCombustivel() {
+        return tanque.getPrecoCombustivel();
+    }
 
 }
