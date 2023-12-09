@@ -18,6 +18,21 @@ public class App {
         sc.nextLine();
     }
 
+    public static void lerEntradaTexto(String nomeArquivo) throws FileNotFoundException {
+        File arquivo = new File(nomeArquivo);
+
+        Scanner leitor = new Scanner(arquivo, "UTF-8");
+
+        String linha = leitor.nextLine();
+
+        int numVeiculos = Integer.parseInt(linha);
+
+        for (int i = 0; i < numVeiculos; i++) {
+
+        }
+
+    }
+
     public static int menu(String nomeArquivo) throws FileNotFoundException {
         limparTela();
         File arqMenu = new File(nomeArquivo);
@@ -96,6 +111,14 @@ public class App {
         return nomeCombustivel;
     }
 
+    public static Veiculo localizarVeiculo() {
+        System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
+        String placa = sc.nextLine();
+        Veiculo v = frota.localizarVeiculo(placa);
+
+        return v;
+    }
+
     public static void verificarGastoTotalDeUmVeiculo() {
 
         System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
@@ -104,11 +127,9 @@ public class App {
         double valorPeca = sc.nextDouble();
         System.out.println("Digite o valor da manutenção da períodica: ");
         double valorPeriodico = sc.nextDouble();
-        // Frota f = new Frota();
-        // Veiculo v = f.localizarVeiculo(placa);
 
-        // System.out.println("O valor total do gasto do veículo foi: R$" +
-        // v.gastoTotal(valorPeca, valorPeriodico));
+        System.out.println("O valor total do gasto do veículo foi: R$" +
+                frota.gastoTotal(placa, valorPeca, valorPeriodico));
     }
 
     public static LocalDate converterData(String data) {
@@ -119,9 +140,8 @@ public class App {
     }
 
     public static void adicionarRota() {
-        System.out.println("Digite a placa do veículo: ");
-        String placa = sc.nextLine();
-        Veiculo veiculo = frota.localizarVeiculo(placa);
+
+        Veiculo veiculo = localizarVeiculo();
 
         System.out.println("Digite a data da rota: (DD/MM/YYYY)");
         String data = sc.nextLine();
@@ -147,7 +167,8 @@ public class App {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-
+        String nomeArquivoTexto = "entrada";
+        lerEntradaTexto(nomeArquivoTexto);
         sc = new Scanner(System.in);
         String nomeArq = "menu";
         int opcao = -1;

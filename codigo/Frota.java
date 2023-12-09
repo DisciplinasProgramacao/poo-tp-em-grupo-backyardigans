@@ -24,8 +24,8 @@ public class Frota {
     public String toString() {
         StringBuilder relatorio = new StringBuilder();
 
-        relatorio.append("RELATÓRIO DA FROTA DE PEDIDOS\n");
-        relatorio.append("-----------------------------\n");
+        relatorio.append("RELATÓRIO DA FROTA\n");
+        relatorio.append("------------------\n");
 
         if (tamanhoFrota == 0) {
             relatorio.append("Frota vazia");

@@ -78,4 +78,14 @@ public class Tanque implements ITanque {
     public double getPrecoCombustivel(){
         return tipo.getPreco();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        str.append("Combustível: "+tipo.name());
+        str.append("\nCapacidade Máxima"+capacidadeMaxima);
+        str.append("\nCapacidade Atual"+capacidadeAtual);
+        return super.toString();
+    }
 }
