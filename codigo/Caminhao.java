@@ -11,8 +11,15 @@ public class Caminhao extends Veiculo {
     public Caminhao(String placa, int tipoCombustivel) {
         super(placa);
         this.tanque = new Tanque(250, tipoCombustivel);
-        this.consumo = tanque.getConsumo();
+        this.consumo = getConsumo();
     }
+
+
+    private double getConsumo() {
+        return tanque.getConsumo();
+    }
+
+
     @Override
     public void realizarManutencaoPeriodica() {
         // TODO Auto-generated method stub
@@ -22,6 +29,13 @@ public class Caminhao extends Veiculo {
     public void realizarManutencaoPecas() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
+    }
+    
+    @Override
+    public String toString() {
+        return "Caminhão [placa=" + placa + ", quantRotas=" + quantRotas
+        + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
+        + totalReabastecido + "]";
     }
     
 }

@@ -4,10 +4,10 @@ public abstract class Veiculo implements IManutencao {
 
     private static final int MAX_ROTAS;
     protected double consumo;
-    private String placa;
+    protected String placa;
     private ArrayList<Rota> rotas;
-    private int quantRotas;
-    private double totalReabastecido;
+    protected int quantRotas;
+    protected double totalReabastecido;
     protected Tanque tanque;
     protected double kmTotal;
 
@@ -41,10 +41,17 @@ public abstract class Veiculo implements IManutencao {
         }
     }
 
+
+    /**
+     * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas no mes
+     */
+    public void zerarRotas() {
+        rotas.clear();
+    }
     /**
      * Método para obter a autonomia máxima do veículo
      * 
-     * @return retorna a autonomia máxima do vepiculo
+     * @return retorna a autonomia máxima do veiculo
      */
     private double autonomiaMaxima() {
         return tanque.autonomiaMaxima();
@@ -100,11 +107,7 @@ public abstract class Veiculo implements IManutencao {
      * @return retorna a quilometragem total percorrida
      */
     public double kmTotal() {
-        double quilometragemTotal = 0;
-        for (int i = 0; i < quantRotas; i++) {
-            quilometragemTotal += rotas.get(i).getQuilometragem();
-        }
-        return quilometragemTotal;
+        return kmTotal;
     }
 
     /**
@@ -118,14 +121,13 @@ public abstract class Veiculo implements IManutencao {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
             double litros = kmRota/consumo;
-            if (kmRota <= autonomiaAtual()) {
-                tanque.consumirLitros(litros);
-                kmTotal += kmRota;
-            } else {
+
+            if (kmRota > autonomiaAtual()) {
                 abastecer(litros);
-                tanque.consumirLitros(litros);
-                kmTotal += kmRota;
             }
+
+            tanque.consumirLitros(litros);
+            kmTotal += kmRota;
         }
     }
 
@@ -147,11 +149,8 @@ public abstract class Veiculo implements IManutencao {
         return quantRotas;
     }
 
-    @Override
-    public String toString() {
-        return "Veiculo [placa=" + placa + ", quantRotas=" + quantRotas
-                + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
-                + totalReabastecido + "]";
-    }
 
+    public double consumo() {
+        return 0.0;
+    }
 }

@@ -25,4 +25,10 @@ public class Furgao extends Veiculo {
         throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
     }
 
+    @Override
+    public String toString() {
+        return "Furgao: [placa=" + placa + ", quantRotas=" + quantRotas
+        + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
+        + totalReabastecido + "]";
+    }
 }

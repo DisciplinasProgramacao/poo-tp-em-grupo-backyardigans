@@ -2,6 +2,7 @@ public class Carro extends Veiculo {
 
     private static final int MANUTENCAO_PERIODICA;
     private static final int MANUTENCAO_PECA;
+    private Manutencao manutencaoCarro;
 
 
 
@@ -14,6 +15,7 @@ public class Carro extends Veiculo {
             super(placa);
             this.tanque = new Tanque(50, tipoCombustivel);
             this.consumo = tanque.getConsumo();
+            this.manutencaoCarro = new Manutencao(MANUTENCAO_PERIODICA, MANUTENCAO_PECA);
             
     }
     @Override
@@ -27,4 +29,10 @@ public class Carro extends Veiculo {
         throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
     }
     
+    @Override
+    public String toString() {
+        return "Carro [placa=" + placa + ", quantRotas=" + quantRotas
+        + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
+        + totalReabastecido + "]";
+    }
 }

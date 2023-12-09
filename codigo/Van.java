@@ -25,4 +25,10 @@ public class Van extends Veiculo {
         throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
     }
 
+    @Override
+    public String toString() {
+        return "Van [placa=" + placa + ", quantRotas=" + quantRotas
+        + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
+        + totalReabastecido + "]";
+    }
 }
