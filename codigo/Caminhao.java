@@ -27,9 +27,15 @@ public class Caminhao extends Veiculo {
         + totalReabastecido + "]";
     }
 
-
+    /**
+     * Metódo que vai calcular o gasto total do caminhão
+     * @param placa placa do veículo
+     * @param valorManuPeca valor das peças de manutenção
+     * @param valorManuPeriodico valor da manutenção períodioca
+     * @return retorna o valor total gasto na manutenção
+     */
     @Override
-    public double gastoTotal(String placa, double valorManuPeca, double valorManuPeriodico) {
+    public double gastoTotal(double valorManuPeca, double valorManuPeriodico) {
         double gasto = 0;
 
         gasto = (totalReabastecido * tanque.getPrecoCombustivel()) + (m.quantidadeManutencaoPeca(kmTotal) * valorManuPeca) + (m.quantidadeManutencaoPeriodica(kmTotal) * valorManuPeriodico);

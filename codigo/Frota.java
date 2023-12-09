@@ -10,8 +10,8 @@ public class Frota {
         this.veiculos = new ArrayList<Veiculo>(tamanhoFrota);
     }
 
-    public Frota(){
-        
+    public Frota() {
+
     }
 
     /**
@@ -118,32 +118,9 @@ public class Frota {
         return veiculoMaiorMedia;
     }
 
-
-
     /**
-     * Calcula todos os gastos que um veiculo teve
-     * @param placa a placa do veiculo que irá ter os gastos calculados
-     * 
-     * 
-     * @return Veículo com a maior quilometragem média da frota.
-     */
-
-    public double calcularGastoTotalVeiculo(String placa){
-        double gastoTotal = 0;
-        double litrosUsados;
-        for(Veiculo v : veiculos){
-            if(v.getPlaca().equals(placa)){
-                litrosUsados = v.kmTotal()/v.consumo();
-            }
-        }
-
-        
-        return gastoTotal;
-    }
-
-
-    /**
-     * Vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de cada veiculo
+     * Vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de
+     * cada veiculo
      */
     public void virarMes() {
 
@@ -151,7 +128,4 @@ public class Frota {
             veiculo.zerarRotas();
         }
     }
-
-//  public Veiculo gastoTotal(String placa){
- //   }
 }

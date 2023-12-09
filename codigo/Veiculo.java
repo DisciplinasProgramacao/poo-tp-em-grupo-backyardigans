@@ -155,5 +155,13 @@ public abstract class Veiculo implements ITanque{
         return 0.0;
     }
 
-    public abstract double gastoTotal(String placa, double valorManuPeca, double valorManuPeriodico);
+    /**
+     * Metódo que vai ser implementado nas classes filhas. Vai calcular o gasto total de um veículo
+     * levando em consideração as manutenções e combustível utilizado.
+     * @param placa placa do veículo
+     * @param valorManuPeca valor das peças de manutenção
+     * @param valorManuPeriodico valor da manutenção períodioca
+     * @return retorna o valor total gasto na manutenção
+     */
+    public abstract double gastoTotal(double valorManuPeca, double valorManuPeriodico);
 }

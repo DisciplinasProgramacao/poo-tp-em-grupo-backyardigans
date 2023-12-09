@@ -60,13 +60,12 @@ public class App {
         Frota f = new Frota();
         Veiculo v = f.localizarVeiculo(placa);
         System.out
-                .println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(placa, valorPeca, valorPeriodico));
+                .println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(valorPeca, valorPeriodico));
     }
 
     public static void adicionarRota() {
     }
 
-    
     public static void verificarQuilometragemDeUmVeiculo() {
     }
 
