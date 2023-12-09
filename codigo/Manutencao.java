@@ -10,7 +10,6 @@ public class Manutencao {
 
     public int quantidadeManutencaoPeca(int km) {
         return km/kmPeca;
-
     }
 
     public int quantidadeManutencaoPeriodica(int km) {

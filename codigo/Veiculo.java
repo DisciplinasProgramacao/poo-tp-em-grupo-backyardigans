@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Veiculo implements IManutencao {
+public abstract class Veiculo {
 
     private static final int MAX_ROTAS;
     protected double consumo;
@@ -14,7 +14,7 @@ public abstract class Veiculo implements IManutencao {
     static {
         MAX_ROTAS = 30;
     }
-    
+
     public Veiculo(String placa) {
         this.placa = placa;
         this.rotas = new ArrayList<>(MAX_ROTAS);
@@ -41,13 +41,14 @@ public abstract class Veiculo implements IManutencao {
         }
     }
 
-
     /**
-     * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas no mes
+     * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas
+     * no mes
      */
     public void zerarRotas() {
         rotas.clear();
     }
+
     /**
      * Método para obter a autonomia máxima do veículo
      * 
@@ -120,7 +121,7 @@ public abstract class Veiculo implements IManutencao {
     private void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
-            double litros = kmRota/consumo;
+            double litros = kmRota / consumo;
 
             if (kmRota > autonomiaAtual()) {
                 abastecer(litros);
@@ -148,7 +149,6 @@ public abstract class Veiculo implements IManutencao {
     public int getQuantRotas() {
         return quantRotas;
     }
-
 
     public double consumo() {
         return 0.0;

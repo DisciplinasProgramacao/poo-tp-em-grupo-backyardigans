@@ -14,18 +14,6 @@ public class Van extends Veiculo {
     }
 
     @Override
-    public void realizarManutencaoPeriodica() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPeriodica'");
-    }
-
-    @Override
-    public void realizarManutencaoPecas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'realizarManutencaoPecas'");
-    }
-
-    @Override
     public String toString() {
         return "Van [placa=" + placa + ", quantRotas=" + quantRotas
         + ", tanqueAtual=" + tanque.capacidadeAtual() + ", tanqueMaximo=" + tanque.capacidadeMaxima() + ", totalReabastecido="
