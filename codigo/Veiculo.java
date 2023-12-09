@@ -152,9 +152,12 @@ public abstract class Veiculo implements ITanque{
 
     public double consumo() {
 
-        return 0.0;
+        return consumo;
     }
 
+    public double totalReabastecido() {
+        return totalReabastecido;
+    }
     /**
      * Metódo que vai ser implementado nas classes filhas. Vai calcular o gasto total de um veículo
      * levando em consideração as manutenções e combustível utilizado.
@@ -164,4 +167,5 @@ public abstract class Veiculo implements ITanque{
      * @return retorna o valor total gasto na manutenção
      */
     public abstract double gastoTotal(double valorManuPeca, double valorManuPeriodico);
+
 }

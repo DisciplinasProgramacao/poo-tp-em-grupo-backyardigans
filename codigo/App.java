@@ -51,6 +51,7 @@ public class App {
     }
 
     public static void verificarGastoTotalDeUmVeiculo() {
+
         System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
         String placa = sc.nextLine();
         System.out.println("Digite o valor da manutenção da peça: ");
@@ -59,6 +60,9 @@ public class App {
         double valorPeriodico = sc.nextDouble();
         Frota f = new Frota();
         Veiculo v = f.localizarVeiculo(placa);
+
+
+
         System.out
                 .println("O valor total do gasto do veículo foi: R$" + v.gastoTotal(valorPeca, valorPeriodico));
     }
