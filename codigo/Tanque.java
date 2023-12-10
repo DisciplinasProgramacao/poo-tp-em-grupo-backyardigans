@@ -78,8 +78,14 @@ public class Tanque implements ITanque {
         StringBuilder str = new StringBuilder();
 
         str.append("Combustível: "+tipo.name());
+<<<<<<< HEAD
         str.append("\nCapacidade Máxima: "+capacidadeMaxima);
         str.append("\nCapacidade Atual: "+capacidadeAtual);
         return str.toString();
+=======
+        str.append("\nCapacidade Máxima"+capacidadeMaxima);
+        str.append("\nCapacidade Atual"+capacidadeAtual);
+        return super.toString();
+>>>>>>> a9179cf89d9becc6a96bdf954f2e3950d611d4a0
     }
 }
