@@ -1,16 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-=======
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
->>>>>>> a9179cf89d9becc6a96bdf954f2e3950d611d4a0
 import java.util.Scanner;
 
 public class App {
@@ -28,7 +23,6 @@ public class App {
     }
 
     public static void lerEntradaTexto(String nomeArquivo) throws FileNotFoundException {
-<<<<<<< HEAD
         Random sorteador = new Random(42);
 
         File arquivo = new File(nomeArquivo);
@@ -54,28 +48,12 @@ public class App {
                 String data = "09/12/2023";
                 Rota rota = new Rota(km, converterData(data));
                 vEntrada.addRota(rota);
+                vEntrada.percorrerRota(rota);
             }
-
-            vEntrada.rotas.forEach(e -> vEntrada.percorrerRota(e));
-
         }
 
         System.out.println(frota.toString());
 
-=======
-        File arquivo = new File(nomeArquivo);
-
-        Scanner leitor = new Scanner(arquivo, "UTF-8");
-
-        String linha = leitor.nextLine();
-
-        int numVeiculos = Integer.parseInt(linha);
-
-        for (int i = 0; i < numVeiculos; i++) {
-
-        }
-
->>>>>>> a9179cf89d9becc6a96bdf954f2e3950d611d4a0
     }
 
     public static int menu(String nomeArquivo) throws FileNotFoundException {
@@ -212,14 +190,6 @@ public class App {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-<<<<<<< HEAD
-=======
-        String nomeArquivoTexto = "entrada";
-        lerEntradaTexto(nomeArquivoTexto);
-        sc = new Scanner(System.in);
-        String nomeArq = "menu";
-        int opcao = -1;
->>>>>>> a9179cf89d9becc6a96bdf954f2e3950d611d4a0
         frota = new Frota();
         String nomeArquivoTexto = "entrada";
         lerEntradaTexto(nomeArquivoTexto);

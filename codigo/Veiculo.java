@@ -1,6 +1,4 @@
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Veiculo {
 
@@ -13,7 +11,7 @@ public class Veiculo {
     protected Tanque tanque;
     protected double kmTotal;
     public Manutencao manutencao;
-    private TipoVeiculo  tipo;
+    private TipoVeiculo tipo;
 
     static {
         MAX_ROTAS = 30;
@@ -82,7 +80,7 @@ public class Veiculo {
      */
     public double abastecer(double litros) {
 
-        if (litros < tanque.capacidadeMaxima() && tanque.capacidadeAtual() + litros < tanque.capacidadeMaxima()) {
+        if (tanque.capacidadeAtual() + litros <= tanque.capacidadeMaxima()) {
             tanque.abastecer(litros);
         }
 
@@ -161,16 +159,12 @@ public class Veiculo {
         return totalReabastecido;
     }
 
-
-
     public double quantidadeManutencaoPeca() {
-        
 
         return manutencao.quantidadeManutencaoPeca(kmTotal);
     };
 
-    public double quantidadeManutencaoPeriodica(){
-
+    public double quantidadeManutencaoPeriodica() {
 
         return manutencao.quantidadeManutencaoPeriodica(kmTotal);
     };
@@ -184,10 +178,9 @@ public class Veiculo {
         StringBuilder relatorio = new StringBuilder();
 
         relatorio.append("Placa:" + placa + "\n");
-        relatorio.append("Tipo do Veiculo: " + tipo+ "\n");
+        relatorio.append("Tipo do Veiculo: " + tipo + "\n");
         relatorio.append(tanque.toString() + "\n");
         relatorio.append("Km total do Veiculo: " + kmTotal + "\n");
-
 
         return relatorio.toString();
     }

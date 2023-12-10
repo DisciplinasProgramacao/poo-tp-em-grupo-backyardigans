@@ -6,9 +6,9 @@ public class Tanque implements ITanque {
 
     public Tanque(double capacidadeMaxima, String tipoCombustivel) {
         this.capacidadeMaxima = capacidadeMaxima;
-        this.capacidadeAtual = 0;
+        this.capacidadeAtual = capacidadeMaxima;
         this.tipo = Combustivel.valueOf(tipoCombustivel);
-        this.consumo = getConsumo();
+        this.consumo = tipo.getConsumo();
     }
 
     /**
@@ -19,7 +19,6 @@ public class Tanque implements ITanque {
      * @return a capacidade atual do tanque depois de abastecido, em Double
      */
     public double abastecer(double litros) {
-
         capacidadeAtual += litros;
         return capacidadeAtual;
     }
@@ -52,7 +51,7 @@ public class Tanque implements ITanque {
     }
 
     public double getConsumo() {
-        return tipo.getConsumo();
+        return consumo;
     }
 
     public double capacidadeAtual() {
@@ -64,12 +63,15 @@ public class Tanque implements ITanque {
     }
 
     public void consumirLitros(double litros) {
-        capacidadeAtual = capacidadeAtual - litros;
-
-        System.out.println(capacidadeAtual);
+        if(capacidadeAtual - litros < 0){
+            capacidadeAtual = 0;
+        }else{
+            capacidadeAtual -= litros;
+        }
+        
     }
 
-    public double getPrecoCombustivel(){
+    public double getPrecoCombustivel() {
         return tipo.getPreco();
     }
 
@@ -77,15 +79,9 @@ public class Tanque implements ITanque {
     public String toString() {
         StringBuilder str = new StringBuilder();
 
-        str.append("Combustível: "+tipo.name());
-<<<<<<< HEAD
-        str.append("\nCapacidade Máxima: "+capacidadeMaxima);
-        str.append("\nCapacidade Atual: "+capacidadeAtual);
+        str.append("Combustível: " + tipo.name());
+        str.append("\nCapacidade Máxima: " + capacidadeMaxima);
+        str.append("\nCapacidade Atual: " + capacidadeAtual);
         return str.toString();
-=======
-        str.append("\nCapacidade Máxima"+capacidadeMaxima);
-        str.append("\nCapacidade Atual"+capacidadeAtual);
-        return super.toString();
->>>>>>> a9179cf89d9becc6a96bdf954f2e3950d611d4a0
     }
 }
