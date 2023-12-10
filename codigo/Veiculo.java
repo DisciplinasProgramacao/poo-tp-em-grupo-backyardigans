@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Veiculo {
@@ -52,6 +53,7 @@ public class Veiculo {
      */
     public void zerarRotas() {
         rotas.clear();
+        kmTotal = 0;
     }
 
     /**
@@ -82,6 +84,7 @@ public class Veiculo {
 
         if (tanque.capacidadeAtual() + litros <= tanque.capacidadeMaxima()) {
             tanque.abastecer(litros);
+            totalReabastecido += litros;
         }
 
         return tanque.capacidadeAtual();
@@ -107,7 +110,7 @@ public class Veiculo {
      * 
      * @return retorna a quilometragem total percorrida
      */
-    public double kmTotal() {
+    public double getKmTotal() {
         return kmTotal;
     }
 
@@ -173,14 +176,24 @@ public class Veiculo {
         return tanque.getPrecoCombustivel();
     }
 
+    public double gastoGasolina() {
+        return totalReabastecido * tanque.getPrecoCombustivel();
+    }
+
     @Override
     public String toString() {
         StringBuilder relatorio = new StringBuilder();
-
+        DecimalFormat df = new DecimalFormat("#.##");
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
         relatorio.append(tanque.toString() + "\n");
-        relatorio.append("Km total do Veiculo: " + kmTotal + "\n");
+        relatorio.append("Km total do Veiculo: " + df.format(kmTotal) + "\n");
+        relatorio.append("Quantidade de rotas: " + quantRotas + "\n");
+        relatorio.append("Total reabastecido: " + df.format(totalReabastecido) + "\n");
+        relatorio.append("Quantidade manutenção peças: " + manutencao.quantidadeManutencaoPeca(kmTotal) + "\n");
+        relatorio
+                .append("Quantidade manutenção períodica: " + manutencao.quantidadeManutencaoPeriodica(kmTotal) + "\n");
+        relatorio.append("Gasto Gasolina: " + df.format(gastoGasolina()));
 
         return relatorio.toString();
     }

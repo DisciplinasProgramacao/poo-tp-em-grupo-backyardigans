@@ -1,3 +1,7 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Tanque implements ITanque {
     private double consumo;
     private double capacidadeMaxima;
@@ -32,7 +36,7 @@ public class Tanque implements ITanque {
 
     public double autonomiaMaxima() {
 
-        double kmPossiveis = capacidadeMaxima / consumo;
+        double kmPossiveis = capacidadeMaxima * consumo;
         return kmPossiveis;
     }
 
@@ -44,9 +48,8 @@ public class Tanque implements ITanque {
      */
     public double autonomiaAtual() {
         double quantosKmPodeRodar;
-
-        quantosKmPodeRodar = capacidadeAtual / consumo;
-
+        quantosKmPodeRodar = capacidadeAtual * consumo;
+        
         return quantosKmPodeRodar;
     }
 
@@ -63,12 +66,12 @@ public class Tanque implements ITanque {
     }
 
     public void consumirLitros(double litros) {
-        if(capacidadeAtual - litros < 0){
+        if (capacidadeAtual - litros < 0) {
             capacidadeAtual = 0;
-        }else{
+        } else {
             capacidadeAtual -= litros;
         }
-        
+
     }
 
     public double getPrecoCombustivel() {
@@ -78,10 +81,11 @@ public class Tanque implements ITanque {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("#.##");
 
         str.append("Combustível: " + tipo.name());
-        str.append("\nCapacidade Máxima: " + capacidadeMaxima);
-        str.append("\nCapacidade Atual: " + capacidadeAtual);
+        str.append("\nCapacidade Máxima: " + df.format(capacidadeMaxima));
+        str.append("\nCapacidade Atual: " + df.format(capacidadeAtual));
         return str.toString();
     }
 }

@@ -1,8 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -11,6 +8,9 @@ import java.util.Scanner;
 public class App {
     static Scanner sc;
     static Frota frota;
+    static Random sorteador = new Random(42);
+    static int mes = 12;
+    static int ano = 2023;
 
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
@@ -23,7 +23,7 @@ public class App {
     }
 
     public static void lerEntradaTexto(String nomeArquivo) throws FileNotFoundException {
-        Random sorteador = new Random(42);
+        
 
         File arquivo = new File(nomeArquivo);
 
@@ -37,23 +37,42 @@ public class App {
             String tipoVeiculo = info[1];
             String tipoCombustivel = info[2];
             Veiculo vEntrada = new Veiculo(placa, tipoVeiculo, tipoCombustivel);
+
             frota.adicionarVeiculo(vEntrada);
 
-            int quantRotas = Integer.parseInt(info[3]);
-            frota.adicionarVeiculo(vEntrada);
-            for (int i = 0; i < 2; i++) {
-                Double km = 50.00;
-                BigDecimal kmBigDecimal = BigDecimal.valueOf(km).setScale(2, RoundingMode.HALF_EVEN);
-                km = kmBigDecimal.doubleValue();
-                String data = "09/12/2023";
-                Rota rota = new Rota(km, converterData(data));
+            double kmAleatorio = gerarKmAleatorio();
+
+            LocalDate dataAleatoria = gerarDataAleatoria();
+
+            int quantidadeAleatoriaRotas = sorteador.nextInt(30-15)+15;
+
+            for(int i = 0; i<quantidadeAleatoriaRotas; i++){
+                Rota rota = new Rota(kmAleatorio, dataAleatoria);
+
                 vEntrada.addRota(rota);
-                vEntrada.percorrerRota(rota);
             }
+            vEntrada.rotas.forEach(r -> vEntrada.percorrerRota(r));
         }
 
         System.out.println(frota.toString());
+        leitor.close();
+    }
 
+    public static double gerarKmAleatorio(){
+            Double km = Math.random() * (1000 - 50) + 50;
+            return km;
+    }
+
+    public static LocalDate gerarDataAleatoria(){
+        int ano = sorteador.nextInt(2024 - 2023) + 2023;
+
+        int mes = sorteador.nextInt(12) + 1;
+
+        int dia = sorteador.nextInt(LocalDate.of(ano, mes, 1).lengthOfMonth()) + 1;
+
+        LocalDate dataAleatoria = LocalDate.of(ano, mes, dia);
+
+        return dataAleatoria;
     }
 
     public static int menu(String nomeArquivo) throws FileNotFoundException {
@@ -157,8 +176,8 @@ public class App {
 
     public static LocalDate converterData(String data) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataFormatada = LocalDate.parse(data, formato);
-
+        LocalDate dataFormatada = LocalDate.parse(data+"/"+mes+"/"+ano, formato);
+        
         return dataFormatada;
     }
 
@@ -166,9 +185,9 @@ public class App {
 
         Veiculo veiculo = localizarVeiculo();
 
-        System.out.println("Digite a data da rota: (DD/MM/YYYY)");
-        String data = sc.nextLine();
-        LocalDate dataCorreta = converterData(data);
+        System.out.println("Digite o dia da rota: ");
+        String dia = sc.nextLine();
+        LocalDate dataCorreta = converterData(dia);
 
         System.out.println("Digite a quilometragem da rota: ");
         double quilometragem = sc.nextDouble();
@@ -181,9 +200,15 @@ public class App {
     }
 
     public static void verificarQuilometragemDeUmVeiculo() {
+        Veiculo v = localizarVeiculo();
+        //v.kmNoMes(12);
+        System.out.println("A quilometragem total do veículo de placa "+v.getPlaca()+" no mês ");
     }
 
     public static void verificarQuilometragemTotalDeUmVeiculo() {
+        Veiculo v = localizarVeiculo();
+
+        System.out.println("A quilometragem total do veículo de placa "+v.getPlaca()+" é de: "+v.getKmTotal());
     }
 
     public static void relatorioDeRotasDeUmVeiculo() {
@@ -193,6 +218,7 @@ public class App {
         frota = new Frota();
         String nomeArquivoTexto = "entrada";
         lerEntradaTexto(nomeArquivoTexto);
+
         // sc = new Scanner(System.in);
         // String nomeArq = "menu";
         // int opcao = -1;

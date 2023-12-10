@@ -32,7 +32,7 @@ public class Frota {
         }
 
         for (Veiculo veiculo : veiculos) {
-                relatorio.append(veiculo.toString() + "\n\n");
+            relatorio.append(veiculo.toString() + "\n\n");
         }
 
         return relatorio.toString();
@@ -66,7 +66,7 @@ public class Frota {
         double totalQuilometragem = 0;
 
         for (Veiculo x : veiculos) {
-            totalQuilometragem += x.kmTotal();
+            totalQuilometragem += x.getKmTotal();
         }
 
         return totalQuilometragem;
@@ -82,8 +82,8 @@ public class Frota {
         Veiculo veiculoMaiorKm = null;
 
         for (Veiculo x : veiculos) {
-            if (x.kmTotal() > maiorKm) {
-                maiorKm = x.kmTotal();
+            if (x.getKmTotal() > maiorKm) {
+                maiorKm = x.getKmTotal();
                 veiculoMaiorKm = x;
             }
         }
@@ -101,7 +101,7 @@ public class Frota {
         double maiorKmMedia = 0;
 
         for (Veiculo x : veiculos) {
-            double mediaVeiculo = x.kmTotal() / x.getQuantRotas();
+            double mediaVeiculo = x.getKmTotal() / x.getQuantRotas();
             if (mediaVeiculo > maiorKmMedia) {
                 maiorKmMedia = mediaVeiculo;
                 veiculoMaiorMedia = x;
@@ -133,7 +133,6 @@ public class Frota {
         double valoManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
         double gastoEmCombustivel = v.getTotalReabastecido() * v.valorCombustivel();
 
-        
-       return gastoEmCombustivel +  valoManutencaoPeca + valorManutencaoPeriodica;
+        return gastoEmCombustivel + valoManutencaoPeca + valorManutencaoPeriodica;
     }
 }
