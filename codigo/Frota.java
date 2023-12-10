@@ -2,11 +2,9 @@ import java.util.ArrayList;
 
 public class Frota {
 
-    private int tamanhoFrota;
     private ArrayList<Veiculo> veiculos;
 
     public Frota() {
-        this.tamanhoFrota = 0;
         this.veiculos = new ArrayList<Veiculo>();
     }
 
@@ -24,18 +22,17 @@ public class Frota {
     public String toString() {
         StringBuilder relatorio = new StringBuilder();
 
-        relatorio.append("RELATÓRIO DA FROTA DE PEDIDOS\n");
-        relatorio.append("-----------------------------\n");
+        relatorio.append("RELATÓRIO DA FROTA\n");
+        relatorio.append("------------------\n");
 
-        if (tamanhoFrota == 0) {
+        if (veiculos.isEmpty()) {
             relatorio.append("Frota vazia");
         } else {
-            relatorio.append("Tamanho da frota: " + tamanhoFrota);
+            relatorio.append("Tamanho da frota: " + veiculos.size() + "\n");
         }
 
-        for (int i = 0; i < veiculos.size(); i++) {
-            relatorio.append(String.format("02d", i));
-            relatorio.append(veiculos.toString() + "\\n");
+        for (Veiculo veiculo : veiculos) {
+                relatorio.append(veiculo.toString() + "\n\n");
         }
 
         return relatorio.toString();

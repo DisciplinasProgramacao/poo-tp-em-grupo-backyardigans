@@ -1,11 +1,13 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Veiculo {
 
     private static final int MAX_ROTAS;
     protected double consumo;
     protected String placa;
-    private ArrayList<Rota> rotas;
+    protected ArrayList<Rota> rotas;
     protected int quantRotas;
     protected double totalReabastecido;
     protected Tanque tanque;
@@ -26,6 +28,7 @@ public class Veiculo {
         this.tipo = TipoVeiculo.valueOf(tipoVeiculo);
         this.tanque = new Tanque(tipo.getTanque(), tipoCombustivel);
         this.manutencao = new Manutencao(tipo.getManutencaoPeriodica(), tipo.getManutencaoPeca());
+        this.consumo = tanque.getConsumo();
     }
 
     /**
@@ -36,12 +39,11 @@ public class Veiculo {
      *         o limite de rotas tenha sido atingido
      */
     public boolean addRota(Rota rota) {
-        if (quantRotas < MAX_ROTAS) {
+        if (quantRotas < MAX_ROTAS && rota.getQuilometragem() <= autonomiaMaxima()) {
             rotas.add(rota);
             quantRotas++;
             return true;
         } else {
-            System.out.println("Limite de rotas atingido para este veículo.");
             return false;
         }
     }
@@ -80,14 +82,9 @@ public class Veiculo {
      */
     public double abastecer(double litros) {
 
-        if (tanque.capacidadeAtual() + litros <= tanque.capacidadeMaxima()) {
-            tanque.abastecer(litros);
-        } else {
-            litros = tanque.capacidadeMaxima() - tanque.capacidadeAtual();
+        if (litros < tanque.capacidadeMaxima() && tanque.capacidadeAtual() + litros < tanque.capacidadeMaxima()) {
             tanque.abastecer(litros);
         }
-
-        totalReabastecido = totalReabastecido + litros;
 
         return tanque.capacidadeAtual();
     }
@@ -180,6 +177,19 @@ public class Veiculo {
 
     public double valorCombustivel() {
         return tanque.getPrecoCombustivel();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder relatorio = new StringBuilder();
+
+        relatorio.append("Placa:" + placa + "\n");
+        relatorio.append("Tipo do Veiculo: " + tipo+ "\n");
+        relatorio.append(tanque.toString() + "\n");
+        relatorio.append("Km total do Veiculo: " + kmTotal + "\n");
+
+
+        return relatorio.toString();
     }
 
 }

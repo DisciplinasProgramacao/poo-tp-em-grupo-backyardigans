@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 
+
 public class Rota {
     private double quilometragem;
     private LocalDate data;
@@ -14,6 +15,7 @@ public class Rota {
         this.quilometragem = quilometragem;
         this.data = data;
     }
+    
 
     /**
      * Método para obter a quilometragem

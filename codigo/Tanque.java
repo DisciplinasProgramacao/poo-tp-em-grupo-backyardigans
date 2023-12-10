@@ -6,7 +6,7 @@ public class Tanque implements ITanque {
 
     public Tanque(double capacidadeMaxima, String tipoCombustivel) {
         this.capacidadeMaxima = capacidadeMaxima;
-        this.capacidadeAtual = capacidadeMaxima;
+        this.capacidadeAtual = 0;
         this.tipo = Combustivel.valueOf(tipoCombustivel);
         this.consumo = getConsumo();
     }
@@ -20,15 +20,7 @@ public class Tanque implements ITanque {
      */
     public double abastecer(double litros) {
 
-        if (litros < 0) {
-            litros = litros * (-1);
-        }
-
-        if (capacidadeAtual + litros < capacidadeMaxima) {
-            capacidadeAtual += litros;
-        } else if (capacidadeAtual + litros >= capacidadeMaxima) {
-            capacidadeAtual = capacidadeMaxima;
-        }
+        capacidadeAtual += litros;
         return capacidadeAtual;
     }
 
@@ -72,10 +64,22 @@ public class Tanque implements ITanque {
     }
 
     public void consumirLitros(double litros) {
-        capacidadeAtual -= litros;
+        capacidadeAtual = capacidadeAtual - litros;
+
+        System.out.println(capacidadeAtual);
     }
 
     public double getPrecoCombustivel(){
         return tipo.getPreco();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        str.append("Combustível: "+tipo.name());
+        str.append("\nCapacidade Máxima: "+capacidadeMaxima);
+        str.append("\nCapacidade Atual: "+capacidadeAtual);
+        return str.toString();
     }
 }

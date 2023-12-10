@@ -1,7 +1,7 @@
 public enum TipoVeiculo {
     CARRO(50, 10000, 10000),
-    VAN(60, 10000, 10000),
-    FURGAO(80, 10000, 10000),
+    VAN(60, 10000, 12000),
+    FURGAO(80, 10000, 12000),
     CAMINHAO(250, 20000, 10000);
 
     public int tanque;
