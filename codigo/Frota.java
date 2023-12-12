@@ -10,7 +10,7 @@ public class Frota {
 
     /**
      * Metódo que retorna uma String com um relatório da frota de veículos.
-     * Ele é composto pela quantidade de veículos presente na frota e pelos veículos
+     * Ele é composto pela quantidade de veículos presentes na frota e pelos veículos
      * existentes.
      * 
      * @return String segundo a descrição:
@@ -112,7 +112,7 @@ public class Frota {
     }
 
     /**
-     * Vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de
+     * Método que vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de
      * cada veiculo
      */
     public void virarMes() {
@@ -122,10 +122,26 @@ public class Frota {
         }
     }
 
+    /**
+     * Método que adiciona um novo veículo à frota.
+     * @param veiculo parâmetro do tipo veículo que passa o veículo que será adicionado à frota.
+     */
     public void adicionarVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
     }
 
+    /**
+     * Método que calcula o gasto total de determinado veículo, considerando os valores de manutenção periodica,
+     * manutenção de peças e gastos em combustível, de acordo com a quantidade de recorrência de cada. Para encontrar
+     * o veículo cuja placa foi passada como parâmetro, usa-se Stream para percorrer a lista de veículos e localizar
+     * a placa desejada.
+     * @param placa parâmetro do tipo String que passa a placa do veículo cujo gasto total será
+     * calculado.
+     * @param valorMPeca parâmetro do tipo double que indica o valor da manutenção de peça.
+     * @param valorMPeriodico parâmetro do tipo double que indica o valor da manutenção periódica.
+     * @return retorna o gasto total, obtido pela soma do gastos totais com combustível, manutenção periodica e
+     * manutenção de peças
+     */
     public double gastoTotal(String placa, double valorMPeca, double valorMPeriodico) {
         Veiculo v = (Veiculo) veiculos.stream().filter(e -> e.getPlaca().equals(placa));
 

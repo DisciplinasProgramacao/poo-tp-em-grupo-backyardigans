@@ -18,6 +18,13 @@ public class Veiculo {
         MAX_ROTAS = 30;
     }
 
+    /**
+     * Cria um objeto da classe Veiculo.
+     * @param placa parâmetro do tipo String, que indica a placa do veículo.
+     * @param tipoVeiculo parâemtro do tipo String, que indica o tipo do veículo.
+     * @param tipoCombustivel parâmetro do tipo String, que indica o tipo de combustível
+     * que o veículo utiliza.
+     */
     public Veiculo(String placa, String tipoVeiculo, String tipoCombustivel) {
         this.placa = placa;
         this.rotas = new ArrayList<>(MAX_ROTAS);
@@ -49,7 +56,7 @@ public class Veiculo {
 
     /**
      * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas
-     * no mes
+     * no mes.
      */
     public void zerarRotas() {
         rotas.clear();
@@ -59,16 +66,16 @@ public class Veiculo {
     /**
      * Método para obter a autonomia máxima do veículo
      * 
-     * @return retorna a autonomia máxima do veiculo
+     * @return retorna a autonomia máxima do veiculo, do tipo double.
      */
     public double autonomiaMaxima() {
         return tanque.autonomiaMaxima();
     }
 
     /**
-     * Método para obter a autonomia atual do veículo
+     * Método para obter a autonomia atual do veículo.
      * 
-     * @return retorna a autonomia atual do veículo
+     * @return retorna a autonomia atual do veículo, do tipo double.
      */
     public double autonomiaAtual() {
         return tanque.autonomiaAtual();
@@ -77,8 +84,8 @@ public class Veiculo {
     /**
      * Método para abastecer o veículo
      * 
-     * @param litros quantidade de litros para ser adicinado no tanque do veículo
-     * @return retorna a quantidade de litros do tanque após o abastecimento
+     * @param litros quantidade de litros para ser adicinado no tanque do veículo, do tipo double
+     * @return retorna a quantidade de litros do tanque após o abastecimento, do tipo double.
      */
     public double abastecer(double litros) {
 
@@ -92,9 +99,9 @@ public class Veiculo {
 
     /**
      * Método para calcular a quilometragem percorrida pelo veículo no mês com base
-     * nas rotas registradas
+     * nas rotas registradas.
      * 
-     * @return retorna a quilometragem percorrida no mês
+     * @return retorna a quilometragem percorrida no mês, do tipo double.
      */
     public double kmNoMes() {
         double quilometragemNoMes = 0;
@@ -106,9 +113,9 @@ public class Veiculo {
 
     /**
      * Método para calcular a quilometragem total percorrida pelo veículo com base
-     * nas rotas registradas
+     * nas rotas registradas.
      * 
-     * @return retorna a quilometragem total percorrida
+     * @return retorna a quilometragem total percorrida, do tipo double.
      */
     public double getKmTotal() {
         return kmTotal;
@@ -116,9 +123,9 @@ public class Veiculo {
 
     /**
      * Método para simular a rota de um veículo, a fim de avaliar se a quantidade de
-     * combustível atual é capaz de realizar a rota
+     * combustível atual é capaz de realizar a rota.
      * 
-     * @param rota rota que será percorrida
+     * @param rota rota que será percorrida, do tipo Rota.
      */
 
     protected void percorrerRota(Rota rota) {
@@ -138,7 +145,7 @@ public class Veiculo {
     /**
      * Método para obter a placa do veículo
      * 
-     * @return retorna a placa do veículo
+     * @return retorna a placa do veículo, do tipo String
      */
     public String getPlaca() {
         return placa;
@@ -147,21 +154,30 @@ public class Veiculo {
     /**
      * Método para obter a quantidade de rotas registradas pelo veículo
      * 
-     * @return retorna a quantidade de rotas registradas pelo veículo
+     * @return retorna a quantidade de rotas registradas pelo veículo, do tipo int.
      */
     public int getQuantRotas() {
         return quantRotas;
     }
 
+    /**
+     * Método para obter o consumo do veículo.
+     * @return retorna o consumo do veículo, do tipo double.
+     */
     public double getConsumo() {
 
         return consumo;
     }
 
+    /**
+     * Método para obter o total reabastecido.
+     * @return retorna o total reabastecido, em double.
+     */
     public double getTotalReabastecido() {
         return totalReabastecido;
     }
 
+    
     public double quantidadeManutencaoPeca() {
 
         return manutencao.quantidadeManutencaoPeca(kmTotal);
