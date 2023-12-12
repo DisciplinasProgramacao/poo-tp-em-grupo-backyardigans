@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Veiculo {
@@ -103,12 +104,14 @@ public class Veiculo {
      * 
      * @return retorna a quilometragem percorrida no mês, do tipo double.
      */
-    public double kmNoMes() {
-        double quilometragemNoMes = 0;
-        for (int i = 0; i < quantRotas; i++) {
-            quilometragemNoMes += rotas.get(i).getQuilometragem();
+    public double kmNoMes(LocalDate data) {
+        double km = 0;
+
+        for(Rota r : rotas){
+            if((r.getData().getMonthValue() == data.getMonthValue()) && (r.getData().getYear() == data.getYear()))
+                km += r.getQuilometragem();   
         }
-        return quilometragemNoMes;
+           return km;
     }
 
     /**
@@ -196,20 +199,13 @@ public class Veiculo {
         return totalReabastecido * tanque.getPrecoCombustivel();
     }
 
-    @Override
-    public String toString() {
+    public String relatorioRotasVeiculo() {
         StringBuilder relatorio = new StringBuilder();
-        DecimalFormat df = new DecimalFormat("#.##");
+        
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
-        relatorio.append(tanque.toString() + "\n");
-        relatorio.append("Km total do Veiculo: " + df.format(kmTotal) + "\n");
-        relatorio.append("Quantidade de rotas: " + quantRotas + "\n");
-        relatorio.append("Total reabastecido: " + df.format(totalReabastecido) + "\n");
-        relatorio.append("Quantidade manutenção peças: " + manutencao.quantidadeManutencaoPeca(kmTotal) + "\n");
-        relatorio
-                .append("Quantidade manutenção períodica: " + manutencao.quantidadeManutencaoPeriodica(kmTotal) + "\n");
-        relatorio.append("Gasto Gasolina: " + df.format(gastoGasolina()));
+        rotas.stream().map(Rota::relatorio)
+                    .forEach(r -> relatorio.append(r+"\n"));
 
         return relatorio.toString();
     }

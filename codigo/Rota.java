@@ -1,5 +1,5 @@
+import java.text.DecimalFormat;
 import java.time.LocalDate;
-
 
 public class Rota {
     private double quilometragem;
@@ -15,7 +15,6 @@ public class Rota {
         this.quilometragem = quilometragem;
         this.data = data;
     }
-    
 
     /**
      * Método para obter a quilometragem
@@ -24,6 +23,10 @@ public class Rota {
      */
     public double getQuilometragem() {
         return quilometragem;
+    }
+
+    public LocalDate getData() {
+        return data;
     }
 
     /**
@@ -35,12 +38,12 @@ public class Rota {
      * 
      * @return Uma string contendo o relatório da rota, conforme informações acima.
      */
-    @Override
-    public String toString() {
+    public String relatorio() {
 
         StringBuilder aux = new StringBuilder();
-        aux.append(" DATA: " + data + "\n");
-        aux.append(" QUILOMETRAGEM: " + quilometragem + " km");
+        DecimalFormat df = new DecimalFormat("#.##");
+        aux.append(" DATA: " + data + " - ");
+        aux.append(" QUILOMETRAGEM: " + df.format(quilometragem) + " km");
         return aux.toString();
     }
 }

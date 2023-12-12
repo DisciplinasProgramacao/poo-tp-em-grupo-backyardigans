@@ -19,7 +19,7 @@ public class Frota {
      *         <li>
      *         <ul>
      */
-    public String toString() {
+    public String relatorioFrota() {
         StringBuilder relatorio = new StringBuilder();
 
         relatorio.append("RELATÓRIO DA FROTA\n");
@@ -32,7 +32,7 @@ public class Frota {
         }
 
         for (Veiculo veiculo : veiculos) {
-            relatorio.append(veiculo.toString() + "\n\n");
+            relatorio.append(veiculo.relatorioRotasVeiculo() + "\n\n");
         }
 
         return relatorio.toString();
