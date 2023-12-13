@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -157,6 +158,22 @@ public class Veiculo {
     }
 
     /**
+     * Método que gera uma string com a quilometragem total percorrida pelo veículo,
+     * também é mostrado a quantidade de rotas que foram realizadas.
+     * 
+     * @return retorna uma string contendo as duas informações mencionadas acima.
+     */
+    public String KmTotalVeiculo() {
+        StringBuilder str = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        str.append("Quantidade de rotas realizadas pelo veículo: "+quantRotas+"\n");
+        str.append("Quilometragem total do veículo: "+df.format(kmTotal));
+        
+        return str.toString();
+    }
+
+    /**
      * Método para obter a placa do veículo
      * 
      * @return retorna a placa do veículo, do tipo String
@@ -191,12 +208,10 @@ public class Veiculo {
     }
     
     /**
-     * Método para calcular a quilometragem total percorrida pelo veículo com base
-     * nas rotas registradas.
-     * 
-     * @return retorna a quilometragem total percorrida, do tipo double.
+     * Método para obter a quilometragem total percorrida pelo veículo.
+     * @return retorna a quilometragem total percorrida.
      */
-    public double getKmTotal() {
+    public double getKmTotal(){
         return kmTotal;
     }
 }

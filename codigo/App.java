@@ -324,14 +324,14 @@ public class App {
     /**
      * Método que verifica a quilometragem total de um veículo.
      * Caso o veículo seja localizado, é impresso na tela a sua
-     * quilometragem total.
+     * quilometragem total e quantidade de rotas.
      * 
      */
     public static void verificarQuilometragemTotalDeUmVeiculo() {
         Veiculo v = localizarVeiculo();
 
         if (v != null) {
-            System.out.println("A quilometragem total do veículo é de: " + df.format(v.getKmTotal()));
+            System.out.println(v.KmTotalVeiculo());
         }
 
     }
@@ -352,7 +352,7 @@ public class App {
     }
 
     /**
-     * Menu que permite o usuário selecionar qual relatório
+     * Submenu que permite o usuário selecionar qual relatório
      * quer ver, a partir do arquivo "relatorios". 
      * @throws FileNotFoundException caso o arquivo "relatorios"
      * não exista, é lançada a exceção.
@@ -388,7 +388,9 @@ public class App {
         }
     }
 
-
+    /**
+     * Main com a iniciação do sistema e chamada de métodos do menu
+     */
     public static void main(String[] args) throws FileNotFoundException {
         frota = new Frota();
         String nomeArquivoTexto = "entrada";
