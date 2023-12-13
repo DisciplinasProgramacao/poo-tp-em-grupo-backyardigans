@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -9,19 +10,33 @@ public class App {
     static Scanner sc;
     static Frota frota;
     static Random sorteador = new Random(42);
-    static int mes = 12;
-    static int ano = 2023;
+    static DecimalFormat df = new DecimalFormat("R$ ##,#");
 
+    /**
+     * Método para limpar a tela do console.
+     */
     public static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Método para dar uma pausa para leitura após alguma mensagem no console.
+     */
     static void pausa() {
         System.out.println("Enter para continuar.");
         sc.nextLine();
     }
 
+    /**
+     * Método para a leitura da entrada texto de teste do trabalho. Leitura do
+     * arquivo texto passado como
+     * parâmetro e após isso gera também valores aleatórios para complementar as
+     * informações de teste.
+     * 
+     * @param nomeArquivo nome do arquivo que será lido
+     * @throws FileNotFoundException
+     */
     public static void lerEntradaTexto(String nomeArquivo) throws FileNotFoundException {
 
         File arquivo = new File(nomeArquivo);
@@ -50,17 +65,26 @@ public class App {
 
                 vEntrada.addRota(rota);
             }
-            vEntrada.rotas.forEach(r -> vEntrada.percorrerRota(r));
         }
-        System.out.println(frota.relatorioFrota());
+        //System.out.println(frota.relatorioFrota());
         leitor.close();
     }
 
+    /**
+     * Método para gerar quilometragens aleatórias para a base de teste.
+     * 
+     * @return double contento os quilômetros.
+     */
     public static double gerarKmAleatorio() {
         Double km = Math.random() * (1000 - 50) + 50;
         return km;
     }
 
+    /**
+     * Método para gerar datas aleatórias para a base de teste.
+     * 
+     * @return LocalDate com a data.
+     */
     public static LocalDate gerarDataAleatoria() {
         int ano = sorteador.nextInt(2024 - 2023) + 2023;
 
@@ -73,6 +97,15 @@ public class App {
         return dataAleatoria;
     }
 
+    /**
+     * Método que realiza a construção do menu que será mostrado no console, ele
+     * mostra todas
+     * as opções disponíveis do arquivo texto e lê a opção escolhida pelo usuário.
+     * 
+     * @param nomeArquivo nome do arquivo de menu a ser lido.
+     * @return inteiro que contém a opção escolhida pelo usuário.
+     * @throws FileNotFoundException
+     */
     public static int menu(String nomeArquivo) throws FileNotFoundException {
         limparTela();
         File arqMenu = new File(nomeArquivo);
@@ -91,13 +124,21 @@ public class App {
         return opcao;
     }
 
+    /**
+     * Método para realizar a adição de um novo veículo no sistema. Há uma leitura
+     * de um arquivo
+     * texto com as opções de veículos existentes e também a solicitação da placa,
+     * o tipo do veículo utilizado e o tipo de combustível.
+     * 
+     * @throws FileNotFoundException
+     */
     public static void adicionarVeiculo() throws FileNotFoundException {
         String nomeArq = "veiculos";
         System.out.println("Digite a placa do veículo: ");
         String placa = sc.nextLine();
         System.out.println("Escolha o tipo de veículo: ");
         int opcaoVeiculo = menu(nomeArq);
-        System.out.println("Escolha o tipo do combustivel: ");
+        System.out.println((opcaoVeiculo != 0)?"Escolha o tipo do combustivel: ":"Enter para continuar.");
 
         switch (opcaoVeiculo) {
             case 1:
@@ -120,13 +161,20 @@ public class App {
                 Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
                 frota.adicionarVeiculo(van);
                 break;
-
-            default:
-                break;
         }
 
     }
 
+    /**
+     * Método para pegar o combustível utilizado pelo veículo para o cadastro no
+     * sistema. Ele faz
+     * a leitura de um arquivo texto com as opções de combustíveis disponíveis e
+     * disponibiliza um menu
+     * com as opções para o usuário.
+     * 
+     * @return Retorna uma String com o nome do tipo de combustível utilizado
+     * @throws FileNotFoundException
+     */
     private static String pegarCombustivel() throws FileNotFoundException {
         sc = new Scanner(System.in);
         String nomeArq = "combustiveis";
@@ -144,24 +192,31 @@ public class App {
             case 3:
                 nomeCombustivel = "GASOLINA";
                 break;
-            default:
-                System.out.println("Opção inválida");
-                break;
         }
         return nomeCombustivel;
     }
 
+    /**
+     * Método que localiza um veículo pela placa
+     * 
+     * @return Retorna o veículo localizado
+     */
     public static Veiculo localizarVeiculo() {
         System.out.println("Digite a placa do veículo: ");
         String placa = sc.nextLine();
         Veiculo v = frota.localizarVeiculo(placa);
+        if (v == null) {
+            System.out.println("Veículo não encontrado!");
+        }
 
         return v;
     }
 
     public static void verificarTotalReabastecido() {
         Veiculo v = localizarVeiculo();
-        System.out.println("O total de gasolina reabastecido pelo veículo é de: " + v.getTotalReabastecido());
+        if (v != null) {
+            System.out.println("O total de gasolina reabastecido pelo veículo é de: " + v.getTotalReabastecido());
+        }
     }
 
     public static void verificarGastoTotalDeUmVeiculo() {
@@ -173,13 +228,13 @@ public class App {
         System.out.println("Digite o valor da manutenção da períodica: ");
         double valorPeriodico = sc.nextDouble();
 
-        System.out.println("O valor total do gasto do veículo foi: R$" +
-                frota.gastoTotal(placa, valorPeca, valorPeriodico));
+        System.out.println("O valor total do gasto do veículo foi de: " +
+                df.format(frota.gastoTotal(placa, valorPeca, valorPeriodico)));
     }
 
     public static LocalDate converterData(String data) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataFormatada = LocalDate.parse(data + "/" + mes + "/" + ano, formato);
+        LocalDate dataFormatada = LocalDate.parse(data, formato);
 
         return dataFormatada;
     }
@@ -188,36 +243,49 @@ public class App {
 
         Veiculo veiculo = localizarVeiculo();
 
-        System.out.println("Digite o dia da rota: ");
-        String dia = sc.nextLine();
-        LocalDate dataCorreta = converterData(dia);
+        if (veiculo != null) {
+            System.out.println("Digite o dia da rota: ");
+            String dia = sc.nextLine();
+            LocalDate dataCorreta = converterData(dia);
 
-        System.out.println("Digite a quilometragem da rota: ");
-        double quilometragem = sc.nextDouble();
-        sc.nextLine();
+            System.out.println("Digite a quilometragem da rota: ");
+            double quilometragem = sc.nextDouble();
+            sc.nextLine();
 
-        Rota rota = new Rota(quilometragem, dataCorreta);
-        veiculo.addRota(rota);
+            Rota rota = new Rota(quilometragem, dataCorreta);
+            veiculo.addRota(rota);
+        }
     }
 
     public static void verificarQuilometragemDeUmVeiculoNoMes() {
         Veiculo v = localizarVeiculo();
-        System.out.println("Digite a data: ");
-        String data = sc.nextLine();
 
-        System.out.println("A quilometragem total do no mês foi de " + v.kmNoMes(converterData(data)) + " quilômetros");
+        if (v != null) {
+            System.out.println("Digite a data: ");
+            String data = sc.nextLine();
+
+            System.out.println("A quilometragem total do no mês foi de " + df.format(v.kmNoMes(converterData(data)))
+                    + " quilômetros");
+        }
+
     }
 
     public static void verificarQuilometragemTotalDeUmVeiculo() {
         Veiculo v = localizarVeiculo();
 
-        System.out.println("A quilometragem total do veículo é de: " + v.getKmTotal());
+        if (v != null) {
+            System.out.println("A quilometragem total do veículo é de: " + df.format(v.getKmTotal()));
+        }
+
     }
 
     public static void relatorioDeRotasDeUmVeiculo() {
         Veiculo v = localizarVeiculo();
 
-        System.out.println(v.relatorioRotasVeiculo());
+        if (v != null) {
+            System.out.println(v.relatorioRotasVeiculo());
+        }
+
     }
 
     private static void relatorios() throws FileNotFoundException {
@@ -243,9 +311,6 @@ public class App {
                 case 4:
                     relatorioDeRotasDeUmVeiculo();
                     pausa();
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
                     break;
             }
         }
@@ -280,13 +345,9 @@ public class App {
                     relatorios();
                     pausa();
                     break;
-
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
             }
         }
-
+        System.out.println("Sistema fechado!");
         sc.close();
     }
 }

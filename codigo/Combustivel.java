@@ -34,20 +34,4 @@ public enum Combustivel {
     public double getConsumo() {
         return this.consumo;
     }
-
-/**
- * Método do tipo get que retorna o tipo do combustivel.
- * @param numero parâmetro do tipo int para determinar qual tipo de combustível deverá ser retornado. "1" retorna ALCOOL, "2" retorna DISEL, demais
- * retornam GASOLINA.
- * @return retorna o tipo de combustível escolhido no parâmetro.
- */
-    public Combustivel getTipo(int numero) {
-        if (numero == 1) {
-            return Combustivel.ALCOOL;
-        } else if (numero == 2) {
-            return Combustivel.DIESEL;
-        } else {
-            return Combustivel.GASOLINA;
-        }
-    }
 } 

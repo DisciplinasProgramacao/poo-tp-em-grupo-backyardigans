@@ -57,30 +57,6 @@ public class Tanque implements ITanque {
     }
 
     /**
-     * Método para obter o consumo.
-     * @return retorna o consumo, do tipo double.
-     */
-    public double getConsumo() {
-        return consumo;
-    }
-
-    /**
-     * Método para obter a capacidade atual.
-     * @return retorna a capacidade atual, do tipo double.
-     */
-    public double capacidadeAtual() {
-        return this.capacidadeAtual;
-    }
-
-    /**
-     * Método para obter a capacidade máxima.
-     * @return retorna a capacidade máxima, do tipo double.
-     */
-    public double capacidadeMaxima() {
-        return capacidadeMaxima;
-    }
-
-    /**
      * Método que consome litros, atualizando a capacidade atual de acordo
      * com o valor de litros passado como parâmetro. Tem como valor mínimo
      * 0, pois não é possível o tanque possuir capacidade negativa.
@@ -93,14 +69,6 @@ public class Tanque implements ITanque {
             capacidadeAtual -= litros;
         }
 
-    }
-
-    /**
-     * Método para obter o preço do combustível.
-     * @return retorna o preço do combustível, do tipo double.
-     */
-    public double getPrecoCombustivel() {
-        return tipo.getPreco();
     }
 
     /**
@@ -122,4 +90,37 @@ public class Tanque implements ITanque {
         str.append("\nCapacidade Atual: " + df.format(capacidadeAtual));
         return str.toString();
     }
+
+    /**
+     * Método para obter a capacidade atual.
+     * @return retorna a capacidade atual, do tipo double.
+     */
+    public double getCapacidadeAtual() {
+        return this.capacidadeAtual;
+    }
+
+    /**
+     * Método para obter a capacidade máxima.
+     * @return retorna a capacidade máxima, do tipo double.
+     */
+    public double getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
+
+    /**
+     * Método para obter o preço do combustível.
+     * @return retorna o preço do combustível, do tipo double.
+     */
+    public double getPrecoCombustivel() {
+        return tipo.getPreco();
+    }
+    
+    /**
+     * Método para obter o consumo.
+     * @return retorna o consumo, do tipo double.
+     */
+    public double getConsumo() {
+        return consumo;
+    }
+
 }

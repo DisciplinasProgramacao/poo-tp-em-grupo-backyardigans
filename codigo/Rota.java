@@ -17,19 +17,6 @@ public class Rota {
     }
 
     /**
-     * Método para obter a quilometragem
-     * 
-     * @return retorna a quilometragem
-     */
-    public double getQuilometragem() {
-        return quilometragem;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    /**
      * Relatório da rota. Formatação em 2 linhas, com
      * <ul>
      * <li>Data da rota</li>
@@ -45,5 +32,22 @@ public class Rota {
         aux.append(" DATA: " + data + " - ");
         aux.append(" QUILOMETRAGEM: " + df.format(quilometragem) + " km");
         return aux.toString();
+    }
+
+    /**
+     * Método para obter a quilometragem
+     * 
+     * @return retorna a quilometragem
+     */
+    public double getQuilometragem() {
+        return quilometragem;
+    }
+
+    /**
+     * Método para obter a data da rota.
+     * @return data da rota.
+     */
+    public LocalDate getData() {
+        return data;
     }
 }

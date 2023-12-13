@@ -38,14 +38,14 @@ public class Veiculo {
     }
 
     /**
-     * Método para adicionar uma rota ao veículo
-     * 
+     * Método para adicionar uma rota ao veículo, antes de adicionar ele verifica se o 
+     * veículo tem autonomia suficiente e se pode realizar a rota.
      * @param rota rota a ser adicionada ao veículo
      * @return retorna true caso a rota tenha sido adicionada ou retorna false caso
      *         o limite de rotas tenha sido atingido
      */
     public boolean addRota(Rota rota) {
-        if (quantRotas < MAX_ROTAS && rota.getQuilometragem() <= autonomiaMaxima()) {
+        if (quantRotas < MAX_ROTAS && rota.getQuilometragem() <= tanque.autonomiaMaxima()) {
             rotas.add(rota);
             quantRotas++;
             percorrerRota(rota);
@@ -55,38 +55,19 @@ public class Veiculo {
         }
     }
 
-    // /**
-    //  * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas
-    //  * no mes.
-    //  */
-    // public void zerarRotas() {
-    //     rotas.clear();
-    //     kmTotal = 0;
-    // }
-
     /**
-     * Método para obter a autonomia máxima do veículo
-     * 
-     * @return retorna a autonomia máxima do veiculo, do tipo double.
-     */
-    public double autonomiaMaxima() {
-        return tanque.autonomiaMaxima();
-    }
-
-    /**
-     * Método para abastecer o veículo
-     * 
+     * Método para abastecer o veículo.
      * @param litros quantidade de litros para ser adicinado no tanque do veículo, do tipo double
      * @return retorna a quantidade de litros do tanque após o abastecimento, do tipo double.
      */
     public double abastecer(double litros) {
 
-        if (tanque.capacidadeAtual() + litros <= tanque.capacidadeMaxima()) {
+        if (tanque.getCapacidadeAtual() + litros <= tanque.getCapacidadeMaxima()) {
             tanque.abastecer(litros);
             totalReabastecido += litros;
         }
 
-        return tanque.capacidadeAtual();
+        return tanque.getCapacidadeAtual();
     }
 
     /**
@@ -99,25 +80,18 @@ public class Veiculo {
         double km = 0;
 
         for(Rota r : rotas){
-            if((r.getData().getMonthValue() == data.getMonthValue()) && (r.getData().getYear() == data.getYear()))
-                km += r.getQuilometragem();   
+            if((r.getData().getMonthValue() == data.getMonthValue()) && (r.getData().getYear() == data.getYear())){
+                km += r.getQuilometragem();
+            }
+                
         }
            return km;
     }
 
     /**
-     * Método para calcular a quilometragem total percorrida pelo veículo com base
-     * nas rotas registradas.
-     * 
-     * @return retorna a quilometragem total percorrida, do tipo double.
-     */
-    public double getKmTotal() {
-        return kmTotal;
-    }
-
-    /**
-     * Método para simular a rota de um veículo, a fim de avaliar se a quantidade de
-     * combustível atual é capaz de realizar a rota.
+     * Método para percorrer a rota de um veículo, a fim de avaliar se a quantidade de
+     * combustível atual é capaz de realizar a rota. É verificado se o carro necessita
+     * de manutenção antes de percorrer a rota e se é necessário abastecer.
      * 
      * @param rota rota que será percorrida, do tipo Rota.
      */
@@ -140,10 +114,17 @@ public class Veiculo {
         }
     }
 
+    /**
+     * Método que cálcula e retorna o gasto total de gasolina do veículo.
+     */
     public double gastoGasolina() {
         return totalReabastecido * tanque.getPrecoCombustivel();
     }
 
+    /**
+     * Relatório de rotas realizadas por um veículo.
+     * Retorna uma String com a placa, tipo do veículo e a data e quilometragem da rota.
+     */
     public String relatorioRotasVeiculo() {
         StringBuilder relatorio = new StringBuilder();
         
@@ -155,15 +136,25 @@ public class Veiculo {
         return relatorio.toString();
     }
 
+    /**
+     * Método que chama o método da classe manutenção para calcular a quantidade
+     * de manutenções de peças realizadas por um veículo.
+     * @return inteiro com a quantidade de manutenções feitas.
+     */
     public int quantidadeManutencaoPeca(){
         return manutencao.getQuantidadeManutencaoPeca();
     }
 
+    /**
+     * * Método que chama o método da classe manutenção para calcular a quantidade
+     * de manutenções períodicas realizadas por um veículo.
+     * @return inteiro com a quantidade de manutenções feitas
+     */
     public int quantidadeManutencaoPeriodica(){
         return manutencao.getQuantidadeManutencaoPeriodica();
     }
 
-        /**
+    /**
      * Método para obter a placa do veículo
      * 
      * @return retorna a placa do veículo, do tipo String
@@ -186,7 +177,6 @@ public class Veiculo {
      * @return retorna o consumo do veículo, do tipo double.
      */
     public double getConsumo() {
-
         return consumo;
     }
 
@@ -196,5 +186,15 @@ public class Veiculo {
      */
     public double getTotalReabastecido() {
         return totalReabastecido;
+    }
+    
+    /**
+     * Método para calcular a quilometragem total percorrida pelo veículo com base
+     * nas rotas registradas.
+     * 
+     * @return retorna a quilometragem total percorrida, do tipo double.
+     */
+    public double getKmTotal() {
+        return kmTotal;
     }
 }
