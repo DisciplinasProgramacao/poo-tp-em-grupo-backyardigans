@@ -197,9 +197,7 @@ public class App {
         sc.nextLine();
 
         Rota rota = new Rota(quilometragem, dataCorreta);
-        frota.adicionarVeiculo(veiculo);
         veiculo.addRota(rota);
-        System.out.println("Rota adicionada com sucesso!");
     }
 
     public static void verificarQuilometragemDeUmVeiculoNoMes() {
@@ -224,7 +222,7 @@ public class App {
 
     private static void relatorios() throws FileNotFoundException {
         sc = new Scanner(System.in);
-        String nomeArq = "relatorios.txt";
+        String nomeArq = "relatorios";
         int opcao = -1;
         while (opcao != 0) {
             limparTela();

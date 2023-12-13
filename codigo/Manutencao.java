@@ -1,7 +1,8 @@
-
 public class Manutencao {
-    int kmPeca;
-    int kmPeriodica;
+    private double kmPeca;
+    private double kmPeriodica;
+    private int quantidadeManutencaoPeca;
+    private int quantidadeManutencaoPeriodica;
 
     /**
      * Construtor da classe manutenção.
@@ -10,29 +11,38 @@ public class Manutencao {
      * @param manutencaoPeca parâmetro do tipo int que indica a quilometragem em que 
      * é feita a manutenção de peça.
      */
-    public Manutencao(int manutencaoPeriodica, int manutencaoPeca) {
+    public Manutencao(double manutencaoPeriodica, double manutencaoPeca) {
         this.kmPeriodica = manutencaoPeriodica;
         this.kmPeca = manutencaoPeca;
+        this.quantidadeManutencaoPeca = 0;
+        this.quantidadeManutencaoPeriodica = 0;
     }
 
-    /**
-     * Método que calcula a quantidade de manutenção de peças realizadas.
-     * @param km parâmetro do tipo double que determina a quilometragem rodada do veículo.
-     * @return retorna a quantidade de manutenção de peças realizadas, obtida pela divisão
-     * entre a quilometragem do carro e a quilometragem em que é feita a manutenção de peça.
-     */
-    public int quantidadeManutencaoPeca(double km) {
-        return (int) (km/kmPeca);
+    public boolean verificarManutencao(double kmTotalAtual){
+        
+        if((kmTotalAtual/kmPeca) > quantidadeManutencaoPeca || (kmTotalAtual/kmPeriodica) > quantidadeManutencaoPeriodica){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
-    /**
-     * Método que calcula a quantidade de manutenção periódicas realizadas.
-     * @param km parâmetro do tipo double que determina a quilometragem rodada do veículo.
-     * @return retorna a quantidade de manutenção de peças periódicas realizadas, obtida pela divisão
-     * entre a quilometragem do carro e a quilometragem em que é feita a manutenção periódica.
-     */
-    public int quantidadeManutencaoPeriodica(double km) {
-        return (int) (km/kmPeriodica);
+    public void realizarManutencao(double kmTotalAtual){
+        
+        if(quantidadeManutencaoPeca < (kmTotalAtual/kmPeca)){
+            quantidadeManutencaoPeca++;
+        }
+        if(quantidadeManutencaoPeriodica < (kmTotalAtual/kmPeriodica)){
+            quantidadeManutencaoPeriodica++;
+        }
+    }
+    
+    public int getQuantidadeManutencaoPeca(){
+        return quantidadeManutencaoPeca;
     }
 
+    public int getQuantidadeManutencaoPeriodica(){
+        return quantidadeManutencaoPeriodica;
+    }
 }

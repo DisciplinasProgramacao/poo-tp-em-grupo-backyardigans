@@ -111,16 +111,16 @@ public class Frota {
         return veiculoMaiorMedia;
     }
 
-    /**
-     * Método que vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de
-     * cada veiculo
-     */
-    public void virarMes() {
+    // /**
+    //  * Método que vira o mes de toda a frota de veiculos, limpando todas as rotas do mes de
+    //  * cada veiculo
+    //  */
+    // public void virarMes() {
 
-        for (Veiculo veiculo : veiculos) {
-            veiculo.zerarRotas();
-        }
-    }
+    //     for (Veiculo veiculo : veiculos) {
+    //         veiculo.zerarRotas();
+    //     }
+    // }
 
     /**
      * Método que adiciona um novo veículo à frota.
@@ -147,7 +147,7 @@ public class Frota {
 
         double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
         double valoManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
-        double gastoEmCombustivel = v.getTotalReabastecido() * v.valorCombustivel();
+        double gastoEmCombustivel = v.getTotalReabastecido() * v.tanque.getPrecoCombustivel();
 
         return gastoEmCombustivel + valoManutencaoPeca + valorManutencaoPeriodica;
     }

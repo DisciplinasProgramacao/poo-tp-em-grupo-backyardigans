@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class Veiculo {
     protected double totalReabastecido;
     protected Tanque tanque;
     protected double kmTotal;
-    public Manutencao manutencao;
+    private Manutencao manutencao;
     private TipoVeiculo tipo;
 
     static {
@@ -49,20 +48,21 @@ public class Veiculo {
         if (quantRotas < MAX_ROTAS && rota.getQuilometragem() <= autonomiaMaxima()) {
             rotas.add(rota);
             quantRotas++;
+            percorrerRota(rota);
             return true;
         } else {
             return false;
         }
     }
 
-    /**
-     * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas
-     * no mes.
-     */
-    public void zerarRotas() {
-        rotas.clear();
-        kmTotal = 0;
-    }
+    // /**
+    //  * Método que irá zerar todas as rotas do Vieculo, feitas ou que irão ser feitas
+    //  * no mes.
+    //  */
+    // public void zerarRotas() {
+    //     rotas.clear();
+    //     kmTotal = 0;
+    // }
 
     /**
      * Método para obter a autonomia máxima do veículo
@@ -71,15 +71,6 @@ public class Veiculo {
      */
     public double autonomiaMaxima() {
         return tanque.autonomiaMaxima();
-    }
-
-    /**
-     * Método para obter a autonomia atual do veículo.
-     * 
-     * @return retorna a autonomia atual do veículo, do tipo double.
-     */
-    public double autonomiaAtual() {
-        return tanque.autonomiaAtual();
     }
 
     /**
@@ -135,8 +126,12 @@ public class Veiculo {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
             double litros = kmRota / consumo;
+            
+            if(manutencao.verificarManutencao(kmTotal)){
+                manutencao.realizarManutencao(kmTotal);
+            }
 
-            if (kmRota > autonomiaAtual()) {
+            if (kmRota > tanque.autonomiaAtual()) {
                 abastecer(litros);
             }
 
@@ -145,7 +140,30 @@ public class Veiculo {
         }
     }
 
-    /**
+    public double gastoGasolina() {
+        return totalReabastecido * tanque.getPrecoCombustivel();
+    }
+
+    public String relatorioRotasVeiculo() {
+        StringBuilder relatorio = new StringBuilder();
+        
+        relatorio.append("Placa:" + placa + "\n");
+        relatorio.append("Tipo do Veiculo: " + tipo + "\n");
+        rotas.stream().map(Rota::relatorio)
+                    .forEach(r -> relatorio.append(r+"\n"));
+
+        return relatorio.toString();
+    }
+
+    public int quantidadeManutencaoPeca(){
+        return manutencao.getQuantidadeManutencaoPeca();
+    }
+
+    public int quantidadeManutencaoPeriodica(){
+        return manutencao.getQuantidadeManutencaoPeriodica();
+    }
+
+        /**
      * Método para obter a placa do veículo
      * 
      * @return retorna a placa do veículo, do tipo String
@@ -179,35 +197,4 @@ public class Veiculo {
     public double getTotalReabastecido() {
         return totalReabastecido;
     }
-
-    
-    public double quantidadeManutencaoPeca() {
-
-        return manutencao.quantidadeManutencaoPeca(kmTotal);
-    };
-
-    public double quantidadeManutencaoPeriodica() {
-
-        return manutencao.quantidadeManutencaoPeriodica(kmTotal);
-    };
-
-    public double valorCombustivel() {
-        return tanque.getPrecoCombustivel();
-    }
-
-    public double gastoGasolina() {
-        return totalReabastecido * tanque.getPrecoCombustivel();
-    }
-
-    public String relatorioRotasVeiculo() {
-        StringBuilder relatorio = new StringBuilder();
-        
-        relatorio.append("Placa:" + placa + "\n");
-        relatorio.append("Tipo do Veiculo: " + tipo + "\n");
-        rotas.stream().map(Rota::relatorio)
-                    .forEach(r -> relatorio.append(r+"\n"));
-
-        return relatorio.toString();
-    }
-
 }

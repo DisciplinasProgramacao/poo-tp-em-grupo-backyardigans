@@ -10,9 +10,9 @@ public enum TipoVeiculo {
     FURGAO(80, 10000, 12000),
     CAMINHAO(250, 20000, 20000);
 
-    public int tanque;
-    public int ManutencaoPeca;
-    public int ManutencaoPeriodica;
+    private double tanque;
+    private double ManutencaoPeca;
+    private double ManutencaoPeriodica;
 
     /**
      * Construtor do enumerador TipoVeiculo.
@@ -30,7 +30,7 @@ public enum TipoVeiculo {
      * Método para obter a capacidade máxima do tanque
      * @return retorna a capacidade máxima do tanque, do tipo int.
      */
-    public int getTanque() {
+    public double getTanque() {
         return tanque;
     }
 
@@ -40,7 +40,7 @@ public enum TipoVeiculo {
      * @return retorna a quilometragem da realização da manutenção
      * de peça.
      */
-    public int getManutencaoPeca() {
+    public double getManutencaoPeca() {
         return ManutencaoPeca;
     }
 
@@ -50,7 +50,7 @@ public enum TipoVeiculo {
      * @return retorna a quilometragem da realização da manutenção
      * periódica.
      */
-    public int getManutencaoPeriodica() {
+    public double getManutencaoPeriodica() {
         return ManutencaoPeriodica;
     }
 }
