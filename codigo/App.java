@@ -213,6 +213,16 @@ public class App {
         return v;
     }
 
+    /**
+     * Método que verifica a opção de combustível
+     * 
+     * @param opcao parâmetro do tipo String que indica a opção
+     * de combustível a ser verificada
+     * 
+     * @return retorna um boolean,sendo true caso o parâemtro passado
+     * seja igual a ALCOOL, GASOLINA ou DIESEL, e false nos demais casos.
+     * 
+     */
     public static boolean verificarOpcaoCombustivel(String opcao) {
         if (opcao.equals("ALCOOL") || (opcao.equals("GASOLINA")) || (opcao.equals("DIESEL"))) {
             return true;
@@ -221,6 +231,11 @@ public class App {
         }
     }
 
+    /**
+     * Método que verifica o total reabastecido pelo veículo e imprime a informação 
+     * na tela.
+     * 
+     */
     public static void verificarTotalReabastecido() {
         Veiculo v = localizarVeiculo();
         if (v != null) {
@@ -228,6 +243,13 @@ public class App {
         }
     }
 
+    /**
+     * Método que verifica o gasto total de um veículo. Lê-se do teclado as informações
+     * de placa, valor de manutenção de peça e valor de manutenção periódica, e o relatório
+     * é impresso na tela através da chamada de método relatorioGastoTotal, passando como
+     * parâmetro estas informações.
+     * 
+     */
     public static void verificarGastoTotalDeUmVeiculo() {
 
         System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
@@ -241,6 +263,12 @@ public class App {
         pausa();
     }
 
+    /**
+     * Método que formata a data.
+     * 
+     * @param data data a ser formatada, do tipo String.
+     * @return retorna a data formatada, do  LocalDate.
+     */
     public static LocalDate converterData(String data) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataFormatada = LocalDate.parse(data, formato);
@@ -248,6 +276,14 @@ public class App {
         return dataFormatada;
     }
 
+    /**
+     * Método que adiciona uma nova rota. Caso o veículo
+     * seja localizado, lê-se do teclado o dia da rota e a
+     * quilometragem da rota. Cria-se um novo objeto do tipo
+     * Rota, passando estas informações como parâmetro, e a 
+     * rota é vinculada ao veículo.
+     * 
+     */
     public static void adicionarRota() {
 
         Veiculo veiculo = localizarVeiculo();
@@ -266,6 +302,12 @@ public class App {
         }
     }
 
+    /**
+     * Método que verifica a quilometragem de um veículo no mês.
+     * Caso o veículo seja localizado, lê-se do teclado a data e
+     * é impresso na tela a quilometragem total do mês.
+     * 
+     */
     public static void verificarQuilometragemDeUmVeiculoNoMes() {
         Veiculo v = localizarVeiculo();
 
@@ -279,6 +321,12 @@ public class App {
 
     }
 
+    /**
+     * Método que verifica a quilometragem total de um veículo.
+     * Caso o veículo seja localizado, é impresso na tela a sua
+     * quilometragem total.
+     * 
+     */
     public static void verificarQuilometragemTotalDeUmVeiculo() {
         Veiculo v = localizarVeiculo();
 
@@ -288,6 +336,12 @@ public class App {
 
     }
 
+    /**
+     * Método que mostra o relatório de rotas de um veículo.
+     * Caso o veículo seja localizado, o relatório é impresso
+     * na tela.
+     * 
+     */
     public static void relatorioDeRotasDeUmVeiculo() {
         Veiculo v = localizarVeiculo();
 
@@ -297,6 +351,13 @@ public class App {
 
     }
 
+    /**
+     * Menu que permite o usuário selecionar qual relatório
+     * quer ver, a partir do arquivo "relatorios". 
+     * @throws FileNotFoundException caso o arquivo "relatorios"
+     * não exista, é lançada a exceção.
+     * 
+     */
     private static void relatorios() throws FileNotFoundException {
         sc = new Scanner(System.in);
         String nomeArq = "relatorios";
@@ -326,6 +387,7 @@ public class App {
         pausa();
         }
     }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         frota = new Frota();
