@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Frota {
@@ -126,13 +127,24 @@ public class Frota {
      * @return retorna o gasto total, obtido pela soma do gastos totais com combustível, manutenção periodica 
      * e manutenção de peças
      */
-    public double gastoTotal(String placa, double valorMPeca, double valorMPeriodico) {
-        Veiculo v = (Veiculo) veiculos.stream().filter(e -> e.getPlaca().equals(placa));
-
-        double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
-        double valoManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
+    public String relatorioGastoTotal(String placa, double valorMPeca, double valorMPeriodico) {
+        Veiculo v = localizarVeiculo(placa);
+        DecimalFormat df = new DecimalFormat("#.##");
+        StringBuilder str = new StringBuilder();
         double gastoEmCombustivel = v.getTotalReabastecido() * v.tanque.getPrecoCombustivel();
+        double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
+        double valorManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
 
-        return gastoEmCombustivel + valoManutencaoPeca + valorManutencaoPeriodica;
+        str.append("O gasto total do veículo de placa "+v.getPlaca()+" foi: ");
+        
+        str.append("\nQuantidade de manutenção periódica: "+v.quantidadeManutencaoPeriodica()+" - Valor: R$"+df.format(valorManutencaoPeriodica));
+        
+        str.append("\nQuantidade de manutenção em peças: "+v.quantidadeManutencaoPeca()+" - Valor: R$"+df.format(valorManutencaoPeca));
+        
+        str.append("\nTotal reabastecido pelo carro: "+df.format(v.getTotalReabastecido())+" - Valor: R$"+df.format(gastoEmCombustivel));
+        
+        str.append("\nValor total gasto: R$"+df.format(gastoEmCombustivel+valorManutencaoPeca+valorManutencaoPeriodica));
+        
+        return str.toString();
     }
 }

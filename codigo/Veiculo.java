@@ -130,8 +130,10 @@ public class Veiculo {
         
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
-        rotas.stream().map(Rota::relatorio)
-                    .forEach(r -> relatorio.append(r+"\n"));
+        relatorio.append("Quantidade de rotas realizadas: "+quantRotas+"\n");
+        for(Rota r : rotas){
+            relatorio.append(r.relatorio()+ "\n");
+        }
 
         return relatorio.toString();
     }

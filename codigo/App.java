@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class App {
     static Scanner sc;
     static Frota frota;
-    static Random sorteador = new Random(42);
-    static DecimalFormat df = new DecimalFormat("R$ ##,#");
+    static Random sorteador = new Random();
+    static DecimalFormat df = new DecimalFormat("#.##");
 
     /**
      * Método para limpar a tela do console.
@@ -58,7 +58,7 @@ public class App {
 
             LocalDate dataAleatoria = gerarDataAleatoria();
 
-            int quantidadeAleatoriaRotas = sorteador.nextInt(30 - 15) + 15;
+            int quantidadeAleatoriaRotas = sorteador.nextInt((30-15)+1) + 15;
 
             for (int i = 0; i < quantidadeAleatoriaRotas; i++) {
                 Rota rota = new Rota(kmAleatorio, dataAleatoria);
@@ -66,7 +66,8 @@ public class App {
                 vEntrada.addRota(rota);
             }
         }
-        //System.out.println(frota.relatorioFrota());
+        // System.out.println(frota.relatorioFrota());
+        System.out.println("Base de teste pronta!");
         leitor.close();
     }
 
@@ -76,7 +77,7 @@ public class App {
      * @return double contento os quilômetros.
      */
     public static double gerarKmAleatorio() {
-        Double km = Math.random() * (1000 - 50) + 50;
+        Double km = Math.random() * ((7500-500)+1) + 500;
         return km;
     }
 
@@ -138,29 +139,29 @@ public class App {
         String placa = sc.nextLine();
         System.out.println("Escolha o tipo de veículo: ");
         int opcaoVeiculo = menu(nomeArq);
-        System.out.println((opcaoVeiculo != 0)?"Escolha o tipo do combustivel: ":"Enter para continuar.");
-
-        switch (opcaoVeiculo) {
+        if(opcaoVeiculo != 0){
+            System.out.println("Digite a o número do veículo utilizado: ");
+            String opcaoCombustivel = pegarCombustivel();
+            if(verificarOpcaoCombustivel(opcaoCombustivel)){
+                switch (opcaoVeiculo) {
             case 1:
-                String opcaoCombustivel = pegarCombustivel();
                 Veiculo caminhao = new Veiculo(placa, "CAMINHAO", opcaoCombustivel);
                 frota.adicionarVeiculo(caminhao);
                 break;
             case 2:
-                opcaoCombustivel = pegarCombustivel();
                 Veiculo carro = new Veiculo(placa, "CARRO", opcaoCombustivel);
                 frota.adicionarVeiculo(carro);
                 break;
             case 3:
-                opcaoCombustivel = pegarCombustivel();
                 Veiculo furgao = new Veiculo(placa, "FURGAO", opcaoCombustivel);
                 frota.adicionarVeiculo(furgao);
                 break;
             case 4:
-                opcaoCombustivel = pegarCombustivel();
                 Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
                 frota.adicionarVeiculo(van);
                 break;
+                }
+            }
         }
 
     }
@@ -212,10 +213,18 @@ public class App {
         return v;
     }
 
+    public static boolean verificarOpcaoCombustivel(String opcao) {
+        if (opcao.equals("ALCOOL") || (opcao.equals("GASOLINA")) || (opcao.equals("DIESEL"))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void verificarTotalReabastecido() {
         Veiculo v = localizarVeiculo();
         if (v != null) {
-            System.out.println("O total de gasolina reabastecido pelo veículo é de: " + v.getTotalReabastecido());
+            System.out.println("O total de gasolina reabastecido pelo veículo é de: " + df.format(v.getTotalReabastecido())+ "litros.");
         }
     }
 
@@ -228,8 +237,8 @@ public class App {
         System.out.println("Digite o valor da manutenção da períodica: ");
         double valorPeriodico = sc.nextDouble();
 
-        System.out.println("O valor total do gasto do veículo foi de: " +
-                df.format(frota.gastoTotal(placa, valorPeca, valorPeriodico)));
+        System.out.println(frota.relatorioGastoTotal(placa, valorPeca, valorPeriodico));
+        pausa();
     }
 
     public static LocalDate converterData(String data) {
@@ -292,27 +301,29 @@ public class App {
         sc = new Scanner(System.in);
         String nomeArq = "relatorios";
         int opcao = -1;
+        limparTela();
         while (opcao != 0) {
             limparTela();
             opcao = menu(nomeArq);
             switch (opcao) {
                 case 1:
+                    limparTela();
                     verificarGastoTotalDeUmVeiculo();
-                    pausa();
                     break;
                 case 2:
+                    limparTela();
                     verificarQuilometragemDeUmVeiculoNoMes();
-                    pausa();
                     break;
                 case 3:
+                    limparTela();
                     verificarQuilometragemTotalDeUmVeiculo();
-                    pausa();
                     break;
                 case 4:
+                    limparTela();
                     relatorioDeRotasDeUmVeiculo();
-                    pausa();
                     break;
             }
+        pausa();
         }
     }
 
@@ -328,24 +339,25 @@ public class App {
             opcao = menu(nomeArq);
             switch (opcao) {
                 case 1:
+                    limparTela();
                     adicionarVeiculo();
-                    pausa();
                     break;
 
                 case 2:
+                    limparTela();
                     adicionarRota();
-                    pausa();
                     break;
 
                 case 3:
+                    limparTela();
                     lerEntradaTexto(nomeArquivoTexto);
-                    pausa();
                     break;
                 case 4:
+                    limparTela();    
                     relatorios();
-                    pausa();
                     break;
             }
+            pausa();
         }
         System.out.println("Sistema fechado!");
         sc.close();
