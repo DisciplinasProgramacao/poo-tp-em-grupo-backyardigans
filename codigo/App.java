@@ -357,6 +357,14 @@ public class App {
 
     }
 
+    public static void virarMes(){
+
+    }
+
+    public static void relatorioFrota(){
+        System.out.println(frota.relatorioFrota());
+    }
+
     /**
      * Submenu que permite o usuário selecionar qual relatório
      * quer ver, a partir do arquivo "relatorios".
@@ -389,6 +397,10 @@ public class App {
                 case 4:
                     limparTela();
                     relatorioDeRotasDeUmVeiculo();
+                    break;
+                case 5:
+                    limparTela();
+                    relatorioFrota();
                     break;
             }
             pausa();
@@ -426,6 +438,10 @@ public class App {
                 case 4:
                     limparTela();
                     relatorios();
+                    break;
+                case 5:
+                    limparTela();
+                    virarMes();
                     break;
             }
             pausa();

@@ -14,6 +14,7 @@ public class Veiculo {
     protected double kmTotal;
     private Manutencao manutencao;
     private TipoVeiculo tipo;
+    DecimalFormat df = new DecimalFormat("#.##");
 
     static {
         MAX_ROTAS = 30;
@@ -132,6 +133,7 @@ public class Veiculo {
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
         relatorio.append("Quantidade de rotas realizadas: "+quantRotas+"\n");
+        relatorio.append("Total reabastecido: "+df.format(totalReabastecido)+" litros\n");
         for(Rota r : rotas){
             relatorio.append(r.relatorio()+ "\n");
         }
@@ -165,7 +167,6 @@ public class Veiculo {
      */
     public String KmTotalVeiculo() {
         StringBuilder str = new StringBuilder();
-        DecimalFormat df = new DecimalFormat("#.##");
 
         str.append("Quantidade de rotas realizadas pelo veículo: "+quantRotas+"\n");
         str.append("Quilometragem total do veículo: "+df.format(kmTotal));
