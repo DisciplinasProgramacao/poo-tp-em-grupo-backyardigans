@@ -128,6 +128,7 @@ public class Veiculo {
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
         relatorio.append("Quantidade de rotas realizadas: "+rotas.size()+"\n");
+        relatorio.append("Total reabastecido: "+df.format(totalReabastecido)+" litros\n");
         for(Rota r : rotas){
             relatorio.append(r.relatorio()+ "\n");
         }

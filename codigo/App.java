@@ -378,6 +378,7 @@ public class App {
                     break;
                 case 5:
                     limparTela();
+                    relatorioFrota();
                     break;
             }
             pausa();
@@ -386,7 +387,7 @@ public class App {
 
     private static void zerarRotas() {
         frota.zerarRotas();
-        System.out.println("as rotas dos veiculos foram descartas!");
+        System.out.println("As rotas dos veículos foram descartas!");
         pausa();
     }
 
@@ -465,9 +466,9 @@ public class App {
      * @return LocalDate com a data.
      */
     public static LocalDate gerarDataAleatoria() {
-        int ano = sorteador.nextInt(2024 - 2023) + 2023;
+        int ano = LocalDate.now().getYear();
 
-        int mes = 12;
+        int mes = LocalDate.now().getMonthValue();
 
         int dia = sorteador.nextInt(LocalDate.of(ano, mes, 1).lengthOfMonth()) + 1;
 
