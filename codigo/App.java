@@ -54,19 +54,13 @@ public class App {
 
             frota.adicionarVeiculo(vEntrada);
 
-            double kmAleatorio = gerarKmAleatorio();
-
-            LocalDate dataAleatoria = gerarDataAleatoria();
-
-            int quantidadeAleatoriaRotas = sorteador.nextInt((30-15)+1) + 15;
+            int quantidadeAleatoriaRotas = sorteador.nextInt((30 - 15) + 1) + 15;
 
             for (int i = 0; i < quantidadeAleatoriaRotas; i++) {
-                Rota rota = new Rota(kmAleatorio, dataAleatoria);
-
+                Rota rota = new Rota(gerarKmAleatorio(), gerarDataAleatoria());
                 vEntrada.addRota(rota);
             }
         }
-        // System.out.println(frota.relatorioFrota());
         System.out.println("Base de teste pronta!");
         leitor.close();
     }
@@ -77,7 +71,7 @@ public class App {
      * @return double contento os quilômetros.
      */
     public static double gerarKmAleatorio() {
-        Double km = Math.random() * ((7500-500)+1) + 500;
+        Double km = Math.random() * ((700 - 100) + 1) + 100;
         return km;
     }
 
@@ -139,27 +133,30 @@ public class App {
         String placa = sc.nextLine();
         System.out.println("Escolha o tipo de veículo: ");
         int opcaoVeiculo = menu(nomeArq);
-        if(opcaoVeiculo != 0){
+        if (opcaoVeiculo != 0) {
             System.out.println("Digite a o número do veículo utilizado: ");
             String opcaoCombustivel = pegarCombustivel();
-            if(verificarOpcaoCombustivel(opcaoCombustivel)){
+            if (verificarOpcaoCombustivel(opcaoCombustivel)) {
                 switch (opcaoVeiculo) {
-            case 1:
-                Veiculo caminhao = new Veiculo(placa, "CAMINHAO", opcaoCombustivel);
-                frota.adicionarVeiculo(caminhao);
-                break;
-            case 2:
-                Veiculo carro = new Veiculo(placa, "CARRO", opcaoCombustivel);
-                frota.adicionarVeiculo(carro);
-                break;
-            case 3:
-                Veiculo furgao = new Veiculo(placa, "FURGAO", opcaoCombustivel);
-                frota.adicionarVeiculo(furgao);
-                break;
-            case 4:
-                Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
-                frota.adicionarVeiculo(van);
-                break;
+                    case 1:
+                        Veiculo caminhao = new Veiculo(placa, "CAMINHAO", opcaoCombustivel);
+                        frota.adicionarVeiculo(caminhao);
+                        break;
+                    case 2:
+                        Veiculo carro = new Veiculo(placa, "CARRO", opcaoCombustivel);
+                        frota.adicionarVeiculo(carro);
+                        break;
+                    case 3:
+                        Veiculo furgao = new Veiculo(placa, "FURGAO", opcaoCombustivel);
+                        frota.adicionarVeiculo(furgao);
+                        break;
+                    case 4:
+                        Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
+                        frota.adicionarVeiculo(van);
+                        break;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
                 }
             }
         }
@@ -193,6 +190,9 @@ public class App {
             case 3:
                 nomeCombustivel = "GASOLINA";
                 break;
+            default:
+                System.out.println("Opção inválida");
+                break;
         }
         return nomeCombustivel;
     }
@@ -217,10 +217,10 @@ public class App {
      * Método que verifica a opção de combustível
      * 
      * @param opcao parâmetro do tipo String que indica a opção
-     * de combustível a ser verificada
+     *              de combustível a ser verificada
      * 
      * @return retorna um boolean,sendo true caso o parâemtro passado
-     * seja igual a ALCOOL, GASOLINA ou DIESEL, e false nos demais casos.
+     *         seja igual a ALCOOL, GASOLINA ou DIESEL, e false nos demais casos.
      * 
      */
     public static boolean verificarOpcaoCombustivel(String opcao) {
@@ -232,21 +232,25 @@ public class App {
     }
 
     /**
-     * Método que verifica o total reabastecido pelo veículo e imprime a informação 
+     * Método que verifica o total reabastecido pelo veículo e imprime a informação
      * na tela.
      * 
      */
     public static void verificarTotalReabastecido() {
         Veiculo v = localizarVeiculo();
         if (v != null) {
-            System.out.println("O total de gasolina reabastecido pelo veículo é de: " + df.format(v.getTotalReabastecido())+ "litros.");
+            System.out.println("O total de gasolina reabastecido pelo veículo é de: "
+                    + df.format(v.getTotalReabastecido()) + "litros.");
         }
     }
 
     /**
-     * Método que verifica o gasto total de um veículo. Lê-se do teclado as informações
-     * de placa, valor de manutenção de peça e valor de manutenção periódica, e o relatório
-     * é impresso na tela através da chamada de método relatorioGastoTotal, passando como
+     * Método que verifica o gasto total de um veículo. Lê-se do teclado as
+     * informações
+     * de placa, valor de manutenção de peça e valor de manutenção periódica, e o
+     * relatório
+     * é impresso na tela através da chamada de método relatorioGastoTotal, passando
+     * como
      * parâmetro estas informações.
      * 
      */
@@ -267,7 +271,7 @@ public class App {
      * Método que formata a data.
      * 
      * @param data data a ser formatada, do tipo String.
-     * @return retorna a data formatada, do  LocalDate.
+     * @return retorna a data formatada, do LocalDate.
      */
     public static LocalDate converterData(String data) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -280,7 +284,7 @@ public class App {
      * Método que adiciona uma nova rota. Caso o veículo
      * seja localizado, lê-se do teclado o dia da rota e a
      * quilometragem da rota. Cria-se um novo objeto do tipo
-     * Rota, passando estas informações como parâmetro, e a 
+     * Rota, passando estas informações como parâmetro, e a
      * rota é vinculada ao veículo.
      * 
      */
@@ -298,7 +302,9 @@ public class App {
             sc.nextLine();
 
             Rota rota = new Rota(quilometragem, dataCorreta);
-            veiculo.addRota(rota);
+            boolean resultado = veiculo.addRota(rota);
+            System.out.println(resultado ? "Rota adicionada para o veículo com sucesso!"
+                    : "Não foi possível adicionar a rota ao veículo!");
         }
     }
 
@@ -353,9 +359,10 @@ public class App {
 
     /**
      * Submenu que permite o usuário selecionar qual relatório
-     * quer ver, a partir do arquivo "relatorios". 
+     * quer ver, a partir do arquivo "relatorios".
+     * 
      * @throws FileNotFoundException caso o arquivo "relatorios"
-     * não exista, é lançada a exceção.
+     *                               não exista, é lançada a exceção.
      * 
      */
     private static void relatorios() throws FileNotFoundException {
@@ -384,7 +391,7 @@ public class App {
                     relatorioDeRotasDeUmVeiculo();
                     break;
             }
-        pausa();
+            pausa();
         }
     }
 
@@ -417,7 +424,7 @@ public class App {
                     lerEntradaTexto(nomeArquivoTexto);
                     break;
                 case 4:
-                    limparTela();    
+                    limparTela();
                     relatorios();
                     break;
             }
