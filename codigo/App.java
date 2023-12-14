@@ -40,6 +40,10 @@ public class App {
                     limparTela();
                     relatorios();
                     break;
+                case 4:
+                    limparTela();
+                    zerarRotas();
+                    break;
             }
             pausa();
         }
@@ -374,7 +378,6 @@ public class App {
                     break;
                 case 5:
                     limparTela();
-                    zerarRotas();
                     break;
             }
             pausa();
