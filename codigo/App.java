@@ -87,6 +87,7 @@ public class App {
                 case 5:
                     limparTela();
                     relatorioFrota();
+                    
                     break;
             }
             pausa();
@@ -390,7 +391,6 @@ public class App {
     private static void zerarRotas() {
         frota.zerarRotas();
         System.out.println("As rotas dos veículos foram descartas!");
-        pausa();
     }
 
     /**
