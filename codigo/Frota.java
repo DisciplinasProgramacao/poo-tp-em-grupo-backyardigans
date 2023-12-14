@@ -21,6 +21,8 @@ public class Frota {
 
         relatorio.append("RELATÓRIO DA FROTA\n");
         relatorio.append("------------------\n");
+        relatorio.append("Veículo com mais quilometros: "+maiorKmTotal().getPlaca()+"\n");
+        relatorio.append("Veículo com maior média de quilometros: "+maiorKmMedia().getPlaca()+"\n");
 
         if (veiculos.isEmpty()) {
             relatorio.append("Frota vazia");
