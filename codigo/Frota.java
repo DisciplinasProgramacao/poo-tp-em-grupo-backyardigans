@@ -29,7 +29,11 @@ public class Frota {
         }
 
         for (Veiculo veiculo : veiculos) {
-            relatorio.append(veiculo.relatorioRotasVeiculo() + "\n\n");
+            relatorio.append("Tipo: " + veiculo.getTipo() + "\n");
+            relatorio.append("Placa: " + veiculo.getPlaca()+ "\n");
+            relatorio.append("Tanque: " + veiculo.tanque.getCapacidadeMaxima()+ " litros\n");
+
+            relatorio.append("\n\n");
         }
 
         return relatorio.toString();

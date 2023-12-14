@@ -112,21 +112,15 @@ public class Veiculo {
     }
 
     /**
-     * Método que cálcula e retorna o gasto total de gasolina do veículo.
+     * Relatório do veículo com todas as rotas atualizadas.
+     * Retorna uma String com a placa, tipo do veículo, tanque e a data e quilometragem da rota.
      */
-    public double gastoGasolina() {
-        return totalReabastecido * tanque.getPrecoCombustivel();
-    }
-
-    /**
-     * Relatório de rotas realizadas por um veículo.
-     * Retorna uma String com a placa, tipo do veículo e a data e quilometragem da rota.
-     */
-    public String relatorioRotasVeiculo() {
+    public String relatorioVeiculo() {
         StringBuilder relatorio = new StringBuilder();
         
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
+        relatorio.append(tanque.toString() + "\n");
         relatorio.append("Quantidade de rotas realizadas: "+rotas.size()+"\n");
         relatorio.append("Total reabastecido: "+df.format(totalReabastecido)+" litros\n");
         for(Rota r : rotas){
@@ -173,14 +167,6 @@ public class Veiculo {
     }
 
     /**
-     * Método para obter o consumo do veículo.
-     * @return retorna o consumo do veículo, do tipo double.
-     */
-    public double getConsumo() {
-        return consumo;
-    }
-
-    /**
      * Método para obter o total reabastecido.
      * @return retorna o total reabastecido, em double.
      */
@@ -194,5 +180,13 @@ public class Veiculo {
      */
     public double getKmTotal(){
         return kmTotal;
+    }
+
+    /**
+     * get retornando o tipo do veiculo
+     * @return retorna o nome do tipo do veiculo em string.
+     */
+    public String getTipo() {
+        return tipo.name();
     }
 }

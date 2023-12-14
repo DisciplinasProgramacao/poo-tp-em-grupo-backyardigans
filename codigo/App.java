@@ -51,6 +51,48 @@ public class App {
         sc.close();
     }
 
+     /**
+     * Submenu que permite o usuário selecionar qual relatório
+     * quer ver, a partir do arquivo "relatorios".
+     * 
+     * @throws FileNotFoundException caso o arquivo "relatorios"
+     *                               não exista, é lançada a exceção.
+     * 
+     */
+    private static void relatorios() throws FileNotFoundException {
+        sc = new Scanner(System.in);
+        String nomeArq = "relatorios";
+        int opcao = -1;
+        limparTela();
+        while (opcao != 0) {
+            limparTela();
+            opcao = menu(nomeArq);
+            switch (opcao) {
+                case 1:
+                    limparTela();
+                    verificarGastoTotalDeUmVeiculo();
+                    break;
+                case 2:
+                    limparTela();
+                    verificarQuilometragemDeUmVeiculoNoMes();
+                    break;
+                case 3:
+                    limparTela();
+                    verificarQuilometragemTotalDeUmVeiculo();
+                    break;
+                case 4:
+                    limparTela();
+                    relatorioVeiculo();
+                    break;
+                case 5:
+                    limparTela();
+                    relatorioFrota();
+                    break;
+            }
+            pausa();
+        }
+    }
+
     /**
      * Método para limpar a tela do console.
      */
@@ -330,11 +372,11 @@ public class App {
      * na tela.
      * 
      */
-    public static void relatorioDeRotasDeUmVeiculo() {
+    public static void relatorioVeiculo() {
         Veiculo v = localizarVeiculo();
 
         if (v != null) {
-            System.out.println(v.relatorioRotasVeiculo());
+            System.out.println(v.relatorioVeiculo());
         }
 
     }
@@ -343,47 +385,7 @@ public class App {
         System.out.println(frota.relatorioFrota());
     }
 
-    /**
-     * Submenu que permite o usuário selecionar qual relatório
-     * quer ver, a partir do arquivo "relatorios".
-     * 
-     * @throws FileNotFoundException caso o arquivo "relatorios"
-     *                               não exista, é lançada a exceção.
-     * 
-     */
-    private static void relatorios() throws FileNotFoundException {
-        sc = new Scanner(System.in);
-        String nomeArq = "relatorios";
-        int opcao = -1;
-        limparTela();
-        while (opcao != 0) {
-            limparTela();
-            opcao = menu(nomeArq);
-            switch (opcao) {
-                case 1:
-                    limparTela();
-                    verificarGastoTotalDeUmVeiculo();
-                    break;
-                case 2:
-                    limparTela();
-                    verificarQuilometragemDeUmVeiculoNoMes();
-                    break;
-                case 3:
-                    limparTela();
-                    verificarQuilometragemTotalDeUmVeiculo();
-                    break;
-                case 4:
-                    limparTela();
-                    relatorioDeRotasDeUmVeiculo();
-                    break;
-                case 5:
-                    limparTela();
-                    relatorioFrota();
-                    break;
-            }
-            pausa();
-        }
-    }
+
 
     private static void zerarRotas() {
         frota.zerarRotas();
