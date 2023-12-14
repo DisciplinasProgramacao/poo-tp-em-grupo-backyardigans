@@ -335,6 +335,10 @@ public class App {
 
     }
 
+    public static void relatorioFrota(){
+        System.out.println(frota.relatorioFrota());
+    }
+
     /**
      * Submenu que permite o usuário selecionar qual relatório
      * quer ver, a partir do arquivo "relatorios".
