@@ -13,6 +13,41 @@ public class App {
     static DecimalFormat df = new DecimalFormat("#.##");
 
     /**
+     * Main com a iniciação do sistema e chamada de métodos do menu
+     */
+    public static void main(String[] args) throws FileNotFoundException {
+        frota = new Frota();
+
+        geracaoAleatoria();
+
+        sc = new Scanner(System.in);
+        String nomeArq = "menu";
+        int opcao = -1;
+        while (opcao != 0) {
+            limparTela();
+            opcao = menu(nomeArq);
+            switch (opcao) {
+                case 1:
+                    limparTela();
+                    adicionarVeiculo();
+                    break;
+
+                case 2:
+                    limparTela();
+                    adicionarRota();
+                    break;
+                case 3:
+                    limparTela();
+                    relatorios();
+                    break;
+            }
+            pausa();
+        }
+        System.out.println("Sistema fechado!");
+        sc.close();
+    }
+
+    /**
      * Método para limpar a tela do console.
      */
     public static void limparTela() {
@@ -28,69 +63,6 @@ public class App {
         sc.nextLine();
     }
 
-    /**
-     * Método para a leitura da entrada texto de teste do trabalho. Leitura do
-     * arquivo texto passado como
-     * parâmetro e após isso gera também valores aleatórios para complementar as
-     * informações de teste.
-     * 
-     * @param nomeArquivo nome do arquivo que será lido
-     * @throws FileNotFoundException
-     */
-    public static void lerEntradaTexto(String nomeArquivo) throws FileNotFoundException {
-
-        File arquivo = new File(nomeArquivo);
-
-        Scanner leitor = new Scanner(arquivo, "UTF-8");
-        String[] info = new String[4];
-        while (leitor.hasNextLine()) {
-            String linha = leitor.nextLine();
-
-            info = linha.split(";");
-            String placa = info[0];
-            String tipoVeiculo = info[1];
-            String tipoCombustivel = info[2];
-            Veiculo vEntrada = new Veiculo(placa, tipoVeiculo, tipoCombustivel);
-
-            frota.adicionarVeiculo(vEntrada);
-
-            int quantidadeAleatoriaRotas = sorteador.nextInt((30 - 15) + 1) + 15;
-
-            for (int i = 0; i < quantidadeAleatoriaRotas; i++) {
-                Rota rota = new Rota(gerarKmAleatorio(), gerarDataAleatoria());
-                vEntrada.addRota(rota);
-            }
-        }
-        System.out.println("Base de teste pronta!");
-        leitor.close();
-    }
-
-    /**
-     * Método para gerar quilometragens aleatórias para a base de teste.
-     * 
-     * @return double contento os quilômetros.
-     */
-    public static double gerarKmAleatorio() {
-        Double km = Math.random() * ((700 - 100) + 1) + 100;
-        return km;
-    }
-
-    /**
-     * Método para gerar datas aleatórias para a base de teste.
-     * 
-     * @return LocalDate com a data.
-     */
-    public static LocalDate gerarDataAleatoria() {
-        int ano = sorteador.nextInt(2024 - 2023) + 2023;
-
-        int mes = sorteador.nextInt(12) + 1;
-
-        int dia = sorteador.nextInt(LocalDate.of(ano, mes, 1).lengthOfMonth()) + 1;
-
-        LocalDate dataAleatoria = LocalDate.of(ano, mes, dia);
-
-        return dataAleatoria;
-    }
 
     /**
      * Método que realiza a construção do menu que será mostrado no console, ele
@@ -258,12 +230,18 @@ public class App {
 
         System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
         String placa = sc.nextLine();
-        System.out.println("Digite o valor da manutenção da peça: ");
-        double valorPeca = sc.nextDouble();
-        System.out.println("Digite o valor da manutenção da períodica: ");
-        double valorPeriodico = sc.nextDouble();
+        Veiculo v = frota.localizarVeiculo(placa);
 
-        System.out.println(frota.relatorioGastoTotal(placa, valorPeca, valorPeriodico));
+        if (v != null) {
+            System.out.println("Digite o valor da manutenção da peça: ");
+            double valorPeca = sc.nextDouble();
+            System.out.println("Digite o valor da manutenção da períodica: ");
+            double valorPeriodico = sc.nextDouble();
+
+            System.out.println(frota.relatorioGastoTotal(v, valorPeca, valorPeriodico));
+        } else {
+            System.out.println("veiculo não encontrado");
+        }
         pausa();
     }
 
@@ -293,7 +271,7 @@ public class App {
         Veiculo veiculo = localizarVeiculo();
 
         if (veiculo != null) {
-            System.out.println("Digite o dia da rota: ");
+            System.out.println("Digite o dia da rota: dd/mm/yyyy");
             String dia = sc.nextLine();
             LocalDate dataCorreta = converterData(dia);
 
@@ -318,11 +296,11 @@ public class App {
         Veiculo v = localizarVeiculo();
 
         if (v != null) {
-            System.out.println("Digite a data: ");
-            String data = sc.nextLine();
 
-            System.out.println("A quilometragem total do no mês foi de " + df.format(v.kmNoMes(converterData(data)))
+            System.out.println("A quilometragem total do no mês foi de " + df.format(v.kmNoMes())
                     + " quilômetros");
+        } else {
+            System.out.println("veiculo não encontrado!");
         }
 
     }
@@ -337,7 +315,7 @@ public class App {
         Veiculo v = localizarVeiculo();
 
         if (v != null) {
-            System.out.println(v.KmTotalVeiculo());
+            System.out.println("Quilometragem total: " + v.getKmTotal());
         }
 
     }
@@ -390,47 +368,104 @@ public class App {
                     limparTela();
                     relatorioDeRotasDeUmVeiculo();
                     break;
+                case 5:
+                    limparTela();
+                    zerarRotas();
+                    break;
             }
             pausa();
         }
     }
 
+    private static void zerarRotas() {
+        frota.zerarRotas();
+        System.out.println("as rotas dos veiculos foram descartas!");
+        pausa();
+    }
+
     /**
-     * Main com a iniciação do sistema e chamada de métodos do menu
+     * função para gerar a base de dados dos veiculos aleatorios
+     * 
+     * @throws FileNotFoundException
      */
-    public static void main(String[] args) throws FileNotFoundException {
-        frota = new Frota();
+    private static void geracaoAleatoria() throws FileNotFoundException {
         String nomeArquivoTexto = "entrada";
-
-        sc = new Scanner(System.in);
-        String nomeArq = "menu";
-        int opcao = -1;
-        while (opcao != 0) {
-            limparTela();
-            opcao = menu(nomeArq);
-            switch (opcao) {
-                case 1:
-                    limparTela();
-                    adicionarVeiculo();
-                    break;
-
-                case 2:
-                    limparTela();
-                    adicionarRota();
-                    break;
-
-                case 3:
-                    limparTela();
-                    lerEntradaTexto(nomeArquivoTexto);
-                    break;
-                case 4:
-                    limparTela();
-                    relatorios();
-                    break;
-            }
-            pausa();
+        lerEntradaVeiculos(nomeArquivoTexto);
+        for (int i = 0; i < 2; i++) {
+            gerarRotasAleatorias();
+            frota.zerarRotas();
         }
-        System.out.println("Sistema fechado!");
-        sc.close();
+
+        gerarRotasAleatorias();
+    }
+
+    public static void gerarRotasAleatorias() {
+        for (Veiculo v : frota.veiculos) {
+                int quantidadeAleatoriaRotas = sorteador.nextInt((50 - 20) + 1) + 20;
+
+                for (int j = 0; j < quantidadeAleatoriaRotas; j++) {
+                    Rota rota = new Rota(gerarKmAleatorio(), gerarDataAleatoria());
+                    v.addRota(rota);
+                }
+            }
+
+    }
+
+    /**
+     * Método para a leitura da entrada texto de teste do trabalho. Leitura do
+     * arquivo texto passado como
+     * parâmetro e após isso gera também valores aleatórios para complementar as
+     * informações de teste.
+     * 
+     * @param nomeArquivo nome do arquivo que será lido
+     * @throws FileNotFoundException
+     */
+    public static void lerEntradaVeiculos(String nomeArquivo) throws FileNotFoundException {
+
+        File arquivo = new File(nomeArquivo);
+
+        Scanner leitor = new Scanner(arquivo, "UTF-8");
+        String[] info = new String[4];
+        while (leitor.hasNextLine()) {
+            String linha = leitor.nextLine();
+
+            info = linha.split(";");
+            String placa = info[0];
+            String tipoVeiculo = info[1];
+            String tipoCombustivel = info[2];
+            Veiculo vEntrada = new Veiculo(placa, tipoVeiculo, tipoCombustivel);
+
+            frota.adicionarVeiculo(vEntrada);
+        }
+
+        leitor.close();
+    }
+
+    /**
+     * Método para gerar quilometragens aleatórias para a base de teste.
+     * 
+     * @return double contento os quilômetros.
+     */
+    public static double gerarKmAleatorio() {
+        Double km = ((Math.random() * (300 - 100)) + 100);
+
+        return km;
+    }
+
+    /**
+     * Método para gerar datas aleatórias para a base de teste.
+     * 
+     * @return LocalDate com a data.
+     */
+    public static LocalDate gerarDataAleatoria() {
+        int ano = sorteador.nextInt(2024 - 2023) + 2023;
+
+        int mes = 12;
+
+        int dia = sorteador.nextInt(LocalDate.of(ano, mes, 1).lengthOfMonth()) + 1;
+
+        LocalDate dataAleatoria = LocalDate.of(ano, mes, dia);
+
+        return dataAleatoria;
     }
 }

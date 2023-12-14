@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Frota {
 
-    private ArrayList<Veiculo> veiculos;
+    protected ArrayList<Veiculo> veiculos;
 
     public Frota() {
         this.veiculos = new ArrayList<Veiculo>();
@@ -11,8 +11,9 @@ public class Frota {
 
     /**
      * Metódo que retorna uma String com um relatório da frota de veículos.
-     * Retorna uma String composta pela quantidade de veículos presentes na frota e 
-     * pelos veículos existentes, além dos detalhes das rotas realizadas por cada veículo.
+     * Retorna uma String composta pela quantidade de veículos presentes na frota e
+     * pelos veículos existentes, além dos detalhes das rotas realizadas por cada
+     * veículo.
      * 
      */
     public String relatorioFrota() {
@@ -107,44 +108,63 @@ public class Frota {
         return veiculoMaiorMedia;
     }
 
+    public void zerarRotas() {
+        for (Veiculo veiculo : veiculos) {
+            veiculo.rotas.clear();
+        }
+    }
+
     /**
      * Método que adiciona um novo veículo à frota.
-     * @param veiculo parâmetro do tipo veículo que passa o veículo que será adicionado à frota.
+     * 
+     * @param veiculo parâmetro do tipo veículo que passa o veículo que será
+     *                adicionado à frota.
      */
     public void adicionarVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
     }
 
     /**
-     * Método que calcula o gasto total de determinado veículo, considerando os valores de manutenção 
-     * periodica, manutenção de peças e gastos em combustível, de acordo com a quantidade de recorrência de
-     * cada. Para encontrar o veículo cuja placa foi passada como parâmetro, usa-se Stream para percorrer a 
+     * Método que calcula o gasto total de determinado veículo, considerando os
+     * valores de manutenção
+     * periodica, manutenção de peças e gastos em combustível, de acordo com a
+     * quantidade de recorrência de
+     * cada. Para encontrar o veículo cuja placa foi passada como parâmetro, usa-se
+     * Stream para percorrer a
      * lista de veículos e localizar a placa desejada.
-     * @param placa parâmetro do tipo String que passa a placa do veículo cujo gasto total será
-     * calculado.
-     * @param valorMPeca parâmetro do tipo double que indica o valor da manutenção de peça.
-     * @param valorMPeriodico parâmetro do tipo double que indica o valor da manutenção periódica.
-     * @return retorna o gasto total, obtido pela soma do gastos totais com combustível, manutenção periodica 
-     * e manutenção de peças
+     * 
+     * @param placa           parâmetro do tipo String que passa a placa do veículo
+     *                        cujo gasto total será
+     *                        calculado.
+     * @param valorMPeca      parâmetro do tipo double que indica o valor da
+     *                        manutenção de peça.
+     * @param valorMPeriodico parâmetro do tipo double que indica o valor da
+     *                        manutenção periódica.
+     * @return retorna o gasto total, obtido pela soma do gastos totais com
+     *         combustível, manutenção periodica
+     *         e manutenção de peças
      */
-    public String relatorioGastoTotal(String placa, double valorMPeca, double valorMPeriodico) {
-        Veiculo v = localizarVeiculo(placa);
-        DecimalFormat df = new DecimalFormat("#.##");
-        StringBuilder str = new StringBuilder();
-        double gastoEmCombustivel = v.getTotalReabastecido() * v.tanque.getPrecoCombustivel();
-        double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
-        double valorManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
+    public String relatorioGastoTotal(Veiculo v, double valorMPeca, double valorMPeriodico) {
 
-        str.append("O gasto total do veículo de placa "+v.getPlaca()+" foi: ");
-        
-        str.append("\nQuantidade de manutenção periódica: "+v.quantidadeManutencaoPeriodica()+" - Valor: R$"+df.format(valorManutencaoPeriodica));
-        
-        str.append("\nQuantidade de manutenção em peças: "+v.quantidadeManutencaoPeca()+" - Valor: R$"+df.format(valorManutencaoPeca));
-        
-        str.append("\nTotal reabastecido pelo carro: "+df.format(v.getTotalReabastecido())+" - Valor: R$"+df.format(gastoEmCombustivel));
-        
-        str.append("\nValor total gasto: R$"+df.format(gastoEmCombustivel+valorManutencaoPeca+valorManutencaoPeriodica));
-        
+        StringBuilder str = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("#.##");
+            double gastoEmCombustivel = v.getTotalReabastecido() * v.tanque.getPrecoCombustivel();
+            double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
+            double valorManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
+
+            str.append("O gasto total do veículo de placa " + v.getPlaca() + " foi: ");
+
+            str.append("\nQuantidade de manutenção periódica: " + v.quantidadeManutencaoPeriodica() + " - Valor: R$"
+                    + df.format(valorManutencaoPeriodica));
+
+            str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
+                    + df.format(valorManutencaoPeca));
+
+            str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido()) + " - Valor: R$"
+                    + df.format(gastoEmCombustivel));
+
+            str.append("\nValor total gasto: R$"
+                    + df.format(gastoEmCombustivel + valorManutencaoPeca + valorManutencaoPeriodica));
         return str.toString();
     }
 }

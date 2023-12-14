@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Veiculo {
@@ -8,12 +7,12 @@ public class Veiculo {
     protected double consumo;
     protected String placa;
     protected ArrayList<Rota> rotas;
-    protected int quantRotas;
     protected double totalReabastecido;
     protected Tanque tanque;
     protected double kmTotal;
     private Manutencao manutencao;
     private TipoVeiculo tipo;
+    DecimalFormat df = new DecimalFormat("#.##");
 
     static {
         MAX_ROTAS = 30;
@@ -29,7 +28,6 @@ public class Veiculo {
     public Veiculo(String placa, String tipoVeiculo, String tipoCombustivel) {
         this.placa = placa;
         this.rotas = new ArrayList<>(MAX_ROTAS);
-        this.quantRotas = 0;
         this.totalReabastecido = 0;
         this.kmTotal = 0;
         this.tipo = TipoVeiculo.valueOf(tipoVeiculo);
@@ -46,9 +44,8 @@ public class Veiculo {
      *         o limite de rotas tenha sido atingido
      */
     public boolean addRota(Rota rota) {
-        if (quantRotas < MAX_ROTAS && rota.getQuilometragem() <= tanque.autonomiaMaxima()) {
+        if (rotas.size() < MAX_ROTAS && rota.getQuilometragem() <= tanque.autonomiaMaxima()) {
             rotas.add(rota);
-            quantRotas++;
             percorrerRota(rota);
             return true;
         } else {
@@ -77,13 +74,11 @@ public class Veiculo {
      * 
      * @return retorna a quilometragem percorrida no mês, do tipo double.
      */
-    public double kmNoMes(LocalDate data) {
+    public double kmNoMes() {
         double km = 0;
 
         for(Rota r : rotas){
-            if((r.getData().getMonthValue() == data.getMonthValue()) && (r.getData().getYear() == data.getYear())){
-                km += r.getQuilometragem();
-            }
+            km += r.getQuilometragem();
                 
         }
            return km;
@@ -111,6 +106,7 @@ public class Veiculo {
             }
 
             tanque.consumirLitros(litros);
+
             kmTotal += kmRota;
         }
     }
@@ -131,7 +127,7 @@ public class Veiculo {
         
         relatorio.append("Placa:" + placa + "\n");
         relatorio.append("Tipo do Veiculo: " + tipo + "\n");
-        relatorio.append("Quantidade de rotas realizadas: "+quantRotas+"\n");
+        relatorio.append("Quantidade de rotas realizadas: "+rotas.size()+"\n");
         for(Rota r : rotas){
             relatorio.append(r.relatorio()+ "\n");
         }
@@ -158,22 +154,6 @@ public class Veiculo {
     }
 
     /**
-     * Método que gera uma string com a quilometragem total percorrida pelo veículo,
-     * também é mostrado a quantidade de rotas que foram realizadas.
-     * 
-     * @return retorna uma string contendo as duas informações mencionadas acima.
-     */
-    public String KmTotalVeiculo() {
-        StringBuilder str = new StringBuilder();
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        str.append("Quantidade de rotas realizadas pelo veículo: "+quantRotas+"\n");
-        str.append("Quilometragem total do veículo: "+df.format(kmTotal));
-        
-        return str.toString();
-    }
-
-    /**
      * Método para obter a placa do veículo
      * 
      * @return retorna a placa do veículo, do tipo String
@@ -188,7 +168,7 @@ public class Veiculo {
      * @return retorna a quantidade de rotas registradas pelo veículo, do tipo int.
      */
     public int getQuantRotas() {
-        return quantRotas;
+        return rotas.size();
     }
 
     /**

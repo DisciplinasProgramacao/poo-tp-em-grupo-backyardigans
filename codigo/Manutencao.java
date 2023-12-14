@@ -26,7 +26,7 @@ public class Manutencao {
      */
     public boolean verificarManutencao(double kmTotalAtual){
         
-        if((kmTotalAtual/kmPeca) > quantidadeManutencaoPeca || (kmTotalAtual/kmPeriodica) > quantidadeManutencaoPeriodica){
+        if((int)(kmTotalAtual/kmPeca) > quantidadeManutencaoPeca ||(int) (kmTotalAtual/kmPeriodica) > quantidadeManutencaoPeriodica){
             return true;
         }
         else{
@@ -41,10 +41,10 @@ public class Manutencao {
      */
     public void realizarManutencao(double kmTotalAtual){
         
-        if(quantidadeManutencaoPeca < (kmTotalAtual/kmPeca)){
+        if(quantidadeManutencaoPeca <=(int) (kmTotalAtual/kmPeca)){
             quantidadeManutencaoPeca++;
         }
-        if(quantidadeManutencaoPeriodica < (kmTotalAtual/kmPeriodica)){
+        if(quantidadeManutencaoPeriodica <=(int) (kmTotalAtual/kmPeriodica)){
             quantidadeManutencaoPeriodica++;
         }
     }
