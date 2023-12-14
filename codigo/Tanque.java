@@ -1,6 +1,6 @@
 import java.text.DecimalFormat;
 
-public class Tanque implements ITanque {
+public class Tanque {
     private double consumo;
     private double capacidadeMaxima;
     private double capacidadeAtual;
