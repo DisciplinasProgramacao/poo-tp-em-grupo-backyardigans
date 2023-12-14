@@ -380,13 +380,24 @@ public class App {
             System.out.println(v.relatorioVeiculo());
         }
 
+
     }
+
+
+    /**
+     * Método que imprime o relatorio da frota atual.
+     * 
+     */
 
     public static void relatorioFrota(){
         System.out.println(frota.relatorioFrota());
     }
 
 
+    /**
+     * Zera todas as rotas dos veiculos.
+     * 
+     */
 
     private static void zerarRotas() {
         frota.zerarRotas();
@@ -409,6 +420,13 @@ public class App {
         gerarRotasAleatorias();
     }
 
+
+    /**
+     * Método para que gera rotas aleatorias para cada veiculo da frota
+     * 
+     * @param nomeArquivo nome do arquivo que será lido
+     * @throws FileNotFoundException
+     */
     public static void gerarRotasAleatorias() {
         for (Veiculo v : frota.veiculos) {
                 int quantidadeAleatoriaRotas = sorteador.nextInt((50 - 20) + 1) + 20;

@@ -92,7 +92,7 @@ public class Tanque implements ITanque {
     }
 
     /**
-     * Método para obter a capacidade atual.
+     * Método para obter a capacidade atual do tanque.
      * @return retorna a capacidade atual, do tipo double.
      */
     public double getCapacidadeAtual() {
@@ -100,7 +100,7 @@ public class Tanque implements ITanque {
     }
 
     /**
-     * Método para obter a capacidade máxima.
+     * Método para obter a capacidade máxima do tanque.
      * @return retorna a capacidade máxima, do tipo double.
      */
     public double getCapacidadeMaxima() {

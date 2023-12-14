@@ -112,6 +112,9 @@ public class Frota {
         return veiculoMaiorMedia;
     }
 
+    /**
+     * Metódo que zera todas as rotas dos veiculos dentro da frota
+     */
     public void zerarRotas() {
         for (Veiculo veiculo : veiculos) {
             veiculo.rotas.clear();
@@ -140,10 +143,13 @@ public class Frota {
      * @param placa           parâmetro do tipo String que passa a placa do veículo
      *                        cujo gasto total será
      *                        calculado.
+     * 
      * @param valorMPeca      parâmetro do tipo double que indica o valor da
      *                        manutenção de peça.
+     * 
      * @param valorMPeriodico parâmetro do tipo double que indica o valor da
      *                        manutenção periódica.
+     * 
      * @return retorna o gasto total, obtido pela soma do gastos totais com
      *         combustível, manutenção periodica
      *         e manutenção de peças
