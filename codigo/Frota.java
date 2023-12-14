@@ -33,7 +33,7 @@ public class Frota {
         for (Veiculo veiculo : veiculos) {
             relatorio.append("Tipo: " + veiculo.getTipo() + "\n");
             relatorio.append("Placa: " + veiculo.getPlaca()+ "\n");
-            relatorio.append("Tanque: " + veiculo.tanque.getCapacidadeMaxima()+ " litros\n");
+            relatorio.append("Tanque: " + veiculo.getTanque().getCapacidadeMaxima()+ " litros\n");
 
             relatorio.append("\n\n");
         }
@@ -119,7 +119,7 @@ public class Frota {
      */
     public void zerarRotas() {
         for (Veiculo veiculo : veiculos) {
-            veiculo.rotas.clear();
+            veiculo.getRotas().clear();
         }
     }
 
@@ -160,7 +160,7 @@ public class Frota {
 
         StringBuilder str = new StringBuilder();
         DecimalFormat df = new DecimalFormat("#.##");
-            double gastoEmCombustivel = v.getTotalReabastecido() * v.tanque.getPrecoCombustivel();
+            double gastoEmCombustivel = v.getTotalReabastecido() * v.getTanque().getPrecoCombustivel();
             double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
             double valorManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
 

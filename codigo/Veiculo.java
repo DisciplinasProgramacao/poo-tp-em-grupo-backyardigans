@@ -4,12 +4,12 @@ import java.util.ArrayList;
 public class Veiculo {
 
     private static final int MAX_ROTAS;
-    protected double consumo;
-    protected String placa;
-    protected ArrayList<Rota> rotas;
-    protected double totalReabastecido;
-    protected Tanque tanque;
-    protected double kmTotal;
+    private double consumo;
+    private String placa;
+    private ArrayList<Rota> rotas;
+    private double totalReabastecido;
+    private Tanque tanque;
+    private double kmTotal;
     private Manutencao manutencao;
     private TipoVeiculo tipo;
     DecimalFormat df = new DecimalFormat("#.##");
@@ -92,7 +92,7 @@ public class Veiculo {
      * @param rota rota que será percorrida, do tipo Rota.
      */
 
-    protected void percorrerRota(Rota rota) {
+    public void percorrerRota(Rota rota) {
         if (rota != null) {
             double kmRota = rota.getQuilometragem();
             double litros = kmRota / consumo;
@@ -188,5 +188,13 @@ public class Veiculo {
      */
     public String getTipo() {
         return tipo.name();
+    }
+
+    public Tanque getTanque(){
+        return tanque;
+    }
+
+    public ArrayList<Rota> getRotas(){
+        return rotas;
     }
 }
