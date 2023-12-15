@@ -198,7 +198,7 @@ public class Frota {
                 + df.format((valorManutencaoPeriodica+VALOR_ANTIGO_M_PERIODICO)));
 
         str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
-                + df.format(valorManutencaoPeca+VALOR_ANTIGO_M_PECA));
+                + df.format((valorManutencaoPeca+VALOR_ANTIGO_M_PECA)));
 
         str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido())+" litros"+ " - Valor: R$"
                 + df.format(gastoEmCombustivel));

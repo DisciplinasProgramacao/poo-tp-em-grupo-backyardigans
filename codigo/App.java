@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -354,6 +355,8 @@ public class App {
             System.out.println("Veículo não encontrado");
         }catch(NoSuchElementException nSe){
             System.out.println("Digite um valor válido");
+        }catch(DateTimeParseException d){
+            System.out.println("Data inserida inválida");
         }finally{
             
             System.out.println(resultado ? "Rota adicionada para o veículo com sucesso!"
