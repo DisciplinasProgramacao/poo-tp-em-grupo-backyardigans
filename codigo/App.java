@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,10 +14,7 @@ public class App {
     static Random sorteador = new Random();
     static DecimalFormat df = new DecimalFormat("#.##");
 
-    /**
-     * Main com a iniciação do sistema e chamada de métodos do menu
-     */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
         frota = new Frota();
 
         geracaoAleatoria();
@@ -51,7 +50,7 @@ public class App {
         sc.close();
     }
 
-     /**
+    /**
      * Submenu que permite o usuário selecionar qual relatório
      * quer ver, a partir do arquivo "relatorios".
      * 
@@ -87,7 +86,7 @@ public class App {
                 case 5:
                     limparTela();
                     relatorioFrota();
-                    
+
                     break;
             }
             pausa();
@@ -110,7 +109,6 @@ public class App {
         sc.nextLine();
     }
 
-
     /**
      * Método que realiza a construção do menu que será mostrado no console, ele
      * mostra todas
@@ -120,22 +118,34 @@ public class App {
      * @return inteiro que contém a opção escolhida pelo usuário.
      * @throws FileNotFoundException
      */
-    public static int menu(String nomeArquivo) throws FileNotFoundException {
+    public static int menu(String nomeArquivo) {
         limparTela();
-        File arqMenu = new File(nomeArquivo);
-        Scanner leitor = new Scanner(arqMenu, "UTF-8");
-        System.out.println(leitor.nextLine());
-        System.out.println("=====================================");
-        int contador = 1;
-        while (leitor.hasNextLine()) {
-            System.out.println(contador + " - " + leitor.nextLine());
-            contador++;
+        File arqMenu;
+        Scanner leitor;
+        int opcao = -1;
+        try {
+            arqMenu = new File(nomeArquivo);
+            leitor = new Scanner(arqMenu, "UTF-8");
+            System.out.println(leitor.nextLine());
+            System.out.println("=====================================");
+            int contador = 1;
+            while (leitor.hasNextLine()) {
+                System.out.println(contador + " - " + leitor.nextLine());
+                contador++;
+            }
+            System.out.println("0 - Sair");
+            System.out.print("\nSua opção: ");
+            opcao = Integer.parseInt(sc.nextLine());
+            leitor.close();
+
+        } catch (NumberFormatException e) {
+            System.out.println("Digite apenas números.");
+
+        } catch (FileNotFoundException f) {
+            System.out.println("Arquivo não encontrado, verifique se o nome do arquivo está correto.");
         }
-        System.out.println("0 - Sair");
-        System.out.print("\nSua opção: ");
-        int opcao = Integer.parseInt(sc.nextLine());
-        leitor.close();
         return opcao;
+
     }
 
     /**
@@ -144,40 +154,42 @@ public class App {
      * texto com as opções de veículos existentes e também a solicitação da placa,
      * o tipo do veículo utilizado e o tipo de combustível.
      * 
-     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public static void adicionarVeiculo() throws FileNotFoundException {
-        String nomeArq = "veiculos";
-        System.out.println("Digite a placa do veículo: ");
-        String placa = sc.nextLine();
-        System.out.println("Escolha o tipo de veículo: ");
-        int opcaoVeiculo = menu(nomeArq);
-        if (opcaoVeiculo != 0) {
-            System.out.println("Digite a o número do veículo utilizado: ");
-            String opcaoCombustivel = pegarCombustivel();
-            if (verificarOpcaoCombustivel(opcaoCombustivel)) {
-                switch (opcaoVeiculo) {
-                    case 1:
-                        Veiculo caminhao = new Veiculo(placa, "CAMINHAO", opcaoCombustivel);
-                        frota.adicionarVeiculo(caminhao);
-                        break;
-                    case 2:
-                        Veiculo carro = new Veiculo(placa, "CARRO", opcaoCombustivel);
-                        frota.adicionarVeiculo(carro);
-                        break;
-                    case 3:
-                        Veiculo furgao = new Veiculo(placa, "FURGAO", opcaoCombustivel);
-                        frota.adicionarVeiculo(furgao);
-                        break;
-                    case 4:
-                        Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
-                        frota.adicionarVeiculo(van);
-                        break;
-                    default:
-                        System.out.println("Opção inválida");
-                        break;
+    public static void adicionarVeiculo() {
+        String nomeArq;
+        try {
+            nomeArq = "veiculos";
+            System.out.println("Digite a placa do veículo: ");
+            String placa = sc.nextLine();
+            System.out.println("Escolha o tipo de veículo: ");
+            int opcaoVeiculo = menu(nomeArq);
+            if (opcaoVeiculo != 0) {
+                System.out.println("Digite a o número do veículo utilizado: ");
+                String opcaoCombustivel = pegarCombustivel();
+                if (verificarOpcaoCombustivel(opcaoCombustivel)) {
+                    switch (opcaoVeiculo) {
+                        case 1:
+                            Veiculo caminhao = new Veiculo(placa, "CAMINHAO", opcaoCombustivel);
+                            frota.adicionarVeiculo(caminhao);
+                            break;
+                        case 2:
+                            Veiculo carro = new Veiculo(placa, "CARRO", opcaoCombustivel);
+                            frota.adicionarVeiculo(carro);
+                            break;
+                        case 3:
+                            Veiculo furgao = new Veiculo(placa, "FURGAO", opcaoCombustivel);
+                            frota.adicionarVeiculo(furgao);
+                            break;
+                        case 4:
+                            Veiculo van = new Veiculo(placa, "VAN", opcaoCombustivel);
+                            frota.adicionarVeiculo(van);
+                            break;
+                    }
                 }
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Digite apenas números");
         }
 
     }
@@ -192,7 +204,7 @@ public class App {
      * @return Retorna uma String com o nome do tipo de combustível utilizado
      * @throws FileNotFoundException
      */
-    private static String pegarCombustivel() throws FileNotFoundException {
+    private static String pegarCombustivel() {
         sc = new Scanner(System.in);
         String nomeArq = "combustiveis";
         int opcao;
@@ -209,9 +221,6 @@ public class App {
             case 3:
                 nomeCombustivel = "GASOLINA";
                 break;
-            default:
-                System.out.println("Opção inválida");
-                break;
         }
         return nomeCombustivel;
     }
@@ -222,10 +231,13 @@ public class App {
      * @return Retorna o veículo localizado
      */
     public static Veiculo localizarVeiculo() {
-        System.out.println("Digite a placa do veículo: ");
-        String placa = sc.nextLine();
-        Veiculo v = frota.localizarVeiculo(placa);
-        if (v == null) {
+        Veiculo v = null;
+
+        try{
+            System.out.println("Digite a placa do veículo: ");
+            String placa = sc.nextLine();
+            v = frota.localizarVeiculo(placa);
+        }catch(NullPointerException n){
             System.out.println("Veículo não encontrado!");
         }
 
@@ -256,10 +268,13 @@ public class App {
      * 
      */
     public static void verificarTotalReabastecido() {
-        Veiculo v = localizarVeiculo();
-        if (v != null) {
+        Veiculo v = null;
+        try{
+            v = localizarVeiculo();
             System.out.println("O total de gasolina reabastecido pelo veículo é de: "
                     + df.format(v.getTotalReabastecido()) + "litros.");
+        }catch(NullPointerException e){
+            System.out.println("Veículo não encontrado");
         }
     }
 
@@ -275,19 +290,20 @@ public class App {
      */
     public static void verificarGastoTotalDeUmVeiculo() {
 
-        System.out.println("Digite a placa do veículo que deseja verificar o gasto total: ");
-        String placa = sc.nextLine();
-        Veiculo v = frota.localizarVeiculo(placa);
+        Veiculo v = null;
 
-        if (v != null) {
+        try{
+            v = localizarVeiculo();
             System.out.println("Digite o valor da manutenção da peça: ");
             double valorPeca = sc.nextDouble();
             System.out.println("Digite o valor da manutenção da períodica: ");
             double valorPeriodico = sc.nextDouble();
 
             System.out.println(frota.relatorioGastoTotal(v, valorPeca, valorPeriodico));
-        } else {
-            System.out.println("veiculo não encontrado");
+        }catch(NullPointerException n) {
+            System.out.println("Veículo não encontrado");
+        }catch(InputMismatchException i){
+            System.out.println("Digite um valor válido para o preço da manutenção");
         }
         pausa();
     }
@@ -299,9 +315,14 @@ public class App {
      * @return retorna a data formatada, do LocalDate.
      */
     public static LocalDate converterData(String data) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataFormatada = LocalDate.parse(data, formato);
-
+        LocalDate dataFormatada = null;
+        try{
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            dataFormatada = LocalDate.parse(data, formato);
+        }catch(IllegalArgumentException i){
+            System.out.println("Informe uma data válida");
+        }
+    
         return dataFormatada;
     }
 
@@ -314,10 +335,11 @@ public class App {
      * 
      */
     public static void adicionarRota() {
+       
+        boolean resultado = false;
 
-        Veiculo veiculo = localizarVeiculo();
-
-        if (veiculo != null) {
+        try{
+            Veiculo veiculo = localizarVeiculo();        
             System.out.println("Digite o dia da rota: dd/mm/yyyy");
             String dia = sc.nextLine();
             LocalDate dataCorreta = converterData(dia);
@@ -327,10 +349,18 @@ public class App {
             sc.nextLine();
 
             Rota rota = new Rota(quilometragem, dataCorreta);
-            boolean resultado = veiculo.addRota(rota);
+            resultado = veiculo.addRota(rota);
+        }catch(NullPointerException n){
+            System.out.println("Veículo não encontrado");
+        }catch(NoSuchElementException nSe){
+            System.out.println("Digite um valor válido");
+        }finally{
+            
             System.out.println(resultado ? "Rota adicionada para o veículo com sucesso!"
                     : "Não foi possível adicionar a rota ao veículo!");
         }
+            
+            
     }
 
     /**
@@ -340,16 +370,14 @@ public class App {
      * 
      */
     public static void verificarQuilometragemDeUmVeiculoNoMes() {
-        Veiculo v = localizarVeiculo();
-
-        if (v != null) {
-
+        
+        try{
+            Veiculo v = localizarVeiculo();
             System.out.println("A quilometragem total do no mês foi de " + df.format(v.kmNoMes())
                     + " quilômetros");
-        } else {
-            System.out.println("veiculo não encontrado!");
+        }catch(NullPointerException e){
+            System.out.println("Veículo não encontrado");
         }
-
     }
 
     /**
@@ -359,10 +387,13 @@ public class App {
      * 
      */
     public static void verificarQuilometragemTotalDeUmVeiculo() {
-        Veiculo v = localizarVeiculo();
-
-        if (v != null) {
-            System.out.println("Quilometragem total: " + v.getKmTotal());
+        Veiculo v = null;
+        try{
+            v = localizarVeiculo();
+            System.out.println("A quilometragem total do no mês foi de " + df.format(v.kmNoMes())
+            + " quilômetros");
+        }catch(NullPointerException e){
+            System.out.println("Veículo não encontrado");
         }
 
     }
@@ -374,25 +405,24 @@ public class App {
      * 
      */
     public static void relatorioVeiculo() {
-        Veiculo v = localizarVeiculo();
 
-        if (v != null) {
+        try{
+            Veiculo v = localizarVeiculo();
             System.out.println(v.relatorioVeiculo());
+        }catch(NullPointerException n){
+            System.out.println("Veículo não encontrado");
         }
 
-
     }
-
 
     /**
      * Método que imprime o relatorio da frota atual.
      * 
      */
 
-    public static void relatorioFrota(){
+    public static void relatorioFrota() {
         System.out.println(frota.relatorioFrota());
     }
-
 
     /**
      * Zera todas as rotas dos veiculos.
@@ -420,7 +450,6 @@ public class App {
         gerarRotasAleatorias();
     }
 
-
     /**
      * Método para que gera rotas aleatorias para cada veiculo da frota
      * 
@@ -429,13 +458,13 @@ public class App {
      */
     public static void gerarRotasAleatorias() {
         for (Veiculo v : frota.veiculos) {
-                int quantidadeAleatoriaRotas = sorteador.nextInt((50 - 20) + 1) + 20;
+            int quantidadeAleatoriaRotas = sorteador.nextInt((50 - 20) + 1) + 20;
 
-                for (int j = 0; j < quantidadeAleatoriaRotas; j++) {
-                    Rota rota = new Rota(gerarKmAleatorio(), gerarDataAleatoria());
-                    v.addRota(rota);
-                }
+            for (int j = 0; j < quantidadeAleatoriaRotas; j++) {
+                Rota rota = new Rota(gerarKmAleatorio(), gerarDataAleatoria());
+                v.addRota(rota);
             }
+        }
 
     }
 
@@ -450,23 +479,27 @@ public class App {
      */
     public static void lerEntradaVeiculos(String nomeArquivo) throws FileNotFoundException {
 
-        File arquivo = new File(nomeArquivo);
+        Scanner leitor;
+        try {
+            File arquivo = new File(nomeArquivo);
+            leitor = new Scanner(arquivo, "UTF-8");
+            String[] info = new String[4];
+            while (leitor.hasNextLine()) {
+                String linha = leitor.nextLine();
 
-        Scanner leitor = new Scanner(arquivo, "UTF-8");
-        String[] info = new String[4];
-        while (leitor.hasNextLine()) {
-            String linha = leitor.nextLine();
+                info = linha.split(";");
+                String placa = info[0];
+                String tipoVeiculo = info[1];
+                String tipoCombustivel = info[2];
+                Veiculo vEntrada = new Veiculo(placa, tipoVeiculo, tipoCombustivel);
 
-            info = linha.split(";");
-            String placa = info[0];
-            String tipoVeiculo = info[1];
-            String tipoCombustivel = info[2];
-            Veiculo vEntrada = new Veiculo(placa, tipoVeiculo, tipoCombustivel);
+                frota.adicionarVeiculo(vEntrada);
+            }
 
-            frota.adicionarVeiculo(vEntrada);
+            leitor.close();
+        }catch (NullPointerException e) {
+            System.out.println("Arquivo não encontrado, verifique o nome do arquivo");
         }
-
-        leitor.close();
     }
 
     /**

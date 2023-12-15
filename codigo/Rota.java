@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Rota {
     private double quilometragem;
@@ -26,10 +27,10 @@ public class Rota {
      * @return Uma string contendo o relatório da rota, conforme informações acima.
      */
     public String relatorio() {
-
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         StringBuilder aux = new StringBuilder();
         DecimalFormat df = new DecimalFormat("#.##");
-        aux.append(" DATA: " + data + " - ");
+        aux.append(" DATA: " + dtf.format(data) + " - ");
         aux.append(" QUILOMETRAGEM: " + df.format(quilometragem) + " km");
         return aux.toString();
     }

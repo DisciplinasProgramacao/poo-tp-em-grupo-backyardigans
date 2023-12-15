@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Veiculo {
 
@@ -46,6 +47,7 @@ public class Veiculo {
     public boolean addRota(Rota rota) {
         if (rotas.size() < MAX_ROTAS && rota.getQuilometragem() <= tanque.autonomiaMaxima()) {
             rotas.add(rota);
+            rotas.sort(Comparator.comparing(Rota::getData));
             percorrerRota(rota);
             return true;
         } else {

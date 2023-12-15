@@ -1,9 +1,24 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Frota {
 
     protected ArrayList<Veiculo> veiculos;
+    private static int quantidadeMPecaAntiga;
+    private static int quantidadeMPeriodicaAntiga;
+    private static double valorAntigoMPega;
+    private static double valorAntigoMPeriodico;
+
+    /**
+     * Inicializa valores statics
+     */
+    static{
+        quantidadeMPeriodicaAntiga = 0;
+        quantidadeMPecaAntiga = 0;
+        valorAntigoMPega = 0;
+        valorAntigoMPeriodico = 0;
+    }
 
     public Frota() {
         this.veiculos = new ArrayList<Veiculo>();
@@ -131,6 +146,7 @@ public class Frota {
      */
     public void adicionarVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
+        veiculos.sort(Comparator.comparing(Veiculo::getPlaca));
     }
 
     /**
@@ -160,23 +176,45 @@ public class Frota {
 
         StringBuilder str = new StringBuilder();
         DecimalFormat df = new DecimalFormat("#.##");
-            double gastoEmCombustivel = v.getTotalReabastecido() * v.getTanque().getPrecoCombustivel();
-            double valorManutencaoPeriodica = v.quantidadeManutencaoPeriodica() * valorMPeriodico;
-            double valorManutencaoPeca = v.quantidadeManutencaoPeca() * valorMPeca;
 
-            str.append("O gasto total do veículo de placa " + v.getPlaca() + " foi: ");
+        int quantidadeAtualPeca = v.quantidadeManutencaoPeca();
+        int quantidadeAtualPeriodica = v.quantidadeManutencaoPeriodica();
 
-            str.append("\nQuantidade de manutenção periódica: " + v.quantidadeManutencaoPeriodica() + " - Valor: R$"
-                    + df.format(valorManutencaoPeriodica));
+        if(v.quantidadeManutencaoPeca() > 0){
+            quantidadeAtualPeca = v.quantidadeManutencaoPeca() - quantidadeMPecaAntiga;
+        }
 
-            str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
-                    + df.format(valorManutencaoPeca));
+        if(v.quantidadeManutencaoPeriodica() > 0){
+            quantidadeAtualPeriodica =v.quantidadeManutencaoPeriodica() -  quantidadeMPeriodicaAntiga;
+        }
 
-            str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido()) + " - Valor: R$"
-                    + df.format(gastoEmCombustivel));
+        double gastoEmCombustivel = v.getTotalReabastecido() * v.getTanque().getPrecoCombustivel();
+        double valorManutencaoPeriodica = (quantidadeAtualPeriodica * valorMPeriodico);
+        double valorManutencaoPeca = (quantidadeAtualPeca * valorMPeca);
 
-            str.append("\nValor total gasto: R$"
-                    + df.format(gastoEmCombustivel + valorManutencaoPeca + valorManutencaoPeriodica));
-        return str.toString();
+        str.append("O gasto total do veículo de placa " + v.getPlaca() + " foi: ");
+
+        str.append("\nQuantidade de manutenção periódica: " + v.quantidadeManutencaoPeriodica() + " - Valor: R$"
+                + df.format((valorManutencaoPeriodica)));
+
+        str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
+                + df.format(valorManutencaoPeca));
+
+        str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido())+" litros"+ " - Valor: R$"
+                + df.format(gastoEmCombustivel));
+
+        str.append("\nValor total gasto: R$"
+                + df.format(gastoEmCombustivel + (valorManutencaoPeca+valorAntigoMPega) + (valorManutencaoPeriodica+valorAntigoMPeriodico)));
+ 
+        if(v.quantidadeManutencaoPeca()>0){
+            valorAntigoMPega += valorManutencaoPeca;
+        }
+        if(v.quantidadeManutencaoPeriodica()>0){
+            valorAntigoMPeriodico += valorMPeriodico;
+        }
+
+        quantidadeMPecaAntiga = v.quantidadeManutencaoPeca();
+        quantidadeMPeriodicaAntiga = v.quantidadeManutencaoPeriodica();
+            return str.toString();
     }
 }
