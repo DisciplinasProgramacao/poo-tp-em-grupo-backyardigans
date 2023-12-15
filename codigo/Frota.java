@@ -7,7 +7,7 @@ public class Frota {
     protected ArrayList<Veiculo> veiculos;
     private static int quantidadeMPecaAntiga;
     private static int quantidadeMPeriodicaAntiga;
-    private static double valorAntigoMPega;
+    private static double valorAntigoMPeca;
     private static double valorAntigoMPeriodico;
 
     /**
@@ -16,7 +16,7 @@ public class Frota {
     static{
         quantidadeMPeriodicaAntiga = 0;
         quantidadeMPecaAntiga = 0;
-        valorAntigoMPega = 0;
+        valorAntigoMPeca = 0;
         valorAntigoMPeriodico = 0;
     }
 
@@ -195,19 +195,19 @@ public class Frota {
         str.append("O gasto total do veículo de placa " + v.getPlaca() + " foi: ");
 
         str.append("\nQuantidade de manutenção periódica: " + v.quantidadeManutencaoPeriodica() + " - Valor: R$"
-                + df.format((valorManutencaoPeriodica)));
+                + df.format((valorManutencaoPeriodica+valorAntigoMPeriodico)));
 
         str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
-                + df.format(valorManutencaoPeca));
+                + df.format(valorManutencaoPeca+valorAntigoMPeca));
 
         str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido())+" litros"+ " - Valor: R$"
                 + df.format(gastoEmCombustivel));
 
         str.append("\nValor total gasto: R$"
-                + df.format(gastoEmCombustivel + (valorManutencaoPeca+valorAntigoMPega) + (valorManutencaoPeriodica+valorAntigoMPeriodico)));
+                + df.format(gastoEmCombustivel + (valorManutencaoPeca+valorAntigoMPeca) + (valorManutencaoPeriodica+valorAntigoMPeriodico)));
  
         if(v.quantidadeManutencaoPeca()>0){
-            valorAntigoMPega += valorManutencaoPeca;
+            valorAntigoMPeca += valorManutencaoPeca;
         }
         if(v.quantidadeManutencaoPeriodica()>0){
             valorAntigoMPeriodico += valorMPeriodico;
