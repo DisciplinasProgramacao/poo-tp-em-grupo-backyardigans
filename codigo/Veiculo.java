@@ -13,6 +13,10 @@ public class Veiculo {
     private double kmTotal;
     private Manutencao manutencao;
     private TipoVeiculo tipo;
+    private  int quantidadeMPecasAntiga;
+    private  int quantidadeMPeriodicaAntiga;
+    private  double valorAntigoMPecas;
+    private  double valorAntigoMPeriodica;
     DecimalFormat df = new DecimalFormat("#.##");
 
     static {
@@ -35,6 +39,10 @@ public class Veiculo {
         this.tanque = new Tanque(tipo.getTanque(), tipoCombustivel);
         this.manutencao = new Manutencao(tipo.getManutencaoPeriodica(), tipo.getManutencaoPeca());
         this.consumo = tanque.getConsumo();
+        this.quantidadeMPeriodicaAntiga = 0;
+        this.quantidadeMPecasAntiga = 0;
+        this.valorAntigoMPecas = 0;
+        this.valorAntigoMPeriodica = 0;
     }
 
     /**
@@ -133,21 +141,67 @@ public class Veiculo {
     }
 
     /**
-     * Método que chama o método da classe manutenção para calcular a quantidade
-     * de manutenções de peças realizadas por um veículo.
-     * @return inteiro com a quantidade de manutenções feitas.
+     * Método que calcula o gasto total de determinado veículo, considerando os
+     * valores de manutenção
+     * periodica, manutenção de peças e gastos em combustível, de acordo com a
+     * quantidade de recorrência de
+     * cada. 
+     * 
+     * @param valorMPeca      parâmetro do tipo double que indica o valor da
+     *                        manutenção de peça.
+     * 
+     * @param valorMPeriodico parâmetro do tipo double que indica o valor da
+     *                        manutenção periódica.
+     * 
+     * @return retorna o gasto total, obtido pela soma do gastos totais com
+     *         combustível, manutenção periodica
+     *         e manutenção de peças
      */
-    public int quantidadeManutencaoPeca(){
-        return manutencao.getQuantidadeManutencaoPeca();
-    }
+ 
+    public String relatorioGastoTotal(double valorMPeca, double valorMPeriodico) {
 
-    /**
-     * * Método que chama o método da classe manutenção para calcular a quantidade
-     * de manutenções períodicas realizadas por um veículo.
-     * @return inteiro com a quantidade de manutenções feitas
-     */
-    public int quantidadeManutencaoPeriodica(){
-        return manutencao.getQuantidadeManutencaoPeriodica();
+        StringBuilder str = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        int quantidadeAtualPeca = manutencao.getQuantidadeManutencaoPeca();
+        int quantidadeAtualPeriodica = manutencao.getQuantidadeManutencaoPeriodica();
+
+        if(manutencao.getQuantidadeManutencaoPeca() > 0){
+            quantidadeAtualPeca = manutencao.getQuantidadeManutencaoPeca() - quantidadeMPecasAntiga;
+        }
+
+        if(manutencao.getQuantidadeManutencaoPeriodica() > 0){
+            quantidadeAtualPeriodica = manutencao.getQuantidadeManutencaoPeriodica() -  quantidadeMPeriodicaAntiga;
+        }
+
+        double gastoEmCombustivel = totalReabastecido * tanque.getPrecoCombustivel();
+        double valorManutencaoPeriodica = (quantidadeAtualPeriodica * valorMPeriodico);
+        double valorManutencaoPeca = (quantidadeAtualPeca * valorMPeca);
+
+        str.append("O gasto total do veículo de placa " + placa + " foi: ");
+
+        str.append("\nQuantidade de manutenção periódica: " + manutencao.getQuantidadeManutencaoPeriodica() + " - Valor: R$"
+                + df.format((valorManutencaoPeriodica+valorAntigoMPeriodica)));
+
+        str.append("\nQuantidade de manutenção em peças: " + manutencao.getQuantidadeManutencaoPeca() + " - Valor: R$"
+                + df.format((valorManutencaoPeca+valorAntigoMPecas)));
+
+        str.append("\nTotal reabastecido pelo carro: " + df.format(totalReabastecido)+" litros"+ " - Valor: R$"
+                + df.format(gastoEmCombustivel));
+
+        str.append("\nValor total gasto: R$"
+                + df.format(gastoEmCombustivel + (valorManutencaoPeca+valorAntigoMPecas) + (valorManutencaoPeriodica+valorAntigoMPeriodica)));
+ 
+        if(manutencao.getQuantidadeManutencaoPeca()>0){
+            valorAntigoMPecas += valorManutencaoPeca;
+        }
+        if(manutencao.getQuantidadeManutencaoPeriodica()>0){
+            valorAntigoMPeriodica += valorMPeriodico;
+        }
+
+        quantidadeMPecasAntiga = manutencao.getQuantidadeManutencaoPeca();
+        quantidadeMPeriodicaAntiga = manutencao.getQuantidadeManutencaoPeriodica();
+            return str.toString();
     }
 
     /**

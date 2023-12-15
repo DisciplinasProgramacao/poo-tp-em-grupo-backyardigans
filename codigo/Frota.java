@@ -5,18 +5,9 @@ import java.util.Comparator;
 public class Frota {
 
     protected ArrayList<Veiculo> veiculos;
-    private  int quantidadeMPecasAntiga;
-    private  int quantidadeMPeriodicaAntiga;
-    private  double ValorAntigoMPecas;
-    private  double ValorAntigoMPeriodica;
-
 
     public Frota() {
         this.veiculos = new ArrayList<Veiculo>();
-        quantidadeMPeriodicaAntiga = 0;
-        quantidadeMPecasAntiga = 0;
-        ValorAntigoMPecas = 0;
-        ValorAntigoMPeriodica = 0;
     }
 
     /**
@@ -142,74 +133,5 @@ public class Frota {
     public void adicionarVeiculo(Veiculo veiculo) {
         veiculos.add(veiculo);
         veiculos.sort(Comparator.comparing(Veiculo::getPlaca));
-    }
-
-    /**
-     * Método que calcula o gasto total de determinado veículo, considerando os
-     * valores de manutenção
-     * periodica, manutenção de peças e gastos em combustível, de acordo com a
-     * quantidade de recorrência de
-     * cada. Para encontrar o veículo cuja placa foi passada como parâmetro, usa-se
-     * Stream para percorrer a
-     * lista de veículos e localizar a placa desejada.
-     * 
-     * @param placa           parâmetro do tipo String que passa a placa do veículo
-     *                        cujo gasto total será
-     *                        calculado.
-     * 
-     * @param valorMPeca      parâmetro do tipo double que indica o valor da
-     *                        manutenção de peça.
-     * 
-     * @param valorMPeriodico parâmetro do tipo double que indica o valor da
-     *                        manutenção periódica.
-     * 
-     * @return retorna o gasto total, obtido pela soma do gastos totais com
-     *         combustível, manutenção periodica
-     *         e manutenção de peças
-     */
-    public String relatorioGastoTotal(Veiculo v, double valorMPeca, double valorMPeriodico) {
-
-        StringBuilder str = new StringBuilder();
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        int quantidadeAtualPeca = v.quantidadeManutencaoPeca();
-        int quantidadeAtualPeriodica = v.quantidadeManutencaoPeriodica();
-
-        if(v.quantidadeManutencaoPeca() > 0){
-            quantidadeAtualPeca = v.quantidadeManutencaoPeca() - quantidadeMPecasAntiga;
-        }
-
-        if(v.quantidadeManutencaoPeriodica() > 0){
-            quantidadeAtualPeriodica =v.quantidadeManutencaoPeriodica() -  quantidadeMPeriodicaAntiga;
-        }
-
-        double gastoEmCombustivel = v.getTotalReabastecido() * v.getTanque().getPrecoCombustivel();
-        double valorManutencaoPeriodica = (quantidadeAtualPeriodica * valorMPeriodico);
-        double valorManutencaoPeca = (quantidadeAtualPeca * valorMPeca);
-
-        str.append("O gasto total do veículo de placa " + v.getPlaca() + " foi: ");
-
-        str.append("\nQuantidade de manutenção periódica: " + v.quantidadeManutencaoPeriodica() + " - Valor: R$"
-                + df.format((valorManutencaoPeriodica+ValorAntigoMPeriodica)));
-
-        str.append("\nQuantidade de manutenção em peças: " + v.quantidadeManutencaoPeca() + " - Valor: R$"
-                + df.format((valorManutencaoPeca+ValorAntigoMPecas)));
-
-        str.append("\nTotal reabastecido pelo carro: " + df.format(v.getTotalReabastecido())+" litros"+ " - Valor: R$"
-                + df.format(gastoEmCombustivel));
-
-        str.append("\nValor total gasto: R$"
-                + df.format(gastoEmCombustivel + (valorManutencaoPeca+ValorAntigoMPecas) + (valorManutencaoPeriodica+ValorAntigoMPeriodica)));
- 
-        if(v.quantidadeManutencaoPeca()>0){
-            ValorAntigoMPecas += valorManutencaoPeca;
-        }
-        if(v.quantidadeManutencaoPeriodica()>0){
-            ValorAntigoMPeriodica += valorMPeriodico;
-        }
-
-        quantidadeMPecasAntiga = v.quantidadeManutencaoPeca();
-        quantidadeMPeriodicaAntiga = v.quantidadeManutencaoPeriodica();
-            return str.toString();
-    }
+    }   
 }

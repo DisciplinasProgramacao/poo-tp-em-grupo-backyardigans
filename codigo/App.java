@@ -300,7 +300,7 @@ public class App {
             System.out.println("Digite o valor da manutenção da períodica: ");
             double valorPeriodico = sc.nextDouble();
 
-            System.out.println(frota.relatorioGastoTotal(v, valorPeca, valorPeriodico));
+            System.out.println(v.relatorioGastoTotal(valorPeca, valorPeriodico));
         }catch(NullPointerException n) {
             System.out.println("Veículo não encontrado");
         }catch(InputMismatchException i){
