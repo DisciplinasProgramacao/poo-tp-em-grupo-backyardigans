@@ -5,7 +5,7 @@
  * 
  */
 public enum TipoVeiculo {
-    CARRO(50, 10000, 10000),
+    CARRO(50, 200, 10000),
     VAN(60, 10000, 12000),
     FURGAO(80, 10000, 12000),
     CAMINHAO(250, 20000, 20000);
